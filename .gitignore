@@ -1,0 +1,128 @@
+# ============================================================
+# RSSB Wireless Management System — .gitignore
+# Covers: ASP.NET Core 8, Next.js 14, PostgreSQL, Docker
+# ============================================================
+
+
+# ─── SECRETS & CONFIG (NEVER COMMIT) ────────────────────────
+backend/appsettings.Development.json
+backend/appsettings.Production.json
+frontend/.env.local
+frontend/.env.production
+frontend/.env*.local
+**/*.pfx
+**/*.p12
+**/*.key
+**/*.pem
+**/*.cert
+
+
+# ─── ASP.NET CORE / .NET ────────────────────────────────────
+backend/bin/
+backend/obj/
+backend/Migrations/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+_ReSharper*/
+*.DotSettings.user
+TestResults/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.nupkg
+*.snupkg
+**/publish/
+
+
+# ─── NEXT.JS / NODE ─────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.cache/
+frontend/build/
+frontend/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+frontend/.npm
+frontend/.yarn/
+
+
+# ─── TYPESCRIPT ─────────────────────────────────────────────
+*.tsbuildinfo
+frontend/next-env.d.ts
+
+
+# ─── DOCKER ─────────────────────────────────────────────────
+.docker/
+docker-compose.override.yml
+docker-compose.local.yml
+
+
+# ─── DATABASE ────────────────────────────────────────────────
+*.sql.bak
+pgdata/
+postgres-data/
+
+
+# ─── OS FILES ────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+
+# ─── IDE & EDITORS ──────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+.fleet/
+.cursor/
+
+
+# ─── LOGS ───────────────────────────────────────────────────
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+
+# ─── UPLOADS / MEDIA (use Cloudinary instead) ───────────────
+frontend/public/uploads/
+backend/wwwroot/uploads/
+
+
+# ─── COVERAGE & TEST OUTPUT ─────────────────────────────────
+coverage/
+*.coverage
+*.coveragexml
+frontend/.nyc_output/
+
+
+# ─── MISC ───────────────────────────────────────────────────
+*.bak
+*.tmp
+*.temp
+.cache/
