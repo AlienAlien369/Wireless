@@ -1,16 +1,21 @@
 # ============================================================
-# RSSB Wireless Management System — .gitignore
+# RSSB Wireless Management System — .gitignore (UPDATED)
 # Covers: ASP.NET Core 8, Next.js 14, PostgreSQL, Docker
 # ============================================================
 
 
-# ─── SECRETS & CONFIG (NEVER COMMIT) ────────────────────────
-backend/appsettings.Development.json
-backend/appsettings.Production.json
+# ─── SECRETS & CONFIG (CRITICAL - NEVER COMMIT) ─────────────
 backend/appsettings.json
-frontend/.env.local
-frontend/.env.production
-frontend/.env*.local
+backend/appsettings.*.json
+!backend/appsettings.Example.json
+
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+.env
+.env.*
+
 **/*.pfx
 **/*.p12
 **/*.key
@@ -21,14 +26,15 @@ frontend/.env*.local
 # ─── ASP.NET CORE / .NET ────────────────────────────────────
 backend/bin/
 backend/obj/
-backend/Migrations/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+
 .vs/
 _ReSharper*/
 *.DotSettings.user
+
 TestResults/
 [Dd]ebug/
 [Rr]elease/
@@ -36,14 +42,18 @@ x64/
 x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
-bld/
+
 [Bb]in/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
 *.nupkg
 *.snupkg
 **/publish/
+
+# ❗ DO NOT ignore migrations in production projects
+# backend/Migrations/   <-- removed (important for DB sync)
 
 
 # ─── NEXT.JS / NODE ─────────────────────────────────────────
@@ -53,10 +63,12 @@ frontend/out/
 frontend/.cache/
 frontend/build/
 frontend/dist/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
 .pnpm-store/
 frontend/.npm
 frontend/.yarn/
@@ -72,14 +84,18 @@ frontend/next-env.d.ts
 docker-compose.override.yml
 docker-compose.local.yml
 
+# Optional: ignore local env for docker
+.env.docker
 
-# ─── DATABASE ────────────────────────────────────────────────
+
+# ─── DATABASE ───────────────────────────────────────────────
 *.sql.bak
+*.dump
 pgdata/
 postgres-data/
 
 
-# ─── OS FILES ────────────────────────────────────────────────
+# ─── OS FILES ───────────────────────────────────────────────
 .DS_Store
 .DS_Store?
 ._*
@@ -94,10 +110,12 @@ desktop.ini
 .vscode/
 !.vscode/extensions.json
 !.vscode/launch.json
+
 .idea/
 *.swp
 *.swo
 *~
+
 .fleet/
 .cursor/
 
@@ -122,8 +140,15 @@ coverage/
 frontend/.nyc_output/
 
 
-# ─── MISC ───────────────────────────────────────────────────
+# ─── CACHE / TEMP ───────────────────────────────────────────
+.cache/
 *.bak
 *.tmp
 *.temp
-.cache/
+
+
+# ─── OPTIONAL SECURITY ADDITIONS ────────────────────────────
+# Ignore any accidental secret files
+secrets.json
+credentials.json
+*.env.backup
