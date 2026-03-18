@@ -161,18 +161,29 @@ export default function InventoryPage() {
                       <span className={`text-xs px-2 py-1 rounded-full font-medium
                         ${s.brand === 'Kenwood' ? 'bg-blue-100 text-blue-700' :
                           s.brand === 'Vertel' ? 'bg-green-100 text-green-700' :
-                          'bg-purple-100 text-purple-700'}`}>
+                            'bg-purple-100 text-purple-700'}`}>
                         {s.brand}
                       </span>
                     </td>
                     <td className="px-4 py-3">{statusBadge(s.status)}</td>
                     <td className="px-4 py-3">
-                      {s.qrCodeUrl
-                        ? <a href={s.qrCodeUrl} target="_blank" rel="noopener noreferrer"
-                            className="text-blue-500 hover:text-blue-700 flex items-center gap-1">
-                            <QrCode size={15} /> View
-                          </a>
-                        : <span className="text-gray-400 text-xs">N/A</span>}
+                      {s.qrCodeUrl ? (
+                        <button
+                          onClick={() => {
+                            const newTab = window.open();
+                            newTab.document.write(
+                              `<html><body style="margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#000">
+             <img src="${s.qrCodeUrl}" style="max-width:100%;height:auto;" />
+           </body></html>`
+                            );
+                          }}
+                          className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+                        >
+                          <QrCode size={15} /> View
+                        </button>
+                      ) : (
+                        <span className="text-gray-400 text-xs">N/A</span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-gray-500 text-xs">{s.remarks || '—'}</td>
                     <td className="px-4 py-3">
