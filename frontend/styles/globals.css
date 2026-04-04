@@ -45,4 +45,78 @@
   .sidebar-link.active {
     @apply bg-accent text-white;
   }
+
+  /* Responsive Table Styles */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  @media (max-width: 768px) {
+    .table-responsive {
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      display: block;
+      overflow-x: auto;
+    }
+
+    .table-responsive table thead {
+      display: none;
+    }
+
+    .table-responsive table tbody,
+    .table-responsive table tr,
+    .table-responsive table td {
+      display: block;
+      width: 100%;
+    }
+
+    .table-responsive table tr {
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+    }
+
+    .table-responsive table td {
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      column-gap: 1rem;
+    }
+
+    .table-responsive table td::before {
+      content: attr(data-label);
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .table-responsive table td:first-child::before {
+      display: none;
+    }
+  }
+
+  /* Scrollbar styling for horizontal scroll */
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 0.375rem;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background-color: #f3f4f6;
+    border-radius: 0.25rem;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 0.25rem;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background-color: #4b5563;
+  }
 }
+

@@ -118,6 +118,7 @@ public class IssueService
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
             .Include(i => i.Items).ThenInclude(ii => ii.Kit)
             .Include(i => i.Photos)
+            .Include(i => i.SmsLogs)
             .FirstOrDefaultAsync(i => i.Id == id)
             ?? throw new KeyNotFoundException("Issue not found");
 
@@ -132,6 +133,7 @@ public class IssueService
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
             .Include(i => i.Items).ThenInclude(ii => ii.Kit)
             .Include(i => i.Photos)
+            .Include(i => i.SmsLogs)
             .Where(i => i.VisitId == visitId)
             .OrderByDescending(i => i.IssuedAt)
             .ToListAsync();
@@ -203,6 +205,15 @@ public class IssueService
             IsReturned = ii.IsReturned,
             ReturnedAt = ii.ReturnedAt
         }).ToList(),
-        PhotoUrls = i.Photos.Select(p => p.ImageUrl).ToList()
+        PhotoUrls = i.Photos.Select(p => p.ImageUrl).ToList(),
+        SmsLogs = i.SmsLogs.Select(s => new SmsLogDto
+        {
+            Id = s.Id,
+            MobileNumber = s.MobileNumber,
+            Message = s.Message,
+            Status = s.Status,
+            ErrorMessage = s.ErrorMessage,
+            SentAt = s.SentAt
+        }).ToList()
     };
 }

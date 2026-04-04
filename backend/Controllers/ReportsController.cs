@@ -33,6 +33,14 @@ public class ReportsController : ControllerBase
         return Ok(stats);
     }
 
+    [HttpGet("visit-wise")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetVisitWiseDashboard()
+    {
+        var result = await _reportSvc.GetVisitWiseDashboardAsync();
+        return Ok(result);
+    }
+
     [HttpGet("visit/{visitId}/excel")]
     public async Task<IActionResult> VisitExcel(int visitId)
     {

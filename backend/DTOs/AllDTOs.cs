@@ -77,6 +77,7 @@ public class IssueResponseDto
     public CollectorDto? Collector { get; set; }
     public List<IssueItemResponseDto> Items { get; set; } = new();
     public List<string> PhotoUrls { get; set; } = new();
+    public List<SmsLogDto> SmsLogs { get; set; } = new();
 }
 
 public class IssueItemResponseDto
@@ -90,6 +91,16 @@ public class IssueItemResponseDto
 }
 
 public record CollectorDto(int Id, string Name, string BadgeNumber, string PhoneNumber);
+
+public class SmsLogDto
+{
+    public int Id { get; set; }
+    public string MobileNumber { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+    public string? ErrorMessage { get; set; }
+    public DateTime SentAt { get; set; }
+}
 
 // ─── Breakage ─────────────────────────────────────────────────────────────────
 public class BreakageCreateDto
@@ -125,4 +136,13 @@ public class DashboardStatsDto
     public int ActiveVisits { get; set; }
     public int TodayIssues { get; set; }
     public int TotalBreakages { get; set; }
+}
+
+public class VisitWiseDashboardDto
+{
+    public string VisitName { get; set; } = string.Empty;
+    public int TotalIssued { get; set; }
+    public int TotalReturned { get; set; }
+    public int CurrentlyIssued { get; set; }
+    public int PartiallyReturned { get; set; }
 }

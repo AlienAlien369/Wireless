@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
+import SearchDropdown from '../../components/SearchDropdown'
+import BulkEntryModal from '../../components/BulkEntryModal'
 import { visitsApi, issuesApi } from '../../services/api'
+import { Package, Plus } from 'lucide-react'
 
 export default function ReceivePage() {
   const [visits, setVisits] = useState<any[]>([])
@@ -9,6 +12,8 @@ export default function ReceivePage() {
   const [issues, setIssues] = useState<any[]>([])
   const [expandedIssue, setExpandedIssue] = useState<number | null>(null)
   const [returning, setReturning] = useState<{[key: number]: boolean}>({})
+  const [bulkModalOpen, setBulkModalOpen] = useState(false)
+  const [allUnreturnedItems, setAllUnreturnedItems] = useState<any[]>([])
 
   useEffect(() => {
     visitsApi.getAll().then(r => setVisits(r.data.filter((v: any) => v.isActive)))
@@ -16,7 +21,16 @@ export default function ReceivePage() {
 
   useEffect(() => {
     if (!selectedVisit) return
-    issuesApi.getByVisit(parseInt(selectedVisit)).then(r => setIssues(r.data))
+    issuesApi.getByVisit(parseInt(selectedVisit)).then(r => {
+      setIssues(r.data)
+      const unreturned = r.data.flatMap((issue: any) => 
+        issue.items.filter((i: any) => !i.isReturned).map((item: any) => ({
+          ...item,
+          issueId: issue.id
+        }))
+      )
+      setAllUnreturnedItems(unreturned)
+    })
   }, [selectedVisit])
 
   const returnItems = async (issueId: number, itemIds: number[]) => {
@@ -29,6 +43,27 @@ export default function ReceivePage() {
     finally { setReturning(p => ({ ...p, [issueId]: false })) }
   }
 
+  const handleBulkReturn = async (items: any[]) => {
+    const groupedByIssue: {[key: number]: number[]} = {}
+    
+    items.forEach(item => {
+      if (!groupedByIssue[item.issueId]) {
+        groupedByIssue[item.issueId] = []
+      }
+      groupedByIssue[item.issueId].push(item.id)
+    })
+
+    try {
+      for (const [issueId, itemIds] of Object.entries(groupedByIssue)) {
+        await returnItems(parseInt(issueId), itemIds)
+      }
+      toast.success(`Returned ${items.length} items`)
+      setBulkModalOpen(false)
+    } catch (e) {
+      toast.error('Failed to return some items')
+    }
+  }
+
   const statusBadge = (s: string) => {
     if (s === 'Issued') return <span className="badge-issued">Issued</span>
     if (s === 'Returned') return <span className="badge-returned">Returned</span>
@@ -39,11 +74,30 @@ export default function ReceivePage() {
     <AdminLayout title="Receive Wireless">
       <div className="space-y-4">
         <div className="card">
-          <label className="label">Select Visit</label>
-          <select value={selectedVisit} onChange={e => setSelectedVisit(e.target.value)} className="input w-80">
-            <option value="">— Select a Visit —</option>
-            {visits.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
-          </select>
+          <div className="flex items-end justify-between gap-4">
+            <div className="flex-1">
+              <label className="label">Select Visit</label>
+              <div className="max-w-96">
+                <SearchDropdown
+                  items={visits}
+                  value={selectedVisit}
+                  onChange={(val) => setSelectedVisit(val.toString())}
+                  getLabel={(v) => v.name}
+                  getValue={(v) => v.id}
+                  placeholder="Search and select a visit..."
+                  className="input"
+                />
+              </div>
+            </div>
+            {selectedVisit && allUnreturnedItems.length > 0 && (
+              <button
+                onClick={() => setBulkModalOpen(true)}
+                className="btn-primary flex items-center gap-2 whitespace-nowrap"
+              >
+                <Plus size={16} /> Bulk Receive
+              </button>
+            )}
+          </div>
         </div>
 
         {issues.length > 0 && (
@@ -75,7 +129,7 @@ export default function ReceivePage() {
                 {expandedIssue === issue.id && issue.status !== 'Returned' && (
                   <div className="mt-4 border-t pt-4">
                     <p className="text-sm font-medium text-gray-600 mb-3">Select items to mark as returned:</p>
-                    <div className="space-y-2">
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
                       {issue.items.filter((i: any) => !i.isReturned).map((item: any) => (
                         <label key={item.id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100">
                           <input type="checkbox" id={`item-${item.id}`} className="w-4 h-4" />
@@ -84,28 +138,30 @@ export default function ReceivePage() {
                         </label>
                       ))}
                     </div>
-                    <button
-                      onClick={() => {
-                        const checked = issue.items
-                          .filter((i: any) => !i.isReturned)
-                          .filter((i: any) => (document.getElementById(`item-${i.id}`) as HTMLInputElement)?.checked)
-                          .map((i: any) => i.id)
-                        if (checked.length === 0) { toast.error('Select items to return'); return }
-                        returnItems(issue.id, checked)
-                      }}
-                      disabled={returning[issue.id]}
-                      className="mt-3 btn-primary text-sm disabled:opacity-50">
-                      {returning[issue.id] ? 'Processing...' : 'Mark Selected as Returned'}
-                    </button>
-                    <button
-                      onClick={() => {
-                        const allIds = issue.items.filter((i: any) => !i.isReturned).map((i: any) => i.id)
-                        returnItems(issue.id, allIds)
-                      }}
-                      disabled={returning[issue.id]}
-                      className="mt-3 ml-2 btn-secondary text-sm disabled:opacity-50">
-                      Return All
-                    </button>
+                    <div className="flex gap-2 mt-3 flex-wrap">
+                      <button
+                        onClick={() => {
+                          const checked = issue.items
+                            .filter((i: any) => !i.isReturned)
+                            .filter((i: any) => (document.getElementById(`item-${i.id}`) as HTMLInputElement)?.checked)
+                            .map((i: any) => i.id)
+                          if (checked.length === 0) { toast.error('Select items to return'); return }
+                          returnItems(issue.id, checked)
+                        }}
+                        disabled={returning[issue.id]}
+                        className="btn-primary text-sm disabled:opacity-50">
+                        {returning[issue.id] ? 'Processing...' : 'Mark Selected as Returned'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          const allIds = issue.items.filter((i: any) => !i.isReturned).map((i: any) => i.id)
+                          returnItems(issue.id, allIds)
+                        }}
+                        disabled={returning[issue.id]}
+                        className="btn-secondary text-sm disabled:opacity-50">
+                        Return All
+                      </button>
+                    </div>
                   </div>
                 )}
 
@@ -124,6 +180,17 @@ export default function ReceivePage() {
         {selectedVisit && issues.length === 0 && (
           <div className="card text-center py-10 text-gray-400">No issues found for this visit.</div>
         )}
+
+        <BulkEntryModal
+          isOpen={bulkModalOpen}
+          onClose={() => setBulkModalOpen(false)}
+          title="Bulk Receive Items"
+          placeholder="Paste item numbers to receive, one per line or comma-separated\nExample:\nWK-001\nWK-002\nCH-003"
+          items={allUnreturnedItems}
+          getItemLabel={(item) => item.itemNumber || '(no #)'}
+          onAdd={handleBulkReturn}
+          itemType="item"
+        />
       </div>
     </AdminLayout>
   )

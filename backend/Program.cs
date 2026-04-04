@@ -47,11 +47,14 @@ builder.Services.AddAuthentication(opt =>
 });
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
+var frontendUrl = builder.Configuration["AppSettings:FrontendUrl"]?.Trim() ?? "http://localhost:3000";
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("AllowFrontend", policy =>
-        policy.WithOrigins(builder.Configuration["AppSettings:FrontendUrl"] ?? "http://localhost:3000")
-              .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+        policy.WithOrigins(frontendUrl)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
 });
 
 // ─── Services ─────────────────────────────────────────────────────────────────

@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
+import BulkEntryModal from '../../components/BulkEntryModal'
+import SearchDropdown from '../../components/SearchDropdown'
 import { visitsApi, inchargesApi, inventoryApi, issuesApi } from '../../services/api'
+import { Plus, X } from 'lucide-react'
 
 export default function IssuePage() {
   const [visits, setVisits] = useState<any[]>([])
@@ -17,6 +20,7 @@ export default function IssuePage() {
   const [hasCollector, setHasCollector] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [bulkModalOpen, setBulkModalOpen] = useState('')
   const { register, handleSubmit, watch, reset } = useForm<any>({ defaultValues: { sendSms: true } })
   const selectedBrand = watch('brand')
 
@@ -186,55 +190,165 @@ export default function IssuePage() {
               <>
                 {/* Wireless Sets */}
                 <div className="card">
-                  <h3 className="font-semibold text-gray-700 mb-3">
-                    Select Wireless Sets
-                    {selectedSets.length > 0 && <span className="ml-2 badge-available">{selectedSets.length} selected</span>}
-                  </h3>
-                  <div className="max-h-48 overflow-y-auto space-y-1">
-                    {filteredSets.map(s => (
-                      <label key={s.id} className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer border transition-colors
-                        ${selectedSets.find(x => x.id === s.id) ? 'bg-primary/10 border-primary' : 'border-transparent hover:bg-gray-50'}`}>
-                        <input type="checkbox" checked={!!selectedSets.find(x => x.id === s.id)}
-                          onChange={() => toggleSet(s)} className="w-4 h-4" />
-                        <span className="font-medium text-sm">{s.itemNumber}</span>
-                        <span className={`text-xs px-1.5 py-0.5 rounded ${s.brand === 'Kenwood' ? 'bg-blue-100 text-blue-700' : s.brand === 'Vertel' ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'}`}>{s.brand}</span>
-                      </label>
-                    ))}
-                    {filteredSets.length === 0 && <p className="text-gray-400 text-sm text-center py-4">No available sets</p>}
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-semibold text-gray-700">
+                        Select Wireless Sets
+                      </h3>
+                      {selectedSets.length > 0 && <span className="ml-2 badge-available">{selectedSets.length} selected</span>}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setBulkModalOpen('sets')}
+                      className="btn-secondary text-xs flex items-center gap-1 py-1 px-2"
+                    >
+                      <Plus size={14} /> Bulk
+                    </button>
                   </div>
+                  
+                  <SearchDropdown
+                    items={filteredSets}
+                    value=""
+                    onChange={(val) => {
+                      const item = filteredSets.find(s => s.id === val)
+                      if (item && !selectedSets.find(x => x.id === item.id)) {
+                        setSelectedSets(prev => [...prev, item])
+                      }
+                    }}
+                    getLabel={(s) => `${s.itemNumber} · ${s.brand}`}
+                    getValue={(s) => s.id}
+                    placeholder="Search and add sets by item number..."
+                    className="input"
+                  />
+
+                  {selectedSets.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {selectedSets.map(s => (
+                        <div key={s.id} className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-lg p-2.5">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-sm text-gray-700">{s.itemNumber}</span>
+                            <span className={`text-xs px-1.5 py-0.5 rounded ${
+                              s.brand === 'Kenwood' ? 'bg-blue-100 text-blue-700' : 
+                              s.brand === 'Vertel' ? 'bg-green-100 text-green-700' : 
+                              'bg-purple-100 text-purple-700'
+                            }`}>{s.brand}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedSets(prev => prev.filter(x => x.id !== s.id))}
+                            className="text-gray-400 hover:text-red-600 transition-colors"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {filteredSets.length === 0 && (
+                    <p className="text-gray-400 text-sm text-center py-4">No available sets</p>
+                  )}
                 </div>
 
                 {/* Chargers */}
                 <div className="card">
-                  <h3 className="font-semibold text-gray-700 mb-3">Select Chargers (Optional)</h3>
-                  <div className="max-h-36 overflow-y-auto space-y-1">
-                    {availableChargers.map(c => (
-                      <label key={c.id} className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer border transition-colors
-                        ${selectedChargers.find(x => x.id === c.id) ? 'bg-primary/10 border-primary' : 'border-transparent hover:bg-gray-50'}`}>
-                        <input type="checkbox" checked={!!selectedChargers.find(x => x.id === c.id)}
-                          onChange={() => setSelectedChargers(prev => prev.find(x => x.id === c.id) ? prev.filter(x => x.id !== c.id) : [...prev, c])}
-                          className="w-4 h-4" />
-                        <span className="font-medium text-sm">{c.itemNumber || '(no #)'}</span>
-                        <span className="text-xs text-gray-500">{c.brand}</span>
-                      </label>
-                    ))}
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Select Chargers (Optional)</h3>
+                      {selectedChargers.length > 0 && <span className="ml-2 badge-issued">{selectedChargers.length} selected</span>}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setBulkModalOpen('chargers')}
+                      className="btn-secondary text-xs flex items-center gap-1 py-1 px-2"
+                    >
+                      <Plus size={14} /> Bulk
+                    </button>
                   </div>
+
+                  <SearchDropdown
+                    items={availableChargers}
+                    value=""
+                    onChange={(val) => {
+                      const item = availableChargers.find(c => c.id === val)
+                      if (item && !selectedChargers.find(x => x.id === item.id)) {
+                        setSelectedChargers(prev => [...prev, item])
+                      }
+                    }}
+                    getLabel={(c) => `${c.itemNumber || '(no #)'} · ${c.brand || 'Unknown'}`}
+                    getValue={(c) => c.id}
+                    placeholder="Search and add chargers..."
+                    className="input"
+                  />
+
+                  {selectedChargers.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {selectedChargers.map(c => (
+                        <div key={c.id} className="flex items-center justify-between bg-yellow/5 border border-yellow-200/30 rounded-lg p-2.5">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-sm text-gray-700">{c.itemNumber || '(no #)'}</span>
+                            <span className="text-xs text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">{c.brand || 'Unknown'}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedChargers(prev => prev.filter(x => x.id !== c.id))}
+                            className="text-gray-400 hover:text-red-600 transition-colors"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Kits */}
                 <div className="card">
-                  <h3 className="font-semibold text-gray-700 mb-3">Select Kits/Earphones (Kenwood only)</h3>
-                  <div className="max-h-36 overflow-y-auto space-y-1">
-                    {availableKits.map(k => (
-                      <label key={k.id} className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer border transition-colors
-                        ${selectedKits.find(x => x.id === k.id) ? 'bg-primary/10 border-primary' : 'border-transparent hover:bg-gray-50'}`}>
-                        <input type="checkbox" checked={!!selectedKits.find(x => x.id === k.id)}
-                          onChange={() => setSelectedKits(prev => prev.find(x => x.id === k.id) ? prev.filter(x => x.id !== k.id) : [...prev, k])}
-                          className="w-4 h-4" />
-                        <span className="font-medium text-sm">{k.itemNumber}</span>
-                      </label>
-                    ))}
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Select Kits/Earphones (Kenwood only)</h3>
+                      {selectedKits.length > 0 && <span className="ml-2 badge-broken">{selectedKits.length} selected</span>}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setBulkModalOpen('kits')}
+                      className="btn-secondary text-xs flex items-center gap-1 py-1 px-2"
+                    >
+                      <Plus size={14} /> Bulk
+                    </button>
                   </div>
+
+                  <SearchDropdown
+                    items={availableKits}
+                    value=""
+                    onChange={(val) => {
+                      const item = availableKits.find(k => k.id === val)
+                      if (item && !selectedKits.find(x => x.id === item.id)) {
+                        setSelectedKits(prev => [...prev, item])
+                      }
+                    }}
+                    getLabel={(k) => k.itemNumber}
+                    getValue={(k) => k.id}
+                    placeholder="Search and add kits/earphones..."
+                    className="input"
+                  />
+
+                  {selectedKits.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {selectedKits.map(k => (
+                        <div key={k.id} className="flex items-center justify-between bg-red/5 border border-red-200/30 rounded-lg p-2.5">
+                          <span className="font-medium text-sm text-gray-700">{k.itemNumber}</span>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedKits(prev => prev.filter(x => x.id !== k.id))}
+                            className="text-gray-400 hover:text-red-600 transition-colors"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </>
             )}
@@ -259,6 +373,57 @@ export default function IssuePage() {
             </div>
           </div>
         </div>
+
+        <BulkEntryModal
+          isOpen={bulkModalOpen === 'sets'}
+          onClose={() => setBulkModalOpen('')}
+          title="Bulk Add Wireless Sets"
+          placeholder="Paste item numbers here, one per line or comma-separated\nExample:\nWK-001\nWK-002\nWK-003"
+          items={filteredSets}
+          getItemLabel={(item) => item.itemNumber}
+          onAdd={(items) => {
+            setSelectedSets(prev => {
+              const newItems = items.filter(item => !prev.find(s => s.id === item.id))
+              return [...prev, ...newItems]
+            })
+            setBulkModalOpen('')
+          }}
+          itemType="set"
+        />
+
+        <BulkEntryModal
+          isOpen={bulkModalOpen === 'chargers'}
+          onClose={() => setBulkModalOpen('')}
+          title="Bulk Add Chargers"
+          placeholder="Paste item numbers here, one per line or comma-separated"
+          items={availableChargers}
+          getItemLabel={(item) => item.itemNumber || '(no #)'}
+          onAdd={(items) => {
+            setSelectedChargers(prev => {
+              const newItems = items.filter(item => !prev.find(s => s.id === item.id))
+              return [...prev, ...newItems]
+            })
+            setBulkModalOpen('')
+          }}
+          itemType="charger"
+        />
+
+        <BulkEntryModal
+          isOpen={bulkModalOpen === 'kits'}
+          onClose={() => setBulkModalOpen('')}
+          title="Bulk Add Kits/Earphones"
+          placeholder="Paste item numbers here, one per line or comma-separated"
+          items={availableKits}
+          getItemLabel={(item) => item.itemNumber}
+          onAdd={(items) => {
+            setSelectedKits(prev => {
+              const newItems = items.filter(item => !prev.find(s => s.id === item.id))
+              return [...prev, ...newItems]
+            })
+            setBulkModalOpen('')
+          }}
+          itemType="kit"
+        />
       </form>
     </AdminLayout>
   )

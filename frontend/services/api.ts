@@ -96,6 +96,7 @@ export const breakagesApi = {
 // ─── Reports ─────────────────────────────────────────────────────────────────
 export const reportsApi = {
   getDashboard: () => api.get('/reports/dashboard'),
+  getVisitWiseDashboard: () => api.get('/reports/visit-wise'),
   visitExcel: (visitId: number) =>
     api.get(`/reports/visit/${visitId}/excel`, { responseType: 'blob' }),
   inventoryExcel: () =>

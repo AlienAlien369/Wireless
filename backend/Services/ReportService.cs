@@ -7,11 +7,36 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Kernel.Colors;
 using RSSBWireless.API.Data;
+using RSSBWireless.API.DTOs;
 
 public class ReportService
 {
     private readonly AppDbContext _db;
     public ReportService(AppDbContext db) => _db = db;
+
+    public async Task<List<VisitWiseDashboardDto>> GetVisitWiseDashboardAsync()
+    {
+        var visits = await _db.Visits
+            .Include(v => v.Issues)
+            .OrderByDescending(v => v.VisitDate)
+            .ToListAsync();
+
+        var result = new List<VisitWiseDashboardDto>();
+        foreach (var visit in visits)
+        {
+            var issues = visit.Issues;
+            result.Add(new VisitWiseDashboardDto
+            {
+                VisitName = visit.Name,
+                TotalIssued = issues.Count,
+                TotalReturned = issues.Count(i => i.Status == "Returned"),
+                CurrentlyIssued = issues.Count(i => i.Status == "Issued"),
+                PartiallyReturned = issues.Count(i => i.Status == "Partial")
+            });
+        }
+
+        return result;
+    }
 
     public async Task<byte[]> GenerateVisitExcelReportAsync(int visitId)
     {

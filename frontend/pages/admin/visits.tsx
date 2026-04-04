@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { visitsApi } from '../../services/api'
-import { Plus, Pencil, Trash2, MapPin, Calendar } from 'lucide-react'
+import { Plus, Pencil, Trash2, MapPin, Calendar, AlertCircle } from 'lucide-react'
 
 interface Visit {
   id: number; name: string; location: string; visitDate: string; remarks?: string; isActive: boolean
@@ -45,7 +45,7 @@ export default function VisitsPage() {
   return (
     <AdminLayout title="Visits">
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <p className="text-gray-500 text-sm">Manage spiritual visit events. All issuances must belong to a visit.</p>
           <button onClick={openCreate} className="btn-primary flex items-center gap-2">
             <Plus size={16} /> New Visit
@@ -55,7 +55,7 @@ export default function VisitsPage() {
         {/* Form Modal */}
         {showForm && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+            <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
               <h2 className="text-lg font-semibold mb-4">{editing ? 'Edit' : 'New'} Visit</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                 <div>
@@ -83,55 +83,101 @@ export default function VisitsPage() {
           </div>
         )}
 
-        {/* Table */}
-        <div className="card p-0 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                {['Sr.', 'Visit Name', 'Location', 'Date', 'Status', 'Actions'].map(h => (
-                  <th key={h} className="text-left px-4 py-3 font-medium text-gray-600">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {visits.map((v, i) => (
-                <tr key={v.id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="px-4 py-3 text-gray-500">{i + 1}</td>
-                  <td className="px-4 py-3">
-                    <div className="font-medium text-gray-800">{v.name}</div>
-                    {v.remarks && <div className="text-xs text-gray-400">{v.remarks}</div>}
-                  </td>
-                  <td className="px-4 py-3 flex items-center gap-1 text-gray-600">
-                    <MapPin size={14} className="text-gray-400" />{v.location}
-                  </td>
-                  <td className="px-4 py-3 text-gray-600">
-                    <span className="flex items-center gap-1">
-                      <Calendar size={14} className="text-gray-400" />
-                      {new Date(v.visitDate).toLocaleDateString('en-IN')}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={v.isActive ? 'badge-available' : 'badge-issued'}>
-                      {v.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => openEdit(v)} className="text-blue-500 hover:text-blue-700 p-1">
-                        <Pencil size={15} />
-                      </button>
-                      <button onClick={() => onDelete(v.id)} className="text-red-500 hover:text-red-700 p-1">
-                        <Trash2 size={15} />
-                      </button>
+        {/* Mobile Card View */}
+        <div className="space-y-3 md:hidden">
+          {visits.length === 0 ? (
+            <div className="card text-center py-12">
+              <AlertCircle size={40} className="mx-auto text-gray-300 mb-3" />
+              <p className="text-gray-500">No visits yet. Create your first visit!</p>
+            </div>
+          ) : (
+            visits.map((v) => (
+              <div key={v.id} className="card border-l-4 border-primary p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
+                    <div className="text-lg font-bold text-gray-800">{v.name}</div>
+                    <div className="text-xs text-primary mt-1 font-medium">{v.isActive ? 'Active' : 'Inactive'}</div>
+                  </div>
+                  <div className="flex gap-1">
+                    <button onClick={() => openEdit(v)} className="text-blue-500 hover:text-blue-700 p-2 hover:bg-blue-50 rounded-lg">
+                      <Pencil size={16} />
+                    </button>
+                    <button onClick={() => onDelete(v.id)} className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg">
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <MapPin size={14} className="text-gray-400" />
+                    <span className="text-sm">{v.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Calendar size={14} className="text-gray-400" />
+                    <span className="text-sm">{new Date(v.visitDate).toLocaleDateString('en-IN')}</span>
+                  </div>
+                  {v.remarks && (
+                    <div className="mt-3 p-2 bg-gray-50 rounded border-l-2 border-gray-300">
+                      <p className="text-sm text-gray-700">{v.remarks}</p>
                     </div>
-                  </td>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block card p-0 overflow-hidden">
+          <div className="table-responsive">
+            <table className="w-full text-sm">
+              <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+                <tr>
+                  {['Sr.', 'Visit Name', 'Location', 'Date', 'Status', 'Actions'].map(h => (
+                    <th key={h} className="text-left px-4 py-3 font-semibold text-gray-700">{h}</th>
+                  ))}
                 </tr>
-              ))}
-              {visits.length === 0 && (
-                <tr><td colSpan={6} className="text-center py-10 text-gray-400">No visits yet. Create your first visit!</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {visits.map((v, i) => (
+                  <tr key={v.id} className="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                    <td className="px-4 py-3 text-gray-500 font-medium">{i + 1}</td>
+                    <td className="px-4 py-3">
+                      <div className="font-bold text-gray-800">{v.name}</div>
+                      {v.remarks && <div className="text-xs text-gray-400 mt-1">{v.remarks}</div>}
+                    </td>
+                    <td className="px-4 py-3 flex items-center gap-1 text-gray-600">
+                      <MapPin size={14} className="text-gray-400" />{v.location}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={14} className="text-gray-400" />
+                        {new Date(v.visitDate).toLocaleDateString('en-IN')}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={v.isActive ? 'badge-available' : 'badge-issued'}>
+                        {v.isActive ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => openEdit(v)} className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-2 rounded-lg transition-colors">
+                          <Pencil size={15} />
+                        </button>
+                        <button onClick={() => onDelete(v.id)} className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors">
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {visits.length === 0 && (
+                  <tr><td colSpan={6} className="text-center py-10 text-gray-400">No visits yet. Create your first visit!</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </AdminLayout>
