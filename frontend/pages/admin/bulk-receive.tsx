@@ -229,7 +229,9 @@ export default function BulkReceivePage() {
       }
 
       // Mark each issue as returned
-      for (const [issueId, items] of issueMap.entries()) {
+      const issueEntries = Array.from(issueMap.entries())
+      for (let i = 0; i < issueEntries.length; i++) {
+        const [issueId, items] = issueEntries[i]
         try {
           // Find the issue
           const issue = issues.find((i: any) => i.id === issueId)
