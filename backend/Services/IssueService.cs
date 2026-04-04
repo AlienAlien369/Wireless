@@ -200,6 +200,9 @@ public class IssueService
         {
             Id = ii.Id,
             ItemType = ii.ItemType,
+            WirelessSetId = ii.WirelessSetId,
+            ChargerId = ii.ChargerId,
+            KitId = ii.KitId,
             ItemNumber = ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber,
             Brand = ii.WirelessSet?.Brand ?? ii.Charger?.Brand,
             IsReturned = ii.IsReturned,

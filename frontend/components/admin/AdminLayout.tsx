@@ -13,7 +13,9 @@ const navItems = [
   { href: '/admin/inventory', label: 'Inventory', icon: Package },
   { href: '/admin/incharges', label: 'Incharges', icon: Users },
   { href: '/admin/issue', label: 'Issue Wireless', icon: ArrowDownToLine },
+  { href: '/admin/bulk-issue', label: 'Bulk Issue', icon: ArrowDownToLine },
   { href: '/admin/receive', label: 'Receive Wireless', icon: ArrowUpFromLine },
+  { href: '/admin/bulk-receive', label: 'Bulk Receive', icon: ArrowUpFromLine },
   { href: '/admin/breakage', label: 'Breakage', icon: AlertTriangle },
   { href: '/admin/reports', label: 'Reports', icon: FileBarChart },
 ]

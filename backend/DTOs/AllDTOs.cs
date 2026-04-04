@@ -84,6 +84,9 @@ public class IssueItemResponseDto
 {
     public int Id { get; set; }
     public string ItemType { get; set; } = string.Empty;
+    public int? WirelessSetId { get; set; }
+    public int? ChargerId { get; set; }
+    public int? KitId { get; set; }
     public string? ItemNumber { get; set; }
     public string? Brand { get; set; }
     public bool IsReturned { get; set; }
