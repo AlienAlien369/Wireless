@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import AdminLayout from "../../components/admin/AdminLayout";
 import BulkEntryModal from "../../components/BulkEntryModal";
 import SearchDropdown from "../../components/SearchDropdown";
+import { getActiveVisits, getLatestActiveVisit } from "../../utils/visits";
 import {
   visitsApi,
   inchargesApi,
@@ -26,34 +27,43 @@ export default function IssuePage() {
   const [submitting, setSubmitting] = useState(false);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [bulkModalOpen, setBulkModalOpen] = useState("");
-  const { register, handleSubmit, watch, reset, setValue } = useForm<any>({ 
-    defaultValues: { sendSms: true } 
-  })
+  const { register, handleSubmit, watch, reset, setValue } = useForm<any>({
+    defaultValues: { sendSms: true },
+  });
   const selectedBrand = watch("brand");
 
-  useEffect(() => {
-    visitsApi
-      .getAll()
-      .then((r) => setVisits(r.data.filter((v: any) => v.isActive)));
-    inchargesApi
-      .getAll()
-      .then((r) => setIncharges(r.data.filter((i: any) => i.isActive)));
-    inventoryApi
-      .getSets({ status: "Available" })
-      .then((r) => setAvailableSets(r.data));
-    inventoryApi
-      .getChargers()
-      .then((r) =>
-        setAvailableChargers(
-          r.data.filter((c: any) => c.status === "Available"),
-        ),
-      );
-    inventoryApi
-      .getKits()
-      .then((r) =>
-        setAvailableKits(r.data.filter((k: any) => k.status === "Available")),
-      );
-  }, []);
+useEffect(() => {
+  visitsApi
+    .getAll()
+    .then((r) => {
+      const activeVisits = getActiveVisits(r.data);
+      setVisits(activeVisits);
+
+      const latestVisit = getLatestActiveVisit(r.data);
+      if (latestVisit) {
+        setValue("visitId", latestVisit.id.toString());
+      }
+    });
+    
+  inchargesApi
+    .getAll()
+    .then((r) => setIncharges(r.data.filter((i: any) => i.isActive)));
+  inventoryApi
+    .getSets({ status: "Available" })
+    .then((r) => setAvailableSets(r.data));
+  inventoryApi
+    .getChargers()
+    .then((r) =>
+      setAvailableChargers(
+        r.data.filter((c: any) => c.status === "Available"),
+      ),
+    );
+  inventoryApi
+    .getKits()
+    .then((r) =>
+      setAvailableKits(r.data.filter((k: any) => k.status === "Available")),
+    );
+}, []);
 
   const filteredSets = selectedBrand
     ? availableSets.filter((s: any) => s.brand === selectedBrand)
@@ -116,6 +126,7 @@ export default function IssuePage() {
 
       toast.success("Wireless sets issued successfully!");
       reset();
+      setValue("visitId", visits[0]?.id?.toString() || "");
       setSelectedSets([]);
       setSelectedChargers([]);
       setSelectedKits([]);

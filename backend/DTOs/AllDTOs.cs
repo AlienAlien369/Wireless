@@ -143,9 +143,21 @@ public class DashboardStatsDto
 
 public class VisitWiseDashboardDto
 {
+    public int VisitId { get; set; }
     public string VisitName { get; set; } = string.Empty;
-    public int TotalIssued { get; set; }
-    public int TotalReturned { get; set; }
-    public int CurrentlyIssued { get; set; }
-    public int PartiallyReturned { get; set; }
+    public int TotalCurrentlyIssued { get; set; }
+    public int KenwoodSetsCurrentlyIssued { get; set; }
+    public int KenwoodSetsRemaining { get; set; }
+    public int VertelSetsCurrentlyIssued { get; set; }
+    public int VertelSetsRemaining { get; set; }
+    public int AsperaSetsCurrentlyIssued { get; set; }
+    public int AsperaSetsRemaining { get; set; }
+    public int KenwoodChargersCurrentlyIssued { get; set; }
+    public int KenwoodChargersRemaining { get; set; }
+    public int VertelChargersCurrentlyIssued { get; set; }
+    public int VertelChargersRemaining { get; set; }
+    public int AsperaChargersCurrentlyIssued { get; set; }
+    public int AsperaChargersRemaining { get; set; }
+    public int KitsCurrentlyIssued { get; set; }
+    public int KitsRemaining { get; set; }
 }

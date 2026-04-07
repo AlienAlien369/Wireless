@@ -3,13 +3,27 @@ import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { reportsApi, visitsApi, issuesApi } from '../../services/api'
 import { Download, FileSpreadsheet, FileText, ChevronDown, ChevronUp, Clock, CheckCircle } from 'lucide-react'
-import SearchDropdown from '../../components/SearchDropdown'
+import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
 
 function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url; a.download = filename; a.click()
   URL.revokeObjectURL(url)
+}
+
+function renderIssuedItems(issue: any) {
+  if (issue.isGroupIssue) {
+    return issue.groupName
+      ? `Group: ${issue.groupName} (${issue.groupSetCount || 0} sets)`
+      : `Group issue (${issue.groupSetCount || 0} sets)`
+  }
+
+  const itemNumbers = (issue.items || [])
+    .map((item: any) => item.itemNumber || item.itemType)
+    .filter(Boolean)
+
+  return itemNumbers.length > 0 ? itemNumbers.join(', ') : 'No item numbers'
 }
 
 export default function ReportsPage() {
@@ -21,7 +35,20 @@ export default function ReportsPage() {
   const [loadingList, setLoadingList] = useState(false)
   const [expandedVisit, setExpandedVisit] = useState<number | null>(null)
 
-  useEffect(() => { visitsApi.getAll().then(r => setVisits(r.data)) }, [])
+useEffect(() => {
+  visitsApi.getAll().then(r => {
+    const activeVisits = getActiveVisits(r.data)
+    setVisits(activeVisits)
+
+    const latestVisit = getLatestActiveVisit(r.data)
+    if (latestVisit) {
+      const latestVisitId = Number(latestVisit.id)
+      setSelectedVisit(latestVisit.id.toString());
+      setExpandedVisit(latestVisitId)
+      loadVisitDetails(latestVisitId)
+    }
+  })
+}, [])
 
   const loadVisitDetails = async (visitId: number) => {
     setLoadingList(true)
@@ -102,15 +129,18 @@ export default function ReportsPage() {
         <div className="card">
           <label className="label">Visit Filter (for visit-specific reports)</label>
           <div className="w-full md:w-96">
-            <SearchDropdown
-              items={visits}
+            <select
               value={selectedVisit}
-              onChange={handleVisitSelect}
-              getLabel={(v) => v.name}
-              getValue={(v) => v.id}
-              placeholder="Search and select a visit..."
               className="input"
-            />
+              onChange={(e) => handleVisitSelect(e.target.value)}
+            >
+              <option value="">Select Visit</option>
+              {visits.map((visit) => (
+                <option key={visit.id} value={visit.id}>
+                  {visit.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -152,6 +182,10 @@ export default function ReportsPage() {
                               <span className="text-gray-600">Items:</span>
                               <span className="font-medium">{issue.items?.length || 0}</span>
                             </div>
+                            <div>
+                              <span className="text-gray-600">Issued Item Numbers:</span>
+                              <p className="mt-1 text-xs text-gray-700">{renderIssuedItems(issue)}</p>
+                            </div>
                             <div className="flex justify-between">
                               <span className="text-gray-600">Issued:</span>
                               <span>{new Date(issue.issuedAt).toLocaleDateString()}</span>
@@ -170,14 +204,14 @@ export default function ReportsPage() {
                     <table className="w-full text-sm">
                       <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <tr>
-                          {['Sr.', 'Incharge', 'Badge', 'Mobile', 'Items Count', 'Issued At', 'Status'].map(h => (
+                          {['Sr.', 'Incharge', 'Badge', 'Mobile', 'Items Count', 'Item Numbers', 'Issued At', 'Status'].map(h => (
                             <th key={h} className="text-left px-3 py-2 font-semibold text-gray-700 whitespace-nowrap">{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {issuedList.length === 0 ? (
-                          <tr><td colSpan={7} className="text-center py-4 text-gray-500">No current issues</td></tr>
+                          <tr><td colSpan={8} className="text-center py-4 text-gray-500">No current issues</td></tr>
                         ) : (
                           issuedList.map((issue, idx) => (
                             <tr key={issue.id} className="border-b border-gray-100 hover:bg-yellow-50 transition-colors">
@@ -186,6 +220,7 @@ export default function ReportsPage() {
                               <td className="px-3 py-2 text-gray-600">{issue.inchargeBadge}</td>
                               <td className="px-3 py-2"><a href={`tel:${issue.inchargeMobile}`} className="text-blue-600 hover:underline">{issue.inchargeMobile}</a></td>
                               <td className="px-3 py-2 font-medium">{issue.items?.length || 0}</td>
+                              <td className="px-3 py-2 text-xs text-gray-600 max-w-sm">{renderIssuedItems(issue)}</td>
                               <td className="px-3 py-2 text-xs text-gray-500">{new Date(issue.issuedAt).toLocaleDateString()}</td>
                               <td className="px-3 py-2">{statusBadge(issue.status)}</td>
                             </tr>
@@ -222,6 +257,10 @@ export default function ReportsPage() {
                               <span className="text-gray-600">Items:</span>
                               <span className="font-medium">{issue.items?.length || 0}</span>
                             </div>
+                            <div>
+                              <span className="text-gray-600">Issued Item Numbers:</span>
+                              <p className="mt-1 text-xs text-gray-700">{renderIssuedItems(issue)}</p>
+                            </div>
                             <div className="flex justify-between">
                               <span className="text-gray-600">Issued:</span>
                               <span>{new Date(issue.issuedAt).toLocaleDateString()}</span>
@@ -241,14 +280,14 @@ export default function ReportsPage() {
                     <table className="w-full text-sm">
                       <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <tr>
-                          {['Sr.', 'Incharge', 'Badge', 'Mobile', 'Items Count', 'Issued At', 'Returned At'].map(h => (
+                          {['Sr.', 'Incharge', 'Badge', 'Mobile', 'Items Count', 'Item Numbers', 'Issued At', 'Returned At'].map(h => (
                             <th key={h} className="text-left px-3 py-2 font-semibold text-gray-700 whitespace-nowrap">{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {returnedList.length === 0 ? (
-                          <tr><td colSpan={7} className="text-center py-4 text-gray-500">No returned items</td></tr>
+                          <tr><td colSpan={8} className="text-center py-4 text-gray-500">No returned items</td></tr>
                         ) : (
                           returnedList.map((issue, idx) => (
                             <tr key={issue.id} className="border-b border-gray-100 hover:bg-green-50 transition-colors">
@@ -257,6 +296,7 @@ export default function ReportsPage() {
                               <td className="px-3 py-2 text-gray-600">{issue.inchargeBadge}</td>
                               <td className="px-3 py-2"><a href={`tel:${issue.inchargeMobile}`} className="text-blue-600 hover:underline">{issue.inchargeMobile}</a></td>
                               <td className="px-3 py-2 font-medium">{issue.items?.length || 0}</td>
+                              <td className="px-3 py-2 text-xs text-gray-600 max-w-sm">{renderIssuedItems(issue)}</td>
                               <td className="px-3 py-2 text-xs text-gray-500">{new Date(issue.issuedAt).toLocaleDateString()}</td>
                               <td className="px-3 py-2 text-xs font-medium text-green-600">{new Date(issue.returnedAt).toLocaleDateString()}</td>
                             </tr>

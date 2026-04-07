@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import SearchDropdown from '../../components/SearchDropdown'
 import { visitsApi, issuesApi } from '../../services/api'
+import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
 import { Mail, CheckCircle, AlertCircle, Clock, Filter } from 'lucide-react'
 
 interface SmsLog {
@@ -32,7 +33,15 @@ export default function NotificationCheckPage() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    visitsApi.getAll().then(r => setVisits(r.data))
+    visitsApi.getAll().then(r => {
+      const activeVisits = getActiveVisits(r.data)
+      setVisits(activeVisits)
+
+      const latestVisit = getLatestActiveVisit(r.data)
+      if (latestVisit) {
+        setSelectedVisit(latestVisit.id.toString())
+      }
+    })
   }, [])
 
   useEffect(() => {

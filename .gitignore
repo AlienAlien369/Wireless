@@ -26,6 +26,7 @@ frontend/.env.*
 # ─── ASP.NET CORE / .NET ────────────────────────────────────
 backend/bin/
 backend/obj/
+backend/temp-build-output/
 *.user
 *.suo
 *.userosscache

@@ -18,20 +18,64 @@ public class ReportService
     {
         var visits = await _db.Visits
             .Include(v => v.Issues)
+                .ThenInclude(i => i.Items)
+                    .ThenInclude(ii => ii.WirelessSet)
+            .Include(v => v.Issues)
+                .ThenInclude(i => i.Items)
+                    .ThenInclude(ii => ii.Charger)
+            .Include(v => v.Issues)
+                .ThenInclude(i => i.Items)
+                    .ThenInclude(ii => ii.Kit)
             .OrderByDescending(v => v.VisitDate)
             .ToListAsync();
+
+        var totalKenwoodSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Kenwood" && w.Status != "Broken");
+        var totalVertelSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Vertel" && w.Status != "Broken");
+        var totalAsperaSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Aspera" && w.Status != "Broken");
+
+        var totalKenwoodChargers = await _db.Chargers.CountAsync(c => c.Brand == "Kenwood" && c.Status != "Broken");
+        var totalVertelChargers = await _db.Chargers.CountAsync(c => c.Brand == "Vertel" && c.Status != "Broken");
+        var totalAsperaChargers = await _db.Chargers.CountAsync(c => c.Brand == "Aspera" && c.Status != "Broken");
+
+        var totalKits = await _db.Kits.CountAsync(k => k.Status != "Broken");
 
         var result = new List<VisitWiseDashboardDto>();
         foreach (var visit in visits)
         {
-            var issues = visit.Issues;
+            var activeItems = visit.Issues
+                .SelectMany(i => i.Items)
+                .Where(ii => !ii.IsReturned)
+                .ToList();
+
+            var kenwoodSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Kenwood");
+            var vertelSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Vertel");
+            var asperaSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Aspera");
+
+            var kenwoodChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Kenwood");
+            var vertelChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Vertel");
+            var asperaChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Aspera");
+
+            var kitsIssued = activeItems.Count(ii => ii.KitId.HasValue);
+
             result.Add(new VisitWiseDashboardDto
             {
+                VisitId = visit.Id,
                 VisitName = visit.Name,
-                TotalIssued = issues.Count,
-                TotalReturned = issues.Count(i => i.Status == "Returned"),
-                CurrentlyIssued = issues.Count(i => i.Status == "Issued"),
-                PartiallyReturned = issues.Count(i => i.Status == "Partial")
+                TotalCurrentlyIssued = activeItems.Count,
+                KenwoodSetsCurrentlyIssued = kenwoodSetsIssued,
+                KenwoodSetsRemaining = Math.Max(0, totalKenwoodSets - kenwoodSetsIssued),
+                VertelSetsCurrentlyIssued = vertelSetsIssued,
+                VertelSetsRemaining = Math.Max(0, totalVertelSets - vertelSetsIssued),
+                AsperaSetsCurrentlyIssued = asperaSetsIssued,
+                AsperaSetsRemaining = Math.Max(0, totalAsperaSets - asperaSetsIssued),
+                KenwoodChargersCurrentlyIssued = kenwoodChargersIssued,
+                KenwoodChargersRemaining = Math.Max(0, totalKenwoodChargers - kenwoodChargersIssued),
+                VertelChargersCurrentlyIssued = vertelChargersIssued,
+                VertelChargersRemaining = Math.Max(0, totalVertelChargers - vertelChargersIssued),
+                AsperaChargersCurrentlyIssued = asperaChargersIssued,
+                AsperaChargersRemaining = Math.Max(0, totalAsperaChargers - asperaChargersIssued),
+                KitsCurrentlyIssued = kitsIssued,
+                KitsRemaining = Math.Max(0, totalKits - kitsIssued)
             });
         }
 
@@ -45,6 +89,7 @@ public class ReportService
         var issues = await _db.Issues
             .Include(i => i.Incharge).Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
+            .Include(i => i.Items).ThenInclude(ii => ii.Kit)
             .Where(i => i.VisitId == visitId)
             .ToListAsync();
 
@@ -71,7 +116,7 @@ public class ReportService
         int sr = 1;
         foreach (var issue in issues)
         {
-            var items = string.Join(", ", issue.Items.Select(ii => ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? "Kit"));
+            var items = string.Join(", ", issue.Items.Select(ii => ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber ?? "Kit"));
             ws.Cells[row, 1].Value = sr++;
             ws.Cells[row, 2].Value = issue.Incharge?.Name;
             ws.Cells[row, 3].Value = issue.Incharge?.BadgeNumber;

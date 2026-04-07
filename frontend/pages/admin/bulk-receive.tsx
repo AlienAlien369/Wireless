@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { visitsApi, inchargesApi, inventoryApi, issuesApi } from '../../services/api'
+import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
 
 interface ProcessedItem {
   id: string
@@ -28,7 +29,15 @@ export default function BulkReceivePage() {
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    visitsApi.getAll().then(r => setVisits(r.data.filter((v: any) => v.isActive)))
+    visitsApi.getAll().then(r => {
+      const activeVisits = getActiveVisits(r.data)
+      setVisits(activeVisits)
+
+      const latestVisit = getLatestActiveVisit(r.data)
+      if (latestVisit) {
+        setSelectedVisitId(latestVisit.id.toString())
+      }
+    })
     inchargesApi.getAll().then(r => setIncharges(r.data.filter((i: any) => i.isActive)))
     inventoryApi.getSets().then(r => setAllSets(r.data))
     inventoryApi.getChargers().then(r => setAllChargers(r.data))

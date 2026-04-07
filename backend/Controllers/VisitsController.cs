@@ -18,6 +18,7 @@ public class VisitsController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var visits = await _db.Visits.OrderByDescending(v => v.VisitDate)
+            .OrderByDescending(v => v.CreatedAt)
             .Select(v => new VisitDto(v.Id, v.Name, v.Location, v.VisitDate, v.Remarks, v.IsActive, v.CreatedAt))
             .ToListAsync();
         return Ok(visits);
