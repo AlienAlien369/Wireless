@@ -93,59 +93,75 @@ public class IssueService
         return await GetIssueByIdAsync(issue.Id);
     }
 
-    private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
+private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
+{
+    try
     {
-        try
+        var incharge = await _db.Incharges.FindAsync(dto.InchargeId);
+        var visit = await _db.Visits.FindAsync(dto.VisitId);
+        
+        if (incharge == null || visit == null || string.IsNullOrEmpty(incharge.MobileNumber))
         {
-            var incharge = await _db.Incharges.FindAsync(dto.InchargeId);
-            var visit = await _db.Visits.FindAsync(dto.VisitId);
-            
-            if (incharge == null || visit == null || string.IsNullOrEmpty(incharge.MobileNumber))
-            {
-                _logger.LogWarning("Cannot send SMS: Incharge or Visit not found, or no mobile number");
-                return;
-            }
-
-            var setNumbers = dto.Items
-                .Where(i => i.ItemType == "WirelessSet" && i.WirelessSetId.HasValue)
-                .Select(i => _db.WirelessSets.Find(i.WirelessSetId)?.ItemNumber ?? "")
-                .Where(n => !string.IsNullOrEmpty(n))
-                .ToList();
-
-            var setsText = setNumbers.Any() 
-                ? string.Join(", ", setNumbers) 
-                : $"{dto.GroupSetCount} sets";
-
-            var msg = $"RSSB Wireless Team:\n" +
-                      $"Wireless Set(s) {setsText} has been issued to you for {visit.Name}.\n" +
-                      $"Please return after seva.";
-
-            var (success, err) = await _sms.SendSmsAsync(incharge.MobileNumber, msg);
-
-            var log = new SmsLog
-            {
-                IssueId = issue.Id,
-                MobileNumber = incharge.MobileNumber,
-                Message = msg,
-                Status = success ? "Sent" : "Failed",
-                ErrorMessage = err
-            };
-            
-            _db.SmsLogs.Add(log);
-            await _db.SaveChangesAsync();
-
-            if (!success)
-            {
-                _logger.LogError("Failed to send SMS to {MobileNumber}: {Error}", 
-                    incharge.MobileNumber, err);
-            }
+            _logger.LogWarning("Cannot send SMS: Incharge or Visit not found, or no mobile number");
+            return;
         }
-        catch (Exception ex)
+
+        var setNumbers = dto.Items
+            .Where(i => i.ItemType == "WirelessSet" && i.WirelessSetId.HasValue)
+            .Select(i => _db.WirelessSets.Find(i.WirelessSetId)?.ItemNumber ?? "")
+            .Where(n => !string.IsNullOrEmpty(n))
+            .ToList();
+
+        var setsText = setNumbers.Any() 
+            ? string.Join(", ", setNumbers) 
+            : $"{dto.GroupSetCount} sets";
+
+        var msg = $"RSSB Wireless Team:\n" +
+                  $"Wireless Set(s) {setsText} has been issued to you for {visit.Name}.\n" +
+                  $"Please return after seva.";
+
+        _logger.LogInformation("Attempting to send SMS to {MobileNumber}", incharge.MobileNumber);
+        
+        var (success, err) = await _sms.SendSmsAsync(incharge.MobileNumber, msg);
+
+        _logger.LogInformation("SMS Result for {MobileNumber}: Success={Success}, Error={Error}", 
+            incharge.MobileNumber, success, err ?? "null");
+
+        var log = new SmsLog
         {
-            _logger.LogError(ex, "Error in SendIssueSmsAsync");
+            IssueId = issue.Id,
+            MobileNumber = incharge.MobileNumber,
+            Message = msg,
+            Status = success ? "Sent" : "Failed",
+            ErrorMessage = err
+        };
+        
+        _db.SmsLogs.Add(log);
+        await _db.SaveChangesAsync();
+
+        if (!success)
+        {
+            _logger.LogError("Failed to send SMS to {MobileNumber}: {Error}", 
+                incharge.MobileNumber, err);
         }
     }
-
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error in SendIssueSmsAsync");
+        
+        // Still log the error to database
+        var errorLog = new SmsLog
+        {
+            IssueId = issue.Id,
+            MobileNumber = "unknown",
+            Message = "SMS sending failed",
+            Status = "Failed",
+            ErrorMessage = ex.Message
+        };
+        _db.SmsLogs.Add(errorLog);
+        await _db.SaveChangesAsync();
+    }
+}
     // ... rest of your existing methods remain unchanged ...
     public async Task<IssueResponseDto> GetIssueByIdAsync(int id)
     {
