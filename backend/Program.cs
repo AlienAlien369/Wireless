@@ -58,6 +58,8 @@ builder.Services.AddCors(opt =>
 });
 
 // ─── Services ─────────────────────────────────────────────────────────────────
+builder.Services.AddHttpClient<SmsHelper>();
+builder.Services.AddScoped<SmsHelper>();
 builder.Services.AddScoped<IssueService>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddSingleton<JwtHelper>();
