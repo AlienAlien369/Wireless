@@ -117,6 +117,9 @@ public class IssueItem
     public int? KitId { get; set; }
     public Kit? Kit { get; set; }
 
+    public int? AssetId { get; set; }
+    public Asset? Asset { get; set; }
+
     public bool IsReturned { get; set; } = false;
     public DateTime? ReturnedAt { get; set; }
     public string? ReturnRemarks { get; set; }

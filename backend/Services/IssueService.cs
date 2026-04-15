@@ -79,6 +79,12 @@ public class IssueService
                 var kit = await _db.Kits.FindAsync(item.KitId);
                 if (kit != null) kit.Status = "Issued";
             }
+            else if (item.AssetId.HasValue)
+            {
+                ii.AssetId = item.AssetId;
+                var a = await _db.Assets.FindAsync(item.AssetId);
+                if (a != null) a.Status = "Issued";
+            }
 
             _db.IssueItems.Add(ii);
         }
@@ -172,6 +178,7 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             .Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
             .Include(i => i.Items).ThenInclude(ii => ii.Kit)
+            .Include(i => i.Items).ThenInclude(ii => ii.Asset).ThenInclude(a => a!.AssetType)
             .Include(i => i.Photos)
             .Include(i => i.SmsLogs)
             .FirstOrDefaultAsync(i => i.Id == id)
@@ -187,6 +194,7 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             .Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
             .Include(i => i.Items).ThenInclude(ii => ii.Kit)
+            .Include(i => i.Items).ThenInclude(ii => ii.Asset).ThenInclude(a => a!.AssetType)
             .Include(i => i.Photos)
             .Include(i => i.SmsLogs)
             .Where(i => i.VisitId == visitId)
@@ -222,6 +230,11 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             {
                 var kit = await _db.Kits.FindAsync(item.KitId);
                 if (kit != null) kit.Status = "Available";
+            }
+            if (item.AssetId.HasValue)
+            {
+                var a = await _db.Assets.FindAsync(item.AssetId);
+                if (a != null) a.Status = "Available";
             }
         }
 
@@ -261,8 +274,9 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             WirelessSetId = ii.WirelessSetId,
             ChargerId = ii.ChargerId,
             KitId = ii.KitId,
-            ItemNumber = ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber,
-            Brand = ii.WirelessSet?.Brand ?? ii.Charger?.Brand,
+            AssetId = ii.AssetId,
+            ItemNumber = ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber ?? ii.Asset?.ItemNumber ?? ii.Asset?.AssetType?.Name,
+            Brand = ii.WirelessSet?.Brand ?? ii.Charger?.Brand ?? ii.Asset?.Brand,
             IsReturned = ii.IsReturned,
             ReturnedAt = ii.ReturnedAt
         }).ToList(),

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RSSBWireless.API.Data;
@@ -11,9 +12,11 @@ using RSSBWireless.API.Data;
 namespace RSSBWireless.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260415111620_AddTenancyAndMenu")]
+    partial class AddTenancyAndMenu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,38 +157,6 @@ namespace RSSBWireless.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RSSBWireless.API.Models.AppRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Audience")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("AppRoles");
-                });
-
             modelBuilder.Entity("RSSBWireless.API.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -275,89 +246,6 @@ namespace RSSBWireless.API.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AssetTypeId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("text");
-
-                    b.Property<int>("CenterId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ItemNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetTypeId");
-
-                    b.HasIndex("Status");
-
-                    b.HasIndex("CenterId", "AssetTypeId", "ItemNumber")
-                        .IsUnique();
-
-                    b.ToTable("Assets");
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.AssetType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CenterId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("character varying(120)");
-
-                    b.Property<string>("TrackingMode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CenterId", "Code")
-                        .IsUnique();
-
-                    b.ToTable("AssetTypes");
                 });
 
             modelBuilder.Entity("RSSBWireless.API.Models.Breakage", b =>
@@ -615,9 +503,6 @@ namespace RSSBWireless.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AssetId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("ChargerId")
                         .HasColumnType("integer");
 
@@ -644,8 +529,6 @@ namespace RSSBWireless.API.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
 
                     b.HasIndex("ChargerId");
 
@@ -773,52 +656,6 @@ namespace RSSBWireless.API.Migrations
                         .IsUnique();
 
                     b.ToTable("MenuPagePermissions");
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.PasswordResetRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("OtpHash")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("OtpSalt")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("SentToEmail")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("SentToPhone")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("UsedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedAt");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PasswordResetRequests");
                 });
 
             modelBuilder.Entity("RSSBWireless.API.Models.Photo", b =>
@@ -1022,36 +859,6 @@ namespace RSSBWireless.API.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("RSSBWireless.API.Models.Asset", b =>
-                {
-                    b.HasOne("RSSBWireless.API.Models.AssetType", "AssetType")
-                        .WithMany("Assets")
-                        .HasForeignKey("AssetTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RSSBWireless.API.Models.Center", "Center")
-                        .WithMany()
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssetType");
-
-                    b.Navigation("Center");
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.AssetType", b =>
-                {
-                    b.HasOne("RSSBWireless.API.Models.Center", "Center")
-                        .WithMany()
-                        .HasForeignKey("CenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Center");
-                });
-
             modelBuilder.Entity("RSSBWireless.API.Models.Breakage", b =>
                 {
                     b.HasOne("RSSBWireless.API.Models.Visit", "Visit")
@@ -1107,10 +914,6 @@ namespace RSSBWireless.API.Migrations
 
             modelBuilder.Entity("RSSBWireless.API.Models.IssueItem", b =>
                 {
-                    b.HasOne("RSSBWireless.API.Models.Asset", "Asset")
-                        .WithMany("IssueItems")
-                        .HasForeignKey("AssetId");
-
                     b.HasOne("RSSBWireless.API.Models.Charger", "Charger")
                         .WithMany("IssueItems")
                         .HasForeignKey("ChargerId");
@@ -1128,8 +931,6 @@ namespace RSSBWireless.API.Migrations
                     b.HasOne("RSSBWireless.API.Models.WirelessSet", "WirelessSet")
                         .WithMany("IssueItems")
                         .HasForeignKey("WirelessSetId");
-
-                    b.Navigation("Asset");
 
                     b.Navigation("Charger");
 
@@ -1165,17 +966,6 @@ namespace RSSBWireless.API.Migrations
                     b.Navigation("MenuPage");
                 });
 
-            modelBuilder.Entity("RSSBWireless.API.Models.PasswordResetRequest", b =>
-                {
-                    b.HasOne("RSSBWireless.API.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RSSBWireless.API.Models.Photo", b =>
                 {
                     b.HasOne("RSSBWireless.API.Models.Issue", "Issue")
@@ -1196,16 +986,6 @@ namespace RSSBWireless.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Issue");
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.Asset", b =>
-                {
-                    b.Navigation("IssueItems");
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.AssetType", b =>
-                {
-                    b.Navigation("Assets");
                 });
 
             modelBuilder.Entity("RSSBWireless.API.Models.Center", b =>

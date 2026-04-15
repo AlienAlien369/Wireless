@@ -1,0 +1,232 @@
+import { useEffect, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
+import AdminLayout from '../../components/admin/AdminLayout'
+import SearchDropdown from '../../components/SearchDropdown'
+import { assetsApi, inchargesApi, issuesApi, tenantsApi, visitsApi } from '../../services/api'
+import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
+import { Plus, X } from 'lucide-react'
+
+type Center = { id: number; name: string; isActive: boolean }
+type Visit = any
+type Incharge = any
+type AssetType = { id: number; centerId: number; code: string; name: string; trackingMode: string; isActive: boolean }
+type Asset = { id: number; assetTypeId: number; assetTypeCode: string; assetTypeName: string; itemNumber: string | null; brand: string | null; status: string; remarks: string | null }
+
+export default function IssueAssetsPage() {
+  const [centers, setCenters] = useState<Center[]>([])
+  const [centerId, setCenterId] = useState<number | null>(null)
+  const [visits, setVisits] = useState<Visit[]>([])
+  const [visitId, setVisitId] = useState<string>('')
+  const [incharges, setIncharges] = useState<Incharge[]>([])
+  const [inchargeId, setInchargeId] = useState<string>('')
+
+  const [types, setTypes] = useState<AssetType[]>([])
+  const [typeId, setTypeId] = useState<number | null>(null)
+  const [assets, setAssets] = useState<Asset[]>([])
+  const [selected, setSelected] = useState<Asset[]>([])
+  const [isGroupIssue, setIsGroupIssue] = useState(false)
+  const [groupName, setGroupName] = useState('')
+  const [groupCount, setGroupCount] = useState<number>(0)
+  const [remarks, setRemarks] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    Promise.all([
+      tenantsApi.getCenters(),
+      visitsApi.getAll(),
+      inchargesApi.getAll(),
+    ]).then(([c, v, i]) => {
+      const cs = (c.data || []).filter((x: any) => x.isActive)
+      setCenters(cs)
+      const stored = JSON.parse(localStorage.getItem('user') || 'null')
+      const preferred = stored?.centerId
+      setCenterId(preferred || cs[0]?.id || null)
+
+      const activeVisits = getActiveVisits(v.data)
+      setVisits(activeVisits)
+      const latest = getLatestActiveVisit(v.data)
+      if (latest) setVisitId(String(latest.id))
+
+      setIncharges((i.data || []).filter((x: any) => x.isActive))
+    }).catch(() => toast.error('Failed to load data'))
+  }, [])
+
+  useEffect(() => {
+    if (!centerId) return
+    assetsApi.getTypes(centerId).then((res) => {
+      const list = (res.data || []).filter((x: any) => x.isActive)
+      setTypes(list)
+      if (!typeId && list.length) setTypeId(list[0].id)
+    }).catch(() => setTypes([]))
+  }, [centerId])
+
+  useEffect(() => {
+    if (!centerId || !typeId) { setAssets([]); setSelected([]); return }
+    assetsApi.getAssets(centerId, typeId, 'Available').then((res) => {
+      setAssets(res.data || [])
+      setSelected([])
+    }).catch(() => setAssets([]))
+  }, [centerId, typeId])
+
+  const currentType = useMemo(() => types.find(t => t.id === typeId) || null, [types, typeId])
+
+  const toggle = (a: Asset) => {
+    if (selected.find(x => x.id === a.id)) setSelected(prev => prev.filter(x => x.id !== a.id))
+    else setSelected(prev => [...prev, a])
+  }
+
+  const submit = async () => {
+    if (!visitId || !inchargeId) { toast.error('Select visit and incharge'); return }
+    if (!currentType) { toast.error('Select asset type'); return }
+    if (!isGroupIssue && selected.length === 0) { toast.error('Select at least one asset'); return }
+
+    setSubmitting(true)
+    try {
+      const items = selected.map((a) => ({
+        itemType: currentType.code,
+        assetId: a.id,
+      }))
+
+      const payload: any = {
+        visitId: parseInt(visitId),
+        inchargeId: parseInt(inchargeId),
+        isGroupIssue,
+        groupName: isGroupIssue ? groupName : undefined,
+        groupSetCount: isGroupIssue ? groupCount : undefined,
+        remarks,
+        sendSms: true,
+        items,
+      }
+
+      await issuesApi.create(payload)
+      toast.success('Assets issued successfully')
+      setSelected([])
+      setIsGroupIssue(false)
+      setGroupName('')
+      setGroupCount(0)
+      setRemarks('')
+      if (centerId && typeId) {
+        const res = await assetsApi.getAssets(centerId, typeId, 'Available')
+        setAssets(res.data || [])
+      }
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to issue assets')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <AdminLayout title="Issue Assets">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-4">
+          <div className="card space-y-4">
+            <h3 className="font-semibold text-gray-700 border-b pb-2">Issue Details</h3>
+
+            <div>
+              <label className="label">Center</label>
+              <select className="input" value={centerId ?? ''} onChange={(e) => setCenterId(e.target.value ? Number(e.target.value) : null)}>
+                <option value="">Select center...</option>
+                {centers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label className="label">Visit *</label>
+              <select className="input" value={visitId} onChange={(e) => setVisitId(e.target.value)}>
+                <option value="">— Select Visit —</option>
+                {visits.map((v: any) => <option key={v.id} value={v.id}>{v.name}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label className="label">Incharge *</label>
+              <SearchDropdown
+                items={incharges}
+                value={inchargeId}
+                onChange={(val) => setInchargeId(String(val))}
+                getLabel={(i) => `${i.name} (${i.badgeNumber})`}
+                getValue={(i) => i.id}
+                placeholder="Search incharge by name or badge..."
+                className="input"
+              />
+            </div>
+
+            <div>
+              <label className="label">Asset Type *</label>
+              <select className="input" value={typeId ?? ''} onChange={(e) => setTypeId(e.target.value ? Number(e.target.value) : null)}>
+                <option value="">Select type...</option>
+                {types.map(t => <option key={t.id} value={t.id}>{t.name} ({t.trackingMode})</option>)}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input type="checkbox" checked={isGroupIssue} onChange={(e) => setIsGroupIssue(e.target.checked)} className="w-4 h-4" />
+              <label className="text-sm font-medium text-gray-700">Group Issue</label>
+            </div>
+
+            {isGroupIssue && (
+              <div className="grid grid-cols-2 gap-3 bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                <div>
+                  <label className="label">Group Name</label>
+                  <input className="input" value={groupName} onChange={(e) => setGroupName(e.target.value)} placeholder="e.g. Gate Team" />
+                </div>
+                <div>
+                  <label className="label">Count</label>
+                  <input className="input" type="number" value={groupCount || ''} onChange={(e) => setGroupCount(parseInt(e.target.value || '0'))} placeholder="10" />
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="label">Remarks</label>
+              <textarea className="input h-16 resize-none" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Optional remarks..." />
+            </div>
+
+            <button disabled={submitting} onClick={submit} className="btn-primary w-full">
+              {submitting ? 'Issuing...' : 'Issue Assets'}
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="card">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-gray-700">Available Items</h3>
+              <div className="text-sm text-gray-500">Selected: {selected.length}</div>
+            </div>
+
+            {assets.length === 0 ? (
+              <div className="text-sm text-gray-500">No available assets found for this type.</div>
+            ) : (
+              <div className="space-y-2">
+                {assets.map(a => {
+                  const active = !!selected.find(x => x.id === a.id)
+                  return (
+                    <button key={a.id} type="button" onClick={() => toggle(a)}
+                      className={`w-full text-left p-3 rounded-lg border transition-colors ${active ? 'border-primary bg-primary/5' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="font-medium text-gray-800 truncate">{a.itemNumber || a.assetTypeName}</div>
+                          <div className="text-xs text-gray-500 truncate">{a.brand || a.assetTypeCode}</div>
+                        </div>
+                        {active && <X size={16} className="text-primary" />}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+
+            <div className="pt-4">
+              <a href="/admin/assets" className="btn-secondary w-full inline-flex items-center justify-center gap-2">
+                <Plus size={16} /> Add more assets
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AdminLayout>
+  )
+}
+

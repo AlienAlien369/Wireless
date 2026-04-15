@@ -6,6 +6,10 @@ interface User {
   role: string
   fullName: string
   token: string
+  centerId?: number | null
+  centerName?: string | null
+  departmentId?: number | null
+  departmentName?: string | null
 }
 
 export function useAuthState() {
@@ -21,12 +25,7 @@ export function useAuthState() {
   const login = async (username: string, password: string) => {
     const res = await authApi.login(username, password)
     const data = res.data
-    const u: User = {
-      username: data.username,
-      role: data.role,
-      fullName: data.fullName,
-      token: data.token
-    }
+    const u: User = data
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(u))
     setUser(u)

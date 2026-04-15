@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { Wifi, Lock, User } from 'lucide-react'
 import { authApi } from '../services/api'
+import Link from 'next/link'
 
 interface LoginForm {
   username: string
@@ -80,6 +81,12 @@ export default function LoginPage() {
               className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-light transition-colors disabled:opacity-50">
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
+
+            <div className="text-center">
+              <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+                Forgot password?
+              </Link>
+            </div>
           </form>
 
           <p className="text-center text-gray-500 text-xs mt-6">

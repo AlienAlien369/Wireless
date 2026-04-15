@@ -19,7 +19,11 @@ public class JwtHelper
             new Claim(ClaimTypes.Name, user.UserName ?? ""),
             new Claim(ClaimTypes.Role, user.Role),
             new Claim("FullName", user.FullName),
-            new Claim("BadgeNumber", user.BadgeNumber ?? "")
+            new Claim("BadgeNumber", user.BadgeNumber ?? ""),
+            new Claim("CenterId", user.CenterId?.ToString() ?? ""),
+            new Claim("CenterName", user.Center?.Name ?? ""),
+            new Claim("DepartmentId", user.DepartmentId?.ToString() ?? ""),
+            new Claim("DepartmentName", user.Department?.Name ?? "")
         };
         var token = new JwtSecurityToken(
             issuer: _config["Jwt:Issuer"],

@@ -6,18 +6,25 @@ import {
   ArrowDownToLine, ArrowUpFromLine, AlertTriangle,
   FileBarChart, LogOut, Menu, X, Wifi
 } from 'lucide-react'
+import { Shield } from 'lucide-react'
+import { Boxes, UserCog } from 'lucide-react'
+import { menuApi } from '../../services/api'
 
-const navItems = [
+const fallbackNavItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/visits', label: 'Visits', icon: MapPin },
   { href: '/admin/inventory', label: 'Inventory', icon: Package },
   { href: '/admin/incharges', label: 'Incharges', icon: Users },
   { href: '/admin/issue', label: 'Issue Wireless', icon: ArrowDownToLine },
+  { href: '/admin/issue-assets', label: 'Issue Assets', icon: ArrowDownToLine },
   { href: '/admin/bulk-issue', label: 'Bulk Issue', icon: ArrowDownToLine },
   { href: '/admin/receive', label: 'Receive Wireless', icon: ArrowUpFromLine },
   { href: '/admin/bulk-receive', label: 'Bulk Receive', icon: ArrowUpFromLine },
   { href: '/admin/breakage', label: 'Breakage', icon: AlertTriangle },
   { href: '/admin/reports', label: 'Reports', icon: FileBarChart },
+  { href: '/admin/assets', label: 'Assets', icon: Boxes },
+  { href: '/admin/users', label: 'Users', icon: UserCog },
+  { href: '/admin/access', label: 'Access Control', icon: Shield },
 ]
 
 interface Props {
@@ -29,6 +36,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
+  const [navItems, setNavItems] = useState(fallbackNavItems)
 
   useEffect(() => {
     const stored = localStorage.getItem('user')
@@ -36,6 +44,33 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
     const u = JSON.parse(stored)
     if (u.role !== 'Admin') { router.push('/incharge'); return }
     setUser(u)
+
+    const iconMap: Record<string, any> = {
+      LayoutDashboard,
+      MapPin,
+      Package,
+      Users,
+      ArrowDownToLine,
+      ArrowUpFromLine,
+      AlertTriangle,
+      FileBarChart,
+      Shield,
+      Boxes,
+      UserCog,
+      Radio,
+      Wifi,
+    }
+
+    menuApi.getMy()
+      .then((r) => {
+        const items = (r.data || []).map((x: any) => ({
+          href: x.path,
+          label: x.label,
+          icon: iconMap[x.icon] || LayoutDashboard,
+        }))
+        setNavItems(items.length > 0 ? items : fallbackNavItems)
+      })
+      .catch(() => setNavItems(fallbackNavItems))
   }, [])
 
   const logout = () => {
@@ -105,7 +140,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
           <h1 className="text-lg font-semibold text-gray-800">{title}</h1>
           <div className="ml-auto">
             <span className="text-sm text-gray-500">
-              Bhatti Center · Wireless Management
+              {(user?.centerName || 'Bhatti Center')} · Wireless Management
             </span>
           </div>
         </header>

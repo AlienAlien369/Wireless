@@ -2,8 +2,71 @@ namespace RSSBWireless.API.DTOs;
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 public record LoginDto(string Username, string Password);
-public record RegisterDto(string Username, string Password, string FullName, string Role, string? BadgeNumber);
-public record AuthResponseDto(string Token, string Username, string Role, string FullName);
+public record RegisterDto(string Username, string Password, string FullName, string Role, string? BadgeNumber, int? CenterId, int? DepartmentId);
+public record AuthResponseDto(
+    string Token,
+    string Username,
+    string Role,
+    string FullName,
+    int? CenterId,
+    string? CenterName,
+    int? DepartmentId,
+    string? DepartmentName
+);
+
+// â”€â”€â”€ Tenancy + Menu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+public record CenterCreateDto(string Name);
+public record CenterDto(int Id, string Name, bool IsActive);
+
+public record DepartmentCreateDto(int CenterId, string Name);
+public record DepartmentDto(int Id, int CenterId, string Name, bool IsActive);
+
+public record MenuPageDto(int Id, string Code, string Label, string Path, string Icon, string Audience, int SortOrder, bool IsActive);
+public record MenuAssignmentUpdateDto(int CenterId, int? DepartmentId, string Role, List<int> MenuPageIds);
+public record MenuMyItemDto(string Code, string Label, string Path, string Icon, int SortOrder);
+
+public record AppRoleCreateDto(string Name, string Audience);
+public record AppRoleDto(int Id, string Name, string Audience, bool IsActive);
+
+public record AdminUserCreateDto(
+    string Username,
+    string Password,
+    string FullName,
+    string Role,
+    int? CenterId,
+    int? DepartmentId,
+    string? BadgeNumber,
+    string? Email,
+    string? PhoneNumber,
+    bool IsActive
+);
+
+public record AdminUserDto(
+    string Id,
+    string Username,
+    string FullName,
+    string Role,
+    int? CenterId,
+    string? CenterName,
+    int? DepartmentId,
+    string? DepartmentName,
+    string? BadgeNumber,
+    string? Email,
+    string? PhoneNumber,
+    bool IsActive,
+    DateTime CreatedAt
+);
+
+public record AdminSetPasswordDto(string NewPassword);
+
+public record ForgotPasswordDto(string Identifier);
+public record ResetPasswordDto(string Identifier, string Otp, string NewPassword);
+
+public record AssetTypeCreateDto(int CenterId, string Code, string Name, string TrackingMode);
+public record AssetTypeDto(int Id, int CenterId, string Code, string Name, string TrackingMode, bool IsActive);
+public record AssetCreateDto(int CenterId, int AssetTypeId, string? ItemNumber, string? Brand, string? Remarks);
+public record AssetUpdateDto(string Status, string? Remarks);
+public record AssetDto(int Id, int CenterId, int AssetTypeId, string AssetTypeCode, string AssetTypeName, string? ItemNumber, string? Brand, string Status, string? Remarks);
 
 // ─── Visit ────────────────────────────────────────────────────────────────────
 public record VisitCreateDto(string Name, string Location, DateTime VisitDate, string? Remarks);
@@ -48,6 +111,7 @@ public class IssueItemDto
     public int? WirelessSetId { get; set; }
     public int? ChargerId { get; set; }
     public int? KitId { get; set; }
+    public int? AssetId { get; set; }
 }
 
 public class CollectorCreateDto
@@ -87,6 +151,7 @@ public class IssueItemResponseDto
     public int? WirelessSetId { get; set; }
     public int? ChargerId { get; set; }
     public int? KitId { get; set; }
+    public int? AssetId { get; set; }
     public string? ItemNumber { get; set; }
     public string? Brand { get; set; }
     public bool IsReturned { get; set; }

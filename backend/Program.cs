@@ -60,6 +60,7 @@ builder.Services.AddCors(opt =>
 // ─── Services ─────────────────────────────────────────────────────────────────
 builder.Services.AddHttpClient<SmsHelper>();
 builder.Services.AddScoped<SmsHelper>();
+builder.Services.AddScoped<EmailHelper>();
 builder.Services.AddScoped<IssueService>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddSingleton<JwtHelper>();
@@ -93,16 +94,101 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 
     var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    if (!userMgr.Users.Any())
+
+    // Seed default center/department for multi-tenancy.
+    var center = await db.Centers.OrderBy(x => x.Id).FirstOrDefaultAsync();
+    if (center == null)
     {
-        var admin = new ApplicationUser
+        center = new Center { Name = "Bhatti Center" };
+        db.Centers.Add(center);
+        await db.SaveChangesAsync();
+    }
+
+    var dept = await db.Departments.OrderBy(x => x.Id).FirstOrDefaultAsync(x => x.CenterId == center.Id);
+    if (dept == null)
+    {
+        dept = new Department { CenterId = center.Id, Name = "General" };
+        db.Departments.Add(dept);
+        await db.SaveChangesAsync();
+    }
+
+    // Seed roles (UI-managed).
+    if (!await db.AppRoles.AnyAsync())
+    {
+        db.AppRoles.AddRange(
+            new AppRole { Name = "Admin", Audience = "Admin" },
+            new AppRole { Name = "Incharge", Audience = "Incharge" }
+        );
+        await db.SaveChangesAsync();
+    }
+
+    // Seed/ensure menu pages exist (used for dynamic nav + access assignment UI).
+    var requiredPages = new List<MenuPage>
+    {
+        new() { Code = "admin.dashboard", Label = "Dashboard", Path = "/admin", Icon = "LayoutDashboard", Audience = "Admin", SortOrder = 10 },
+        new() { Code = "admin.visits", Label = "Visits", Path = "/admin/visits", Icon = "MapPin", Audience = "Admin", SortOrder = 20 },
+        new() { Code = "admin.inventory", Label = "Inventory", Path = "/admin/inventory", Icon = "Package", Audience = "Admin", SortOrder = 30 },
+        new() { Code = "admin.incharges", Label = "Incharges", Path = "/admin/incharges", Icon = "Users", Audience = "Admin", SortOrder = 40 },
+        new() { Code = "admin.issue", Label = "Issue Wireless", Path = "/admin/issue", Icon = "ArrowDownToLine", Audience = "Admin", SortOrder = 50 },
+        new() { Code = "admin.bulkIssue", Label = "Bulk Issue", Path = "/admin/bulk-issue", Icon = "ArrowDownToLine", Audience = "Admin", SortOrder = 60 },
+        new() { Code = "admin.receive", Label = "Receive Wireless", Path = "/admin/receive", Icon = "ArrowUpFromLine", Audience = "Admin", SortOrder = 70 },
+        new() { Code = "admin.bulkReceive", Label = "Bulk Receive", Path = "/admin/bulk-receive", Icon = "ArrowUpFromLine", Audience = "Admin", SortOrder = 80 },
+        new() { Code = "admin.breakage", Label = "Breakage", Path = "/admin/breakage", Icon = "AlertTriangle", Audience = "Admin", SortOrder = 90 },
+        new() { Code = "admin.reports", Label = "Reports", Path = "/admin/reports", Icon = "FileBarChart", Audience = "Admin", SortOrder = 100 },
+        new() { Code = "admin.assets", Label = "Assets", Path = "/admin/assets", Icon = "Boxes", Audience = "Admin", SortOrder = 105 },
+        new() { Code = "admin.users", Label = "Users", Path = "/admin/users", Icon = "UserCog", Audience = "Admin", SortOrder = 106 },
+        new() { Code = "admin.access", Label = "Access Control", Path = "/admin/access", Icon = "Shield", Audience = "Admin", SortOrder = 110 },
+        new() { Code = "admin.issueAssets", Label = "Issue Assets", Path = "/admin/issue-assets", Icon = "ArrowDownToLine", Audience = "Admin", SortOrder = 120 },
+    };
+
+    foreach (var p in requiredPages)
+    {
+        var exists = await db.MenuPages.AnyAsync(x => x.Code == p.Code);
+        if (!exists) db.MenuPages.Add(p);
+    }
+    await db.SaveChangesAsync();
+
+    // Default: Admin gets all admin pages for this center (all departments).
+    if (!await db.MenuPagePermissions.AnyAsync())
+    {
+        var pages = await db.MenuPages.Where(x => x.Audience == "Admin" && x.IsActive).ToListAsync();
+        db.MenuPagePermissions.AddRange(pages.Select(p => new MenuPagePermission
+        {
+            CenterId = center.Id,
+            DepartmentId = null,
+            Role = "Admin",
+            MenuPageId = p.Id
+        }));
+        await db.SaveChangesAsync();
+    }
+
+    // Seed a default asset type for non-wireless materials.
+    if (!await db.AssetTypes.AnyAsync(x => x.CenterId == center.Id))
+    {
+        db.AssetTypes.Add(new AssetType { CenterId = center.Id, Code = "wheelchair", Name = "Wheelchair", TrackingMode = "Individual" });
+        await db.SaveChangesAsync();
+    }
+
+    // Seed default admin user.
+    var adminUser = await userMgr.FindByNameAsync("admin");
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser
         {
             UserName = "admin",
             Email = "admin@rssb.local",
             FullName = "System Admin",
-            Role = "Admin"
+            Role = "Admin",
+            CenterId = center.Id,
+            DepartmentId = dept.Id
         };
-        await userMgr.CreateAsync(admin, "Admin@123");
+        await userMgr.CreateAsync(adminUser, "Admin@123");
+    }
+    else if (adminUser.CenterId == null || adminUser.DepartmentId == null)
+    {
+        adminUser.CenterId ??= center.Id;
+        adminUser.DepartmentId ??= dept.Id;
+        await userMgr.UpdateAsync(adminUser);
     }
 }
 

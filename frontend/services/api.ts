@@ -30,6 +30,10 @@ api.interceptors.response.use(
 export const authApi = {
   login: (username: string, password: string) =>
     api.post('/auth/login', { username, password }),
+  forgotPassword: (identifier: string) =>
+    api.post('/auth/forgot-password', { identifier }),
+  resetPassword: (identifier: string, otp: string, newPassword: string) =>
+    api.post('/auth/reset-password', { identifier, otp, newPassword }),
 }
 
 // ─── Visits ──────────────────────────────────────────────────────────────────
@@ -103,6 +107,45 @@ export const reportsApi = {
     api.get('/reports/inventory/excel', { responseType: 'blob' }),
   breakagesPdf: (visitId?: number) =>
     api.get('/reports/breakages/pdf', { params: { visitId }, responseType: 'blob' }),
+}
+
+// â”€â”€â”€ Tenancy â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export const tenantsApi = {
+  getCenters: () => api.get('/tenants/centers'),
+  createCenter: (name: string) => api.post('/tenants/centers', { name }),
+  getDepartments: (centerId?: number) => api.get('/tenants/departments', { params: { centerId } }),
+  createDepartment: (centerId: number, name: string) => api.post('/tenants/departments', { centerId, name }),
+}
+
+// â”€â”€â”€ Menu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export const menuApi = {
+  getMy: () => api.get('/menu/my'),
+  getPages: () => api.get('/menu/pages'),
+  getAssignment: (centerId: number, departmentId: number | null, role: string) =>
+    api.get('/menu/assignments', { params: { centerId, departmentId, role } }),
+  upsertAssignment: (data: { centerId: number; departmentId: number | null; role: string; menuPageIds: number[] }) =>
+    api.put('/menu/assignments', data),
+}
+
+export const rolesApi = {
+  getAll: () => api.get('/roles'),
+  create: (name: string, audience: 'Admin' | 'Incharge') => api.post('/roles', { name, audience }),
+}
+
+export const usersApi = {
+  getAll: (params?: { centerId?: number; departmentId?: number; role?: string }) => api.get('/users', { params }),
+  create: (data: any) => api.post('/users', data),
+  update: (id: string, data: any) => api.put(`/users/${id}`, data),
+  setPassword: (id: string, newPassword: string) => api.post(`/users/${id}/set-password`, { newPassword }),
+}
+
+export const assetsApi = {
+  getTypes: (centerId?: number) => api.get('/assets/types', { params: { centerId } }),
+  createType: (data: any) => api.post('/assets/types', data),
+  getAssets: (centerId: number, assetTypeId?: number, status?: string) =>
+    api.get('/assets', { params: { centerId, assetTypeId, status } }),
+  createAsset: (data: any) => api.post('/assets', data),
+  updateAsset: (id: number, data: any) => api.put(`/assets/${id}`, data),
 }
 
 export default api
