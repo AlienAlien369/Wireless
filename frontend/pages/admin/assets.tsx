@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { assetsApi, tenantsApi } from '../../services/api'
-import { Plus, Save, Wrench } from 'lucide-react'
+import { Plus, Save, Wrench, Pencil, Trash2 } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type AssetType = { id: number; centerId: number; code: string; name: string; trackingMode: string; isActive: boolean }
@@ -17,6 +17,8 @@ export default function AssetsPage() {
 
   const [newType, setNewType] = useState({ code: '', name: '', trackingMode: 'Individual' })
   const [newAsset, setNewAsset] = useState({ assetTypeId: 0, itemNumber: '', brand: '', remarks: '' })
+  const [editingTypeId, setEditingTypeId] = useState<number | null>(null)
+  const [editingAssetId, setEditingAssetId] = useState<number | null>(null)
 
   const load = async (cId: number) => {
     const [t, a] = await Promise.all([
@@ -85,11 +87,65 @@ export default function AssetsPage() {
 
   const updateStatus = async (id: number, status: string) => {
     try {
-      await assetsApi.updateAsset(id, { status, remarks: null })
+      await assetsApi.updateAsset(id, { status })
       setAssets((prev) => prev.map(a => a.id === id ? { ...a, status } : a))
       toast.success('Updated')
     } catch {
       toast.error('Failed to update')
+    }
+  }
+
+  const updateType = async (t: AssetType) => {
+    try {
+      await assetsApi.updateType(t.id, {
+        code: t.code,
+        name: t.name,
+        trackingMode: t.trackingMode,
+        isActive: t.isActive,
+      })
+      toast.success('Type updated')
+      setEditingTypeId(null)
+      if (centerId) await load(centerId)
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to update type')
+    }
+  }
+
+  const deleteType = async (t: AssetType) => {
+    if (!confirm(`Delete asset type "${t.name}"?`)) return
+    try {
+      await assetsApi.deleteType(t.id)
+      toast.success('Type deleted')
+      if (centerId) await load(centerId)
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to delete type')
+    }
+  }
+
+  const updateAssetDetails = async (a: Asset) => {
+    try {
+      await assetsApi.updateAsset(a.id, {
+        status: a.status,
+        itemNumber: a.itemNumber,
+        brand: a.brand,
+        remarks: a.remarks,
+      })
+      toast.success('Asset updated')
+      setEditingAssetId(null)
+      if (centerId) await load(centerId)
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to update asset')
+    }
+  }
+
+  const deleteAsset = async (a: Asset) => {
+    if (!confirm(`Delete asset "${a.assetTypeName} ${a.itemNumber || ''}"?`)) return
+    try {
+      await assetsApi.deleteAsset(a.id)
+      toast.success('Asset deleted')
+      if (centerId) await load(centerId)
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to delete asset')
     }
   }
 
@@ -134,9 +190,39 @@ export default function AssetsPage() {
             <div className="space-y-2">
               {types.map(t => (
                 <div key={t.id} className="flex items-center justify-between border border-gray-200 rounded-lg p-3">
-                  <div className="min-w-0">
-                    <div className="font-medium text-gray-800">{t.name}</div>
-                    <div className="text-xs text-gray-500">{t.code} · {t.trackingMode}</div>
+                  <div className="min-w-0 flex-1">
+                    {editingTypeId === t.id ? (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                        <input className="input" value={t.code} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, code: e.target.value } : x))} />
+                        <input className="input" value={t.name} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, name: e.target.value } : x))} />
+                        <select className="input" value={t.trackingMode} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, trackingMode: e.target.value } : x))}>
+                          <option value="Individual">Individual</option>
+                          <option value="Group">Group</option>
+                        </select>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="font-medium text-gray-800">{t.name}</div>
+                        <div className="text-xs text-gray-500">{t.code} · {t.trackingMode}</div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    {editingTypeId === t.id ? (
+                      <>
+                        <button className="btn-primary" onClick={() => updateType(t)}>Save</button>
+                        <button className="btn-secondary" onClick={() => setEditingTypeId(null)}>Cancel</button>
+                      </>
+                    ) : (
+                      <>
+                        <button className="btn-secondary flex items-center gap-2" onClick={() => setEditingTypeId(t.id)}>
+                          <Pencil size={16} /> Edit
+                        </button>
+                        <button className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50" onClick={() => deleteType(t)}>
+                          <Trash2 size={16} /> Delete
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
@@ -175,13 +261,36 @@ export default function AssetsPage() {
                   {visibleAssets.map(a => (
                     <tr key={a.id} className="border-b last:border-b-0">
                       <td className="py-2 pr-3">{a.assetTypeName}</td>
-                      <td className="py-2 pr-3">{a.itemNumber || '-'}</td>
-                      <td className="py-2 pr-3">{a.brand || '-'}</td>
+                      <td className="py-2 pr-3">
+                        {editingAssetId === a.id ? (
+                          <input className="input" value={a.itemNumber || ''} onChange={(e) => setAssets(prev => prev.map(x => x.id === a.id ? { ...x, itemNumber: e.target.value || null } : x))} />
+                        ) : (a.itemNumber || '-')}
+                      </td>
+                      <td className="py-2 pr-3">
+                        {editingAssetId === a.id ? (
+                          <input className="input" value={a.brand || ''} onChange={(e) => setAssets(prev => prev.map(x => x.id === a.id ? { ...x, brand: e.target.value || null } : x))} />
+                        ) : (a.brand || '-')}
+                      </td>
                       <td className="py-2 pr-3">{a.status}</td>
                       <td className="py-2 pr-3">
                         <div className="flex gap-2">
-                          <button className="btn-secondary" onClick={() => updateStatus(a.id, 'Available')}>Available</button>
-                          <button className="btn-secondary" onClick={() => updateStatus(a.id, 'Broken')}>Broken</button>
+                          {editingAssetId === a.id ? (
+                            <>
+                              <button className="btn-primary" onClick={() => updateAssetDetails(a)}>Save</button>
+                              <button className="btn-secondary" onClick={() => setEditingAssetId(null)}>Cancel</button>
+                            </>
+                          ) : (
+                            <>
+                              <button className="btn-secondary" onClick={() => updateStatus(a.id, 'Available')}>Available</button>
+                              <button className="btn-secondary" onClick={() => updateStatus(a.id, 'Broken')}>Broken</button>
+                              <button className="btn-secondary flex items-center gap-2" onClick={() => setEditingAssetId(a.id)}>
+                                <Pencil size={16} /> Edit
+                              </button>
+                              <button className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50" onClick={() => deleteAsset(a)}>
+                                <Trash2 size={16} /> Delete
+                              </button>
+                            </>
+                          )}
                         </div>
                       </td>
                     </tr>

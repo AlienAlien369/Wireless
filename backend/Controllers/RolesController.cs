@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using System;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -40,6 +41,43 @@ public class RolesController : ControllerBase
         _db.AppRoles.Add(role);
         await _db.SaveChangesAsync();
         return Ok(new AppRoleDto(role.Id, role.Name, role.Audience, role.IsActive));
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Update(int id, [FromBody] AppRoleUpdateDto dto)
+    {
+        var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Id == id);
+        if (role == null) return NotFound();
+
+        var name = (dto.Name ?? "").Trim();
+        var audience = (dto.Audience ?? "").Trim();
+        if (string.IsNullOrWhiteSpace(name)) return BadRequest(new { message = "Role name is required" });
+        if (audience != "Admin" && audience != "Incharge") return BadRequest(new { message = "Audience must be Admin or Incharge" });
+        if (await _db.AppRoles.AnyAsync(x => x.Id != id && x.Name == name))
+            return BadRequest(new { message = "Role already exists" });
+
+        role.Name = name;
+        role.Audience = audience;
+        role.IsActive = dto.IsActive;
+        await _db.SaveChangesAsync();
+        return Ok(new AppRoleDto(role.Id, role.Name, role.Audience, role.IsActive));
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Id == id);
+        if (role == null) return NotFound();
+        if (string.Equals(role.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+            return BadRequest(new { message = "Admin role cannot be deleted" });
+
+        var hasUsage = await _db.Users.AnyAsync(x => x.Role == role.Name)
+            || await _db.MenuPagePermissions.AnyAsync(x => x.Role == role.Name);
+        if (hasUsage) return BadRequest(new { message = "Role is in use and cannot be deleted" });
+
+        _db.AppRoles.Remove(role);
+        await _db.SaveChangesAsync();
+        return NoContent();
     }
 }
 

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using System;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -112,7 +113,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] AdminUserCreateDto dto)
+    public async Task<IActionResult> Update(string id, [FromBody] AdminUserUpdateDto dto)
     {
         var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
         if (user == null) return NotFound();
@@ -136,6 +137,20 @@ public class UsersController : ControllerBase
         user.PhoneNumber = string.IsNullOrWhiteSpace(dto.PhoneNumber) ? user.PhoneNumber : dto.PhoneNumber.Trim();
 
         await _userManager.UpdateAsync(user);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null) return NotFound();
+
+        if (string.Equals(user.UserName, "admin", StringComparison.OrdinalIgnoreCase))
+            return BadRequest(new { message = "Default admin user cannot be deleted" });
+
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded) return BadRequest(result.Errors);
         return NoContent();
     }
 

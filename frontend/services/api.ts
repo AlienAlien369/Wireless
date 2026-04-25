@@ -113,8 +113,12 @@ export const reportsApi = {
 export const tenantsApi = {
   getCenters: () => api.get('/tenants/centers'),
   createCenter: (name: string) => api.post('/tenants/centers', { name }),
+  updateCenter: (id: number, data: { name: string; isActive: boolean }) => api.put(`/tenants/centers/${id}`, data),
+  deleteCenter: (id: number) => api.delete(`/tenants/centers/${id}`),
   getDepartments: (centerId?: number) => api.get('/tenants/departments', { params: { centerId } }),
   createDepartment: (centerId: number, name: string) => api.post('/tenants/departments', { centerId, name }),
+  updateDepartment: (id: number, data: { name: string; isActive: boolean }) => api.put(`/tenants/departments/${id}`, data),
+  deleteDepartment: (id: number) => api.delete(`/tenants/departments/${id}`),
 }
 
 // â”€â”€â”€ Menu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -130,22 +134,28 @@ export const menuApi = {
 export const rolesApi = {
   getAll: () => api.get('/roles'),
   create: (name: string, audience: 'Admin' | 'Incharge') => api.post('/roles', { name, audience }),
+  update: (id: number, data: { name: string; audience: 'Admin' | 'Incharge'; isActive: boolean }) => api.put(`/roles/${id}`, data),
+  delete: (id: number) => api.delete(`/roles/${id}`),
 }
 
 export const usersApi = {
   getAll: (params?: { centerId?: number; departmentId?: number; role?: string }) => api.get('/users', { params }),
   create: (data: any) => api.post('/users', data),
   update: (id: string, data: any) => api.put(`/users/${id}`, data),
+  delete: (id: string) => api.delete(`/users/${id}`),
   setPassword: (id: string, newPassword: string) => api.post(`/users/${id}/set-password`, { newPassword }),
 }
 
 export const assetsApi = {
   getTypes: (centerId?: number) => api.get('/assets/types', { params: { centerId } }),
   createType: (data: any) => api.post('/assets/types', data),
+  updateType: (id: number, data: any) => api.put(`/assets/types/${id}`, data),
+  deleteType: (id: number) => api.delete(`/assets/types/${id}`),
   getAssets: (centerId: number, assetTypeId?: number, status?: string) =>
     api.get('/assets', { params: { centerId, assetTypeId, status } }),
   createAsset: (data: any) => api.post('/assets', data),
   updateAsset: (id: number, data: any) => api.put(`/assets/${id}`, data),
+  deleteAsset: (id: number) => api.delete(`/assets/${id}`),
 }
 
 export default api

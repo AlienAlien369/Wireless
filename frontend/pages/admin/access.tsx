@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { menuApi, tenantsApi, rolesApi } from '../../services/api'
-import { Plus, Save, RefreshCw } from 'lucide-react'
+import { Plus, Save, RefreshCw, Pencil, Trash2 } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type Department = { id: number; centerId: number; name: string; isActive: boolean }
@@ -120,6 +120,34 @@ export default function AccessControlPage() {
     }
   }
 
+  const updateCenter = async () => {
+    if (!centerId) return
+    const current = centers.find(c => c.id === centerId)
+    if (!current) return
+    const name = prompt('Edit center name', current.name)
+    if (name == null) return
+    try {
+      await tenantsApi.updateCenter(centerId, { name: name.trim(), isActive: current.isActive })
+      toast.success('Center updated')
+      await loadCenters()
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to update center')
+    }
+  }
+
+  const deleteCenter = async () => {
+    if (!centerId) return
+    if (!confirm('Delete selected center?')) return
+    try {
+      await tenantsApi.deleteCenter(centerId)
+      toast.success('Center deleted')
+      setCenterId(null)
+      await loadCenters()
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to delete center')
+    }
+  }
+
   const createDepartment = async () => {
     if (!centerId) { toast.error('Select a center first'); return }
     const name = newDeptName.trim()
@@ -134,6 +162,34 @@ export default function AccessControlPage() {
     }
   }
 
+  const updateDepartment = async () => {
+    if (!departmentId) { toast.error('Select a department first'); return }
+    const current = departments.find(d => d.id === departmentId)
+    if (!current) return
+    const name = prompt('Edit department name', current.name)
+    if (name == null) return
+    try {
+      await tenantsApi.updateDepartment(departmentId, { name: name.trim(), isActive: current.isActive })
+      toast.success('Department updated')
+      if (centerId) await loadDepartments(centerId)
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to update department')
+    }
+  }
+
+  const deleteDepartment = async () => {
+    if (!departmentId) { toast.error('Select a department first'); return }
+    if (!confirm('Delete selected department?')) return
+    try {
+      await tenantsApi.deleteDepartment(departmentId)
+      toast.success('Department deleted')
+      setDepartmentId(null)
+      if (centerId) await loadDepartments(centerId)
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to delete department')
+    }
+  }
+
   const createRole = async () => {
     const name = newRoleName.trim()
     if (!name) return
@@ -145,6 +201,35 @@ export default function AccessControlPage() {
       setRole(name)
     } catch {
       toast.error('Failed to create role')
+    }
+  }
+
+  const updateRole = async () => {
+    const current = roles.find(r => r.name === role)
+    if (!current) return
+    const name = prompt('Edit role name', current.name)
+    if (name == null) return
+    try {
+      await rolesApi.update(current.id, { name: name.trim(), audience: current.audience as any, isActive: current.isActive })
+      toast.success('Role updated')
+      await loadRoles()
+      setRole(name.trim())
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to update role')
+    }
+  }
+
+  const deleteRole = async () => {
+    const current = roles.find(r => r.name === role)
+    if (!current) return
+    if (!confirm(`Delete role "${current.name}"?`)) return
+    try {
+      await rolesApi.delete(current.id)
+      toast.success('Role deleted')
+      await loadRoles()
+      setRole('')
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to delete role')
     }
   }
 
@@ -178,6 +263,14 @@ export default function AccessControlPage() {
                   <Plus size={16} /> Add
                 </button>
               </div>
+              <div className="flex gap-2 mt-2">
+                <button onClick={updateCenter} className="btn-secondary flex items-center gap-2" disabled={!centerId}>
+                  <Pencil size={16} /> Edit
+                </button>
+                <button onClick={deleteCenter} className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50" disabled={!centerId}>
+                  <Trash2 size={16} /> Delete
+                </button>
+              </div>
             </div>
 
             <div>
@@ -190,6 +283,14 @@ export default function AccessControlPage() {
                 <input className="input" placeholder="New department name" value={newDeptName} onChange={(e) => setNewDeptName(e.target.value)} />
                 <button onClick={createDepartment} className="btn-primary flex items-center gap-2 whitespace-nowrap" disabled={!centerId}>
                   <Plus size={16} /> Add
+                </button>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <button onClick={updateDepartment} className="btn-secondary flex items-center gap-2" disabled={!departmentId}>
+                  <Pencil size={16} /> Edit
+                </button>
+                <button onClick={deleteDepartment} className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50" disabled={!departmentId}>
+                  <Trash2 size={16} /> Delete
                 </button>
               </div>
             </div>
@@ -209,6 +310,14 @@ export default function AccessControlPage() {
               <button onClick={createRole} className="btn-primary flex items-center gap-2 mt-2 w-full justify-center">
                 <Plus size={16} /> Add Role
               </button>
+              <div className="flex gap-2 mt-2">
+                <button onClick={updateRole} className="btn-secondary flex items-center gap-2 flex-1">
+                  <Pencil size={16} /> Edit Role
+                </button>
+                <button onClick={deleteRole} className="btn-secondary flex items-center gap-2 flex-1 text-red-600 border-red-300 hover:bg-red-50">
+                  <Trash2 size={16} /> Delete Role
+                </button>
+              </div>
             </div>
 
             <button onClick={save} className="btn-primary flex items-center justify-center gap-2" disabled={saving || !centerId}>

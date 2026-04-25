@@ -7,6 +7,7 @@ public record AuthResponseDto(
     string Token,
     string Username,
     string Role,
+    string Audience,
     string FullName,
     int? CenterId,
     string? CenterName,
@@ -16,9 +17,11 @@ public record AuthResponseDto(
 
 // â”€â”€â”€ Tenancy + Menu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 public record CenterCreateDto(string Name);
+public record CenterUpdateDto(string Name, bool IsActive);
 public record CenterDto(int Id, string Name, bool IsActive);
 
 public record DepartmentCreateDto(int CenterId, string Name);
+public record DepartmentUpdateDto(string Name, bool IsActive);
 public record DepartmentDto(int Id, int CenterId, string Name, bool IsActive);
 
 public record MenuPageDto(int Id, string Code, string Label, string Path, string Icon, string Audience, int SortOrder, bool IsActive);
@@ -26,11 +29,23 @@ public record MenuAssignmentUpdateDto(int CenterId, int? DepartmentId, string Ro
 public record MenuMyItemDto(string Code, string Label, string Path, string Icon, int SortOrder);
 
 public record AppRoleCreateDto(string Name, string Audience);
+public record AppRoleUpdateDto(string Name, string Audience, bool IsActive);
 public record AppRoleDto(int Id, string Name, string Audience, bool IsActive);
 
 public record AdminUserCreateDto(
     string Username,
     string Password,
+    string FullName,
+    string Role,
+    int? CenterId,
+    int? DepartmentId,
+    string? BadgeNumber,
+    string? Email,
+    string? PhoneNumber,
+    bool IsActive
+);
+
+public record AdminUserUpdateDto(
     string FullName,
     string Role,
     int? CenterId,
@@ -63,9 +78,10 @@ public record ForgotPasswordDto(string Identifier);
 public record ResetPasswordDto(string Identifier, string Otp, string NewPassword);
 
 public record AssetTypeCreateDto(int CenterId, string Code, string Name, string TrackingMode);
+public record AssetTypeUpdateDto(string Code, string Name, string TrackingMode, bool IsActive);
 public record AssetTypeDto(int Id, int CenterId, string Code, string Name, string TrackingMode, bool IsActive);
 public record AssetCreateDto(int CenterId, int AssetTypeId, string? ItemNumber, string? Brand, string? Remarks);
-public record AssetUpdateDto(string Status, string? Remarks);
+public record AssetUpdateDto(string? Status, string? ItemNumber, string? Brand, string? Remarks);
 public record AssetDto(int Id, int CenterId, int AssetTypeId, string AssetTypeCode, string AssetTypeName, string? ItemNumber, string? Brand, string Status, string? Remarks);
 
 // ─── Visit ────────────────────────────────────────────────────────────────────

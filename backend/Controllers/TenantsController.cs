@@ -41,6 +41,43 @@ public class TenantsController : ControllerBase
         return Ok(new CenterDto(center.Id, center.Name, center.IsActive));
     }
 
+    [HttpPut("centers/{id:int}")]
+    public async Task<IActionResult> UpdateCenter(int id, [FromBody] CenterUpdateDto dto)
+    {
+        var center = await _db.Centers.FirstOrDefaultAsync(x => x.Id == id);
+        if (center == null) return NotFound();
+
+        var name = (dto.Name ?? "").Trim();
+        if (string.IsNullOrWhiteSpace(name))
+            return BadRequest(new { message = "Center name is required" });
+
+        if (await _db.Centers.AnyAsync(x => x.Id != id && x.Name == name))
+            return BadRequest(new { message = "Center already exists" });
+
+        center.Name = name;
+        center.IsActive = dto.IsActive;
+        await _db.SaveChangesAsync();
+        return Ok(new CenterDto(center.Id, center.Name, center.IsActive));
+    }
+
+    [HttpDelete("centers/{id:int}")]
+    public async Task<IActionResult> DeleteCenter(int id)
+    {
+        var center = await _db.Centers.FirstOrDefaultAsync(x => x.Id == id);
+        if (center == null) return NotFound();
+
+        var hasUsage = await _db.Users.AnyAsync(x => x.CenterId == id)
+            || await _db.Departments.AnyAsync(x => x.CenterId == id)
+            || await _db.MenuPagePermissions.AnyAsync(x => x.CenterId == id)
+            || await _db.AssetTypes.AnyAsync(x => x.CenterId == id)
+            || await _db.Assets.AnyAsync(x => x.CenterId == id);
+        if (hasUsage) return BadRequest(new { message = "Center is in use and cannot be deleted" });
+
+        _db.Centers.Remove(center);
+        await _db.SaveChangesAsync();
+        return NoContent();
+    }
+
     [HttpGet("departments")]
     public async Task<IActionResult> GetDepartments([FromQuery] int? centerId)
     {
@@ -70,6 +107,40 @@ public class TenantsController : ControllerBase
         _db.Departments.Add(dept);
         await _db.SaveChangesAsync();
         return Ok(new DepartmentDto(dept.Id, dept.CenterId, dept.Name, dept.IsActive));
+    }
+
+    [HttpPut("departments/{id:int}")]
+    public async Task<IActionResult> UpdateDepartment(int id, [FromBody] DepartmentUpdateDto dto)
+    {
+        var dept = await _db.Departments.FirstOrDefaultAsync(x => x.Id == id);
+        if (dept == null) return NotFound();
+
+        var name = (dto.Name ?? "").Trim();
+        if (string.IsNullOrWhiteSpace(name))
+            return BadRequest(new { message = "Department name is required" });
+
+        if (await _db.Departments.AnyAsync(x => x.Id != id && x.CenterId == dept.CenterId && x.Name == name))
+            return BadRequest(new { message = "Department already exists for this center" });
+
+        dept.Name = name;
+        dept.IsActive = dto.IsActive;
+        await _db.SaveChangesAsync();
+        return Ok(new DepartmentDto(dept.Id, dept.CenterId, dept.Name, dept.IsActive));
+    }
+
+    [HttpDelete("departments/{id:int}")]
+    public async Task<IActionResult> DeleteDepartment(int id)
+    {
+        var dept = await _db.Departments.FirstOrDefaultAsync(x => x.Id == id);
+        if (dept == null) return NotFound();
+
+        var hasUsage = await _db.Users.AnyAsync(x => x.DepartmentId == id)
+            || await _db.MenuPagePermissions.AnyAsync(x => x.DepartmentId == id);
+        if (hasUsage) return BadRequest(new { message = "Department is in use and cannot be deleted" });
+
+        _db.Departments.Remove(dept);
+        await _db.SaveChangesAsync();
+        return NoContent();
     }
 }
 

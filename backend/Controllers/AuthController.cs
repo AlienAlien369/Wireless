@@ -6,6 +6,7 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Helpers;
 using RSSBWireless.API.Models;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -41,10 +42,14 @@ public class AuthController : ControllerBase
         if (!user.IsActive)
             return Unauthorized(new { message = "Account is inactive" });
 
+        var appRole = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == user.Role && x.IsActive);
+        var audience = appRole?.Audience ?? (string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Incharge");
+
         return Ok(new AuthResponseDto(
             _jwt.GenerateToken(user),
             user.UserName!,
             user.Role,
+            audience,
             user.FullName,
             user.CenterId,
             user.Center?.Name,

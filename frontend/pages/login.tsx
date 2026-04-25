@@ -24,7 +24,7 @@ export default function LoginPage() {
       localStorage.setItem('token', u.token)
       localStorage.setItem('user', JSON.stringify(u))
       toast.success(`Welcome, ${u.fullName}!`)
-      if (u.role === 'Admin') router.push('/admin')
+      if (u.audience === 'Admin' || u.role === 'Admin') router.push('/admin')
       else router.push('/incharge')
     } catch {
       toast.error('Invalid credentials. Please try again.')

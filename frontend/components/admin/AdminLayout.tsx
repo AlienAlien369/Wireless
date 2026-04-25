@@ -42,7 +42,8 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
     const stored = localStorage.getItem('user')
     if (!stored) { router.push('/login'); return }
     const u = JSON.parse(stored)
-    if (u.role !== 'Admin') { router.push('/incharge'); return }
+    const canUseAdminUi = u.audience === 'Admin' || u.role === 'Admin'
+    if (!canUseAdminUi) { router.push('/incharge'); return }
     setUser(u)
 
     const iconMap: Record<string, any> = {
@@ -68,10 +69,15 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
           label: x.label,
           icon: iconMap[x.icon] || LayoutDashboard,
         }))
-        setNavItems(items.length > 0 ? items : fallbackNavItems)
+        const resolvedItems = items.length > 0 ? items : fallbackNavItems
+        setNavItems(resolvedItems)
+
+        // Route-level RBAC: redirect to first allowed admin page when a URL is not assigned.
+        const isAllowed = resolvedItems.some((i: any) => router.pathname === i.href || (i.href !== '/admin' && router.pathname.startsWith(i.href)))
+        if (!isAllowed && resolvedItems.length > 0) router.replace(resolvedItems[0].href)
       })
       .catch(() => setNavItems(fallbackNavItems))
-  }, [])
+  }, [router])
 
   const logout = () => {
     localStorage.clear()
@@ -115,7 +121,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
           <div className="flex items-center justify-between">
             <div>
               <div className="text-white text-sm font-medium">{user?.fullName}</div>
-              <div className="text-gray-400 text-xs">Administrator</div>
+              <div className="text-gray-400 text-xs">{user?.role || 'User'}</div>
             </div>
             <button onClick={logout} className="text-gray-400 hover:text-white transition-colors" title="Logout">
               <LogOut size={18} />

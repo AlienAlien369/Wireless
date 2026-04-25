@@ -7,7 +7,7 @@ export default function Home() {
     const user = localStorage.getItem('user')
     if (!user) { router.push('/login'); return }
     const u = JSON.parse(user)
-    router.push(u.role === 'Admin' ? '/admin' : '/incharge')
+    router.push(u.audience === 'Admin' || u.role === 'Admin' ? '/admin' : '/incharge')
   }, [])
   return null
 }

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { rolesApi, tenantsApi, usersApi } from '../../services/api'
-import { Plus, KeyRound, Save, X } from 'lucide-react'
+import { Plus, KeyRound, Save, X, Pencil, Trash2 } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type Department = { id: number; centerId: number; name: string; isActive: boolean }
@@ -30,6 +30,7 @@ export default function UsersPage() {
   const [roles, setRoles] = useState<Role[]>([])
 
   const [showCreate, setShowCreate] = useState(false)
+  const [showEdit, setShowEdit] = useState<User | null>(null)
   const [showPassword, setShowPassword] = useState<User | null>(null)
   const [saving, setSaving] = useState(false)
 
@@ -132,6 +133,61 @@ export default function UsersPage() {
     }
   }
 
+  const openEdit = (u: User) => {
+    setForm({
+      username: u.username,
+      password: '',
+      fullName: u.fullName,
+      role: u.role,
+      centerId: u.centerId,
+      departmentId: u.departmentId,
+      badgeNumber: u.badgeNumber || '',
+      email: u.email || '',
+      phoneNumber: u.phoneNumber || '',
+      isActive: u.isActive,
+    })
+    setShowEdit(u)
+  }
+
+  const updateUser = async () => {
+    if (!showEdit) return
+    if (!form.fullName || !form.role) {
+      toast.error('Full name and role are required')
+      return
+    }
+    setSaving(true)
+    try {
+      await usersApi.update(showEdit.id, {
+        fullName: form.fullName,
+        role: form.role,
+        centerId: form.centerId,
+        departmentId: form.departmentId,
+        badgeNumber: form.badgeNumber || null,
+        email: form.email || null,
+        phoneNumber: form.phoneNumber || null,
+        isActive: form.isActive,
+      })
+      toast.success('User updated')
+      setShowEdit(null)
+      await load()
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to update user')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const deleteUser = async (u: User) => {
+    if (!confirm(`Delete user "${u.username}"?`)) return
+    try {
+      await usersApi.delete(u.id)
+      toast.success('User deleted')
+      await load()
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Failed to delete user')
+    }
+  }
+
   return (
     <AdminLayout title="Users">
       <div className="space-y-4">
@@ -169,9 +225,17 @@ export default function UsersPage() {
                   <td className="py-2 pr-3">{u.email || '-'}</td>
                   <td className="py-2 pr-3">{u.isActive ? 'Yes' : 'No'}</td>
                   <td className="py-2 pr-3">
-                    <button onClick={() => setShowPassword(u)} className="btn-secondary flex items-center gap-2">
-                      <KeyRound size={16} /> Set Password
-                    </button>
+                    <div className="flex gap-2">
+                      <button onClick={() => openEdit(u)} className="btn-secondary flex items-center gap-2">
+                        <Pencil size={16} /> Edit
+                      </button>
+                      <button onClick={() => setShowPassword(u)} className="btn-secondary flex items-center gap-2">
+                        <KeyRound size={16} /> Set Password
+                      </button>
+                      <button onClick={() => deleteUser(u)} className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50">
+                        <Trash2 size={16} /> Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -246,6 +310,71 @@ export default function UsersPage() {
                   <Save size={16} /> {saving ? 'Saving...' : 'Create'}
                 </button>
                 <button onClick={() => setShowCreate(false)} className="btn-secondary flex-1">Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showEdit && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold">Edit User</h2>
+                <button onClick={() => setShowEdit(null)} className="text-gray-500 hover:text-gray-700"><X size={18} /></button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="label">Username</label>
+                  <input className="input bg-gray-100" value={form.username} disabled />
+                </div>
+                <div>
+                  <label className="label">Full Name *</label>
+                  <input className="input" value={form.fullName} onChange={(e) => setForm((p: any) => ({ ...p, fullName: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="label">Role *</label>
+                  <select className="input" value={form.role} onChange={(e) => setForm((p: any) => ({ ...p, role: e.target.value }))}>
+                    {roles.filter(r => r.isActive).map(r => <option key={r.id} value={r.name}>{r.name}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="label">Center</label>
+                  <select className="input" value={form.centerId ?? ''} onChange={(e) => setForm((p: any) => ({ ...p, centerId: e.target.value ? Number(e.target.value) : null }))}>
+                    <option value="">Select center...</option>
+                    {centers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="label">Department</label>
+                  <select className="input" value={form.departmentId ?? ''} onChange={(e) => setForm((p: any) => ({ ...p, departmentId: e.target.value ? Number(e.target.value) : null }))}>
+                    <option value="">Select department...</option>
+                    {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="label">Phone</label>
+                  <input className="input" value={form.phoneNumber} onChange={(e) => setForm((p: any) => ({ ...p, phoneNumber: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="label">Email</label>
+                  <input className="input" value={form.email} onChange={(e) => setForm((p: any) => ({ ...p, email: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="label">Badge Number</label>
+                  <input className="input" value={form.badgeNumber} onChange={(e) => setForm((p: any) => ({ ...p, badgeNumber: e.target.value }))} />
+                </div>
+                <div className="flex items-center gap-2 mt-6">
+                  <input type="checkbox" checked={form.isActive} onChange={(e) => setForm((p: any) => ({ ...p, isActive: e.target.checked }))} />
+                  <span className="text-sm text-gray-700">Active</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-5">
+                <button onClick={updateUser} disabled={saving} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                  <Save size={16} /> {saving ? 'Saving...' : 'Update'}
+                </button>
+                <button onClick={() => setShowEdit(null)} className="btn-secondary flex-1">Cancel</button>
               </div>
             </div>
           </div>

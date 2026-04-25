@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using System;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -26,13 +27,14 @@ public class MenuController : ControllerBase
         if (user == null) return Unauthorized();
         if (user.CenterId == null) return Ok(new List<MenuMyItemDto>());
 
-        var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == user.Role && x.IsActive);
-        var audience = role?.Audience ?? user.Role;
+        var normalizedRole = (user.Role ?? "").Trim();
+        var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == normalizedRole && x.IsActive);
+        var audience = role?.Audience ?? (string.Equals(normalizedRole, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Incharge");
 
         var items = await _db.MenuPagePermissions
             .Where(p =>
                 p.CenterId == user.CenterId &&
-                p.Role == user.Role &&
+                p.Role == normalizedRole &&
                 (p.DepartmentId == null || p.DepartmentId == user.DepartmentId))
             .Select(p => p.MenuPage)
             .Where(p => p.IsActive && p.Audience == audience)

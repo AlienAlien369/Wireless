@@ -47,6 +47,43 @@ public class AssetsController : ControllerBase
         return Ok(new AssetTypeDto(t.Id, t.CenterId, t.Code, t.Name, t.TrackingMode, t.IsActive));
     }
 
+    [HttpPut("types/{id:int}")]
+    public async Task<IActionResult> UpdateType(int id, [FromBody] AssetTypeUpdateDto dto)
+    {
+        var t = await _db.AssetTypes.FirstOrDefaultAsync(x => x.Id == id);
+        if (t == null) return NotFound();
+
+        var code = (dto.Code ?? "").Trim().ToLowerInvariant();
+        var name = (dto.Name ?? "").Trim();
+        var tracking = (dto.TrackingMode ?? "").Trim();
+        if (string.IsNullOrWhiteSpace(code)) return BadRequest(new { message = "Code is required" });
+        if (string.IsNullOrWhiteSpace(name)) return BadRequest(new { message = "Name is required" });
+        if (tracking != "Individual" && tracking != "Group") return BadRequest(new { message = "TrackingMode must be Individual or Group" });
+        if (await _db.AssetTypes.AnyAsync(x => x.Id != id && x.CenterId == t.CenterId && x.Code == code))
+            return BadRequest(new { message = "Asset type code already exists" });
+
+        t.Code = code;
+        t.Name = name;
+        t.TrackingMode = tracking;
+        t.IsActive = dto.IsActive;
+        await _db.SaveChangesAsync();
+        return Ok(new AssetTypeDto(t.Id, t.CenterId, t.Code, t.Name, t.TrackingMode, t.IsActive));
+    }
+
+    [HttpDelete("types/{id:int}")]
+    public async Task<IActionResult> DeleteType(int id)
+    {
+        var t = await _db.AssetTypes.FirstOrDefaultAsync(x => x.Id == id);
+        if (t == null) return NotFound();
+
+        if (await _db.Assets.AnyAsync(x => x.AssetTypeId == id))
+            return BadRequest(new { message = "Asset type has items and cannot be deleted" });
+
+        _db.AssetTypes.Remove(t);
+        await _db.SaveChangesAsync();
+        return NoContent();
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAssets([FromQuery] int centerId, [FromQuery] int? assetTypeId, [FromQuery] string? status)
     {
@@ -107,12 +144,35 @@ public class AssetsController : ControllerBase
     {
         var a = await _db.Assets.Include(x => x.AssetType).FirstOrDefaultAsync(x => x.Id == id);
         if (a == null) return NotFound();
-        var status = (dto.Status ?? "").Trim();
-        if (status != "Available" && status != "Issued" && status != "Broken")
-            return BadRequest(new { message = "Invalid status" });
+        if (!string.IsNullOrWhiteSpace(dto.Status))
+        {
+            var status = dto.Status.Trim();
+            if (status != "Available" && status != "Issued" && status != "Broken")
+                return BadRequest(new { message = "Invalid status" });
+            a.Status = status;
+        }
 
-        a.Status = status;
+        var itemNumber = string.IsNullOrWhiteSpace(dto.ItemNumber) ? null : dto.ItemNumber.Trim();
+        if (itemNumber != null && await _db.Assets.AnyAsync(x => x.Id != id && x.CenterId == a.CenterId && x.AssetTypeId == a.AssetTypeId && x.ItemNumber == itemNumber))
+            return BadRequest(new { message = "ItemNumber already exists for this type" });
+
+        a.ItemNumber = itemNumber;
+        a.Brand = string.IsNullOrWhiteSpace(dto.Brand) ? null : dto.Brand.Trim();
         a.Remarks = string.IsNullOrWhiteSpace(dto.Remarks) ? null : dto.Remarks.Trim();
+        await _db.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteAsset(int id)
+    {
+        var a = await _db.Assets.FirstOrDefaultAsync(x => x.Id == id);
+        if (a == null) return NotFound();
+
+        if (await _db.IssueItems.AnyAsync(x => x.AssetId == id && !x.IsReturned))
+            return BadRequest(new { message = "Asset is currently issued and cannot be deleted" });
+
+        _db.Assets.Remove(a);
         await _db.SaveChangesAsync();
         return NoContent();
     }
