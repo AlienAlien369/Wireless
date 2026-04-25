@@ -25,7 +25,7 @@ public class IssueService
         _logger = logger;
     }
 
-    public async Task<IssueResponseDto> CreateIssueAsync(IssueCreateDto dto, string issuedBy)
+    public async Task<IssueResponseDto> CreateIssueAsync(IssueCreateDto dto, string issuedBy, int? centerId, int? departmentId)
     {
         // Handle collector
         Collector? collector = null;
@@ -43,6 +43,8 @@ public class IssueService
 
         var issue = new Issue
         {
+            CenterId = centerId,
+            DepartmentId = departmentId,
             VisitId = dto.VisitId,
             InchargeId = dto.InchargeId,
             IsGroupIssue = dto.IsGroupIssue,
@@ -96,7 +98,7 @@ public class IssueService
             await SendIssueSmsAsync(issue, dto);
         }
 
-        return await GetIssueByIdAsync(issue.Id);
+        return await GetIssueByIdAsync(issue.Id, centerId, departmentId, false);
     }
 
 private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
@@ -169,7 +171,7 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
     }
 }
     // ... rest of your existing methods remain unchanged ...
-    public async Task<IssueResponseDto> GetIssueByIdAsync(int id)
+    public async Task<IssueResponseDto> GetIssueByIdAsync(int id, int? centerId = null, int? departmentId = null, bool strictDepartment = false)
     {
         var issue = await _db.Issues
             .Include(i => i.Visit)
@@ -181,13 +183,16 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             .Include(i => i.Items).ThenInclude(ii => ii.Asset).ThenInclude(a => a!.AssetType)
             .Include(i => i.Photos)
             .Include(i => i.SmsLogs)
-            .FirstOrDefaultAsync(i => i.Id == id)
+            .FirstOrDefaultAsync(i =>
+                i.Id == id &&
+                (centerId == null || i.CenterId == centerId) &&
+                (!strictDepartment || departmentId == null || i.DepartmentId == departmentId || i.DepartmentId == null))
             ?? throw new KeyNotFoundException("Issue not found");
 
         return MapToDto(issue);
     }
 
-    public async Task<List<IssueResponseDto>> GetIssuesByVisitAsync(int visitId)
+    public async Task<List<IssueResponseDto>> GetIssuesByVisitAsync(int visitId, int? centerId = null, int? departmentId = null, bool strictDepartment = false)
     {
         var issues = await _db.Issues
             .Include(i => i.Visit).Include(i => i.Incharge).Include(i => i.Collector)
@@ -197,7 +202,10 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             .Include(i => i.Items).ThenInclude(ii => ii.Asset).ThenInclude(a => a!.AssetType)
             .Include(i => i.Photos)
             .Include(i => i.SmsLogs)
-            .Where(i => i.VisitId == visitId)
+            .Where(i =>
+                i.VisitId == visitId &&
+                (centerId == null || i.CenterId == centerId) &&
+                (!strictDepartment || departmentId == null || i.DepartmentId == departmentId || i.DepartmentId == null))
             .OrderByDescending(i => i.IssuedAt)
             .ToListAsync();
 

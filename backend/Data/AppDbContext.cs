@@ -121,11 +121,19 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<Visit>(e => {
             e.HasKey(x => x.Id);
             e.Property(x => x.Name).IsRequired().HasMaxLength(200);
+            e.HasOne(x => x.Center).WithMany().HasForeignKey(x => x.CenterId).IsRequired(false);
+            e.HasOne(x => x.Department).WithMany().HasForeignKey(x => x.DepartmentId).IsRequired(false);
+            e.HasIndex(x => x.CenterId);
+            e.HasIndex(x => x.DepartmentId);
         });
 
         builder.Entity<Incharge>(e => {
             e.HasKey(x => x.Id);
             e.HasIndex(x => x.BadgeNumber).IsUnique();
+            e.HasOne(x => x.Center).WithMany().HasForeignKey(x => x.CenterId).IsRequired(false);
+            e.HasOne(x => x.Department).WithMany().HasForeignKey(x => x.DepartmentId).IsRequired(false);
+            e.HasIndex(x => x.CenterId);
+            e.HasIndex(x => x.DepartmentId);
         });
 
         builder.Entity<WirelessSet>(e => {
@@ -137,6 +145,10 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             e.HasOne(x => x.Visit).WithMany(v => v.Issues).HasForeignKey(x => x.VisitId);
             e.HasOne(x => x.Incharge).WithMany(i => i.Issues).HasForeignKey(x => x.InchargeId);
             e.HasOne(x => x.Collector).WithMany(c => c.Issues).HasForeignKey(x => x.CollectorId).IsRequired(false);
+            e.HasOne(x => x.Center).WithMany().HasForeignKey(x => x.CenterId).IsRequired(false);
+            e.HasOne(x => x.Department).WithMany().HasForeignKey(x => x.DepartmentId).IsRequired(false);
+            e.HasIndex(x => x.CenterId);
+            e.HasIndex(x => x.DepartmentId);
         });
 
         builder.Entity<IssueItem>(e => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import AdminLayout from '../../components/admin/AdminLayout'
-import { reportsApi } from '../../services/api'
+import { reportsApi, productConfigApi } from '../../services/api'
 import { Radio, Users, AlertTriangle, CheckCircle, Clock, MapPin, Calendar, Activity, TrendingUp, Send } from 'lucide-react'
 
 interface Stats {
@@ -72,11 +72,19 @@ function CountPair({
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null)
   const [visitStats, setVisitStats] = useState<VisitStat[]>([])
+  const [widgetConfig, setWidgetConfig] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     reportsApi.getDashboard().then(r => setStats(r.data)).catch(console.error)
     reportsApi.getVisitWiseDashboard().then(r => setVisitStats(r.data)).catch(console.error)
+    productConfigApi.get().then((r) => {
+      const map: Record<string, boolean> = {}
+      ;(r.data?.dashboardWidgets || []).forEach((w: any) => { map[w.key] = !!w.enabled })
+      setWidgetConfig(map)
+    }).catch(() => {})
   }, [])
+
+  const isWidgetEnabled = (key: string) => widgetConfig[key] !== false
 
   if (!stats) return (
     <AdminLayout title="Dashboard">
@@ -96,21 +104,26 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Grid */}
+        {isWidgetEnabled('assets.summary') && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatCard label="Total Sets" value={stats.totalWirelessSets} icon={Radio} color="bg-primary" />
           <StatCard label="Available" value={stats.availableSets} icon={CheckCircle} color="bg-green-500" />
           <StatCard label="Issued" value={stats.issuedSets} icon={Clock} color="bg-yellow-500" />
           <StatCard label="Broken" value={stats.brokenSets} icon={AlertTriangle} color="bg-red-500" />
         </div>
+        )}
 
+        {isWidgetEnabled('operations.summary') && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatCard label="Incharges" value={stats.totalIncharges} icon={Users} color="bg-purple-500" />
           <StatCard label="Active Visits" value={stats.activeVisits} icon={MapPin} color="bg-indigo-500" />
           <StatCard label="Today Issues" value={stats.todayIssues} icon={Calendar} color="bg-teal-500" />
           <StatCard label="Total Breakages" value={stats.totalBreakages} icon={Activity} color="bg-orange-500" />
         </div>
+        )}
 
         {/* Visit-wise Breakdown */}
+        {isWidgetEnabled('visit.breakdown') && (
         <div className="card">
           <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
             <TrendingUp size={20} /> Visit-wise Issue Summary
@@ -224,8 +237,10 @@ export default function AdminDashboard() {
             </table>
           </div>
         </div>
+        )}
 
         {/* Wireless brand summary */}
+        {isWidgetEnabled('brand.summary') && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {['Kenwood', 'Vertel', 'Aspera'].map(brand => (
             <div key={brand} className="card">
@@ -246,6 +261,7 @@ export default function AdminDashboard() {
             </div>
           ))}
         </div>
+        )}
       </div>
     </AdminLayout>
   )

@@ -6,19 +6,22 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using RSSBWireless.API.Services;
 using System;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
+[Authorize]
 public class RolesController : ControllerBase
 {
     private readonly AppDbContext _db;
-    public RolesController(AppDbContext db) => _db = db;
+    private readonly AccessScopeService _scope;
+    public RolesController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        await _scope.RequireAdminUiAsync(User);
         var list = await _db.AppRoles
             .OrderBy(x => x.Name)
             .Select(x => new AppRoleDto(x.Id, x.Name, x.Audience, x.IsActive))
@@ -29,6 +32,8 @@ public class RolesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AppRoleCreateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        if (!scope.IsGlobalAdmin) return Forbid();
         var name = (dto.Name ?? "").Trim();
         var audience = (dto.Audience ?? "").Trim();
         if (string.IsNullOrWhiteSpace(name)) return BadRequest(new { message = "Role name is required" });
@@ -46,6 +51,8 @@ public class RolesController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] AppRoleUpdateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        if (!scope.IsGlobalAdmin) return Forbid();
         var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Id == id);
         if (role == null) return NotFound();
 
@@ -66,6 +73,8 @@ public class RolesController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        if (!scope.IsGlobalAdmin) return Forbid();
         var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Id == id);
         if (role == null) return NotFound();
         if (string.Equals(role.Name, "Admin", StringComparison.OrdinalIgnoreCase))

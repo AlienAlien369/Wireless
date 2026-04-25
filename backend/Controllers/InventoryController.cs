@@ -6,6 +6,7 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Helpers;
 using RSSBWireless.API.Models;
+using RSSBWireless.API.Services;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,12 +15,16 @@ public class InventoryController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly QrCodeHelper _qr;
-    public InventoryController(AppDbContext db, QrCodeHelper qr) { _db = db; _qr = qr; }
+    private readonly AccessScopeService _scope;
+    private readonly ProductConfigService _config;
+    public InventoryController(AppDbContext db, QrCodeHelper qr, AccessScopeService scope, ProductConfigService config) { _db = db; _qr = qr; _scope = scope; _config = config; }
 
     // ─── Wireless Sets ────────────────────────────────────────────────────────
     [HttpGet("wireless-sets")]
     public async Task<IActionResult> GetSets([FromQuery] string? brand, [FromQuery] string? status)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var q = _db.WirelessSets.AsQueryable();
         if (!string.IsNullOrEmpty(brand)) q = q.Where(w => w.Brand == brand);
         if (!string.IsNullOrEmpty(status)) q = q.Where(w => w.Status == status);
@@ -32,15 +37,18 @@ public class InventoryController : ControllerBase
     [HttpGet("wireless-sets/{id}")]
     public async Task<IActionResult> GetSet(int id)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var w = await _db.WirelessSets.FindAsync(id);
         if (w == null) return NotFound();
         return Ok(new WirelessSetDto(w.Id, w.ItemNumber, w.Brand, w.Status, w.Remarks, w.QrCodeUrl, w.CreatedAt));
     }
 
     [HttpGet("wireless-sets/by-number/{number}")]
-    [AllowAnonymous]
     public async Task<IActionResult> GetSetByNumber(string number)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var w = await _db.WirelessSets.FirstOrDefaultAsync(x => x.ItemNumber == number);
         if (w == null) return NotFound();
 
@@ -64,9 +72,11 @@ public class InventoryController : ControllerBase
         });
     }
 
-    [HttpPost("wireless-sets"), Authorize(Roles = "Admin")]
+    [HttpPost("wireless-sets")]
     public async Task<IActionResult> CreateSet([FromBody] WirelessSetCreateDto dto)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         if (await _db.WirelessSets.AnyAsync(w => w.ItemNumber == dto.ItemNumber))
             return BadRequest(new { message = "Item number already exists" });
 
@@ -81,9 +91,11 @@ public class InventoryController : ControllerBase
             new WirelessSetDto(ws.Id, ws.ItemNumber, ws.Brand, ws.Status, ws.Remarks, ws.QrCodeUrl, ws.CreatedAt));
     }
 
-    [HttpPut("wireless-sets/{id}"), Authorize(Roles = "Admin")]
+    [HttpPut("wireless-sets/{id}")]
     public async Task<IActionResult> UpdateSet(int id, [FromBody] WirelessSetUpdateDto dto)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var ws = await _db.WirelessSets.FindAsync(id);
         if (ws == null) return NotFound();
         ws.ItemNumber = dto.ItemNumber; ws.Brand = dto.Brand;
@@ -92,9 +104,11 @@ public class InventoryController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("wireless-sets/{id}"), Authorize(Roles = "Admin")]
+    [HttpDelete("wireless-sets/{id}")]
     public async Task<IActionResult> DeleteSet(int id)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var ws = await _db.WirelessSets.FindAsync(id);
         if (ws == null) return NotFound();
         _db.WirelessSets.Remove(ws);
@@ -106,24 +120,30 @@ public class InventoryController : ControllerBase
     [HttpGet("chargers")]
     public async Task<IActionResult> GetChargers([FromQuery] string? brand)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var q = _db.Chargers.AsQueryable();
         if (!string.IsNullOrEmpty(brand)) q = q.Where(c => c.Brand == brand);
         var list = await q.Select(c => new ChargerDto(c.Id, c.ItemNumber, c.Brand, c.Status, c.Remarks, c.CreatedAt)).ToListAsync();
         return Ok(list);
     }
 
-    [HttpPost("chargers"), Authorize(Roles = "Admin")]
+    [HttpPost("chargers")]
     public async Task<IActionResult> CreateCharger([FromBody] ChargerCreateDto dto)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var ch = new Charger { ItemNumber = dto.ItemNumber, Brand = dto.Brand, Remarks = dto.Remarks };
         _db.Chargers.Add(ch);
         await _db.SaveChangesAsync();
         return Ok(new ChargerDto(ch.Id, ch.ItemNumber, ch.Brand, ch.Status, ch.Remarks, ch.CreatedAt));
     }
 
-    [HttpDelete("chargers/{id}"), Authorize(Roles = "Admin")]
+    [HttpDelete("chargers/{id}")]
     public async Task<IActionResult> DeleteCharger(int id)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var ch = await _db.Chargers.FindAsync(id);
         if (ch == null) return NotFound();
         _db.Chargers.Remove(ch);
@@ -135,22 +155,28 @@ public class InventoryController : ControllerBase
     [HttpGet("kits")]
     public async Task<IActionResult> GetKits()
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var list = await _db.Kits.Select(k => new KitDto(k.Id, k.ItemNumber, k.Status, k.Remarks, k.CreatedAt)).ToListAsync();
         return Ok(list);
     }
 
-    [HttpPost("kits"), Authorize(Roles = "Admin")]
+    [HttpPost("kits")]
     public async Task<IActionResult> CreateKit([FromBody] KitCreateDto dto)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var kit = new Kit { ItemNumber = dto.ItemNumber, Remarks = dto.Remarks };
         _db.Kits.Add(kit);
         await _db.SaveChangesAsync();
         return Ok(new KitDto(kit.Id, kit.ItemNumber, kit.Status, kit.Remarks, kit.CreatedAt));
     }
 
-    [HttpDelete("kits/{id}"), Authorize(Roles = "Admin")]
+    [HttpDelete("kits/{id}")]
     public async Task<IActionResult> DeleteKit(int id)
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var kit = await _db.Kits.FindAsync(id);
         if (kit == null) return NotFound();
         _db.Kits.Remove(kit);
@@ -158,9 +184,11 @@ public class InventoryController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("wireless-sets/generate-qr-codes"), Authorize(Roles = "Admin")]
+    [HttpPost("wireless-sets/generate-qr-codes")]
     public async Task<IActionResult> GenerateAllQrCodes()
     {
+        if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
+        await _scope.RequireAdminUiAsync(User);
         var sets = await _db.WirelessSets
             .Where(w => w.Brand == "Kenwood" && w.QrCodeUrl == null)
             .ToListAsync();

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import SearchDropdown from '../../components/SearchDropdown'
-import { assetsApi, inchargesApi, issuesApi, tenantsApi, visitsApi } from '../../services/api'
+import { assetsApi, inchargesApi, issuesApi, productConfigApi, tenantsApi, visitsApi } from '../../services/api'
 import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
 import { Plus, X } from 'lucide-react'
 
@@ -29,12 +29,15 @@ export default function IssueAssetsPage() {
   const [groupCount, setGroupCount] = useState<number>(0)
   const [remarks, setRemarks] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [sendSms, setSendSms] = useState(true)
+  const [qrInput, setQrInput] = useState('')
 
   useEffect(() => {
     Promise.all([
       tenantsApi.getCenters(),
       visitsApi.getAll(),
       inchargesApi.getAll(),
+      productConfigApi.get(),
     ]).then(([c, v, i]) => {
       const cs = (c.data || []).filter((x: any) => x.isActive)
       setCenters(cs)
@@ -50,6 +53,30 @@ export default function IssueAssetsPage() {
       setIncharges((i.data || []).filter((x: any) => x.isActive))
     }).catch(() => toast.error('Failed to load data'))
   }, [])
+
+  useEffect(() => {
+    productConfigApi.get().then((res) => {
+      const role = JSON.parse(localStorage.getItem('user') || 'null')?.role || ''
+      const roleDefault = (res.data?.roleDefaults || []).find((x: any) => x.role === role)
+      setSendSms(roleDefault ? !!roleDefault.smsEnabled : true)
+    }).catch(() => toast.error('Failed to load data'))
+  }, [])
+  const addByQr = async () => {
+    const raw = qrInput.trim()
+    if (!raw) return
+    try {
+      const res = await assetsApi.scanQr(raw)
+      const a = res.data
+      if (a.status !== 'Available') { toast.error('Asset is not available'); return }
+      if (typeId && a.assetTypeId !== typeId) setTypeId(a.assetTypeId)
+      setSelected((prev) => prev.some(x => x.id === a.id) ? prev : [...prev, a])
+      setQrInput('')
+      toast.success('Asset added by QR')
+    } catch (e: any) {
+      toast.error(e.response?.data?.message || 'Invalid QR')
+    }
+  }
+
 
   useEffect(() => {
     if (!centerId) return
@@ -76,7 +103,12 @@ export default function IssueAssetsPage() {
   }
 
   const submit = async () => {
-    if (!visitId || !inchargeId) { toast.error('Select visit and incharge'); return }
+    const parsedVisitId = Number(visitId)
+    const parsedInchargeId = Number(inchargeId)
+    if (!Number.isFinite(parsedVisitId) || parsedVisitId <= 0 || !Number.isFinite(parsedInchargeId) || parsedInchargeId <= 0) {
+      toast.error('Select visit and incharge')
+      return
+    }
     if (!currentType) { toast.error('Select asset type'); return }
     if (!isGroupIssue && selected.length === 0) { toast.error('Select at least one asset'); return }
 
@@ -88,13 +120,13 @@ export default function IssueAssetsPage() {
       }))
 
       const payload: any = {
-        visitId: parseInt(visitId),
-        inchargeId: parseInt(inchargeId),
+        visitId: parsedVisitId,
+        inchargeId: parsedInchargeId,
         isGroupIssue,
         groupName: isGroupIssue ? groupName : undefined,
         groupSetCount: isGroupIssue ? groupCount : undefined,
         remarks,
-        sendSms: true,
+        sendSms,
         items,
       }
 
@@ -182,6 +214,10 @@ export default function IssueAssetsPage() {
               <label className="label">Remarks</label>
               <textarea className="input h-16 resize-none" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="Optional remarks..." />
             </div>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={sendSms} onChange={(e) => setSendSms(e.target.checked)} />
+              Send SMS notification
+            </label>
 
             <button disabled={submitting} onClick={submit} className="btn-primary w-full">
               {submitting ? 'Issuing...' : 'Issue Assets'}
@@ -194,6 +230,10 @@ export default function IssueAssetsPage() {
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold text-gray-700">Available Items</h3>
               <div className="text-sm text-gray-500">Selected: {selected.length}</div>
+            </div>
+            <div className="flex gap-2 mb-3">
+              <input className="input" value={qrInput} onChange={(e) => setQrInput(e.target.value)} placeholder="Scan or paste asset QR value..." />
+              <button className="btn-secondary" type="button" onClick={addByQr}>Add by QR</button>
             </div>
 
             {assets.length === 0 ? (

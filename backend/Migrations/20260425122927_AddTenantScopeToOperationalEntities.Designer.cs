@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RSSBWireless.API.Data;
@@ -11,9 +12,11 @@ using RSSBWireless.API.Data;
 namespace RSSBWireless.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260425122927_AddTenantScopeToOperationalEntities")]
+    partial class AddTenantScopeToOperationalEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -528,14 +531,8 @@ namespace RSSBWireless.API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("CenterId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("GroupName")
                         .HasColumnType("text");
@@ -556,10 +553,6 @@ namespace RSSBWireless.API.Migrations
                     b.HasIndex("BadgeNumber")
                         .IsUnique();
 
-                    b.HasIndex("CenterId");
-
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Incharges");
                 });
 
@@ -571,13 +564,7 @@ namespace RSSBWireless.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CenterId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("CollectorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("DepartmentId")
                         .HasColumnType("integer");
 
                     b.Property<string>("GroupName")
@@ -614,11 +601,7 @@ namespace RSSBWireless.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CenterId");
-
                     b.HasIndex("CollectorId");
-
-                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("InchargeId");
 
@@ -913,14 +896,8 @@ namespace RSSBWireless.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CenterId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -941,10 +918,6 @@ namespace RSSBWireless.API.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CenterId");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Visits");
                 });
@@ -1110,34 +1083,11 @@ namespace RSSBWireless.API.Migrations
                     b.Navigation("Center");
                 });
 
-            modelBuilder.Entity("RSSBWireless.API.Models.Incharge", b =>
-                {
-                    b.HasOne("RSSBWireless.API.Models.Center", "Center")
-                        .WithMany()
-                        .HasForeignKey("CenterId");
-
-                    b.HasOne("RSSBWireless.API.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Center");
-
-                    b.Navigation("Department");
-                });
-
             modelBuilder.Entity("RSSBWireless.API.Models.Issue", b =>
                 {
-                    b.HasOne("RSSBWireless.API.Models.Center", "Center")
-                        .WithMany()
-                        .HasForeignKey("CenterId");
-
                     b.HasOne("RSSBWireless.API.Models.Collector", "Collector")
                         .WithMany("Issues")
                         .HasForeignKey("CollectorId");
-
-                    b.HasOne("RSSBWireless.API.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("RSSBWireless.API.Models.Incharge", "Incharge")
                         .WithMany("Issues")
@@ -1151,11 +1101,7 @@ namespace RSSBWireless.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Center");
-
                     b.Navigation("Collector");
-
-                    b.Navigation("Department");
 
                     b.Navigation("Incharge");
 
@@ -1253,21 +1199,6 @@ namespace RSSBWireless.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Issue");
-                });
-
-            modelBuilder.Entity("RSSBWireless.API.Models.Visit", b =>
-                {
-                    b.HasOne("RSSBWireless.API.Models.Center", "Center")
-                        .WithMany()
-                        .HasForeignKey("CenterId");
-
-                    b.HasOne("RSSBWireless.API.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Center");
-
-                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("RSSBWireless.API.Models.Asset", b =>

@@ -27,6 +27,7 @@ frontend/.env.*
 backend/bin/
 backend/obj/
 backend/temp-build-output/
+backend/temp_build_out/
 *.user
 *.suo
 *.userosscache

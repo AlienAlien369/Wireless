@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
-import { menuApi, tenantsApi, rolesApi } from '../../services/api'
+import { menuApi, tenantsApi, rolesApi, productConfigApi } from '../../services/api'
 import { Plus, Save, RefreshCw, Pencil, Trash2 } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
@@ -28,6 +28,13 @@ export default function AccessControlPage() {
   const [role, setRole] = useState<string>('Admin')
   const [selectedPageIds, setSelectedPageIds] = useState<number[]>([])
   const [saving, setSaving] = useState(false)
+  const [configSaving, setConfigSaving] = useState(false)
+  const [productConfig, setProductConfig] = useState<any>({
+    featureFlags: { unifiedAssetsEnabled: true, legacyWirelessEnabled: false, qrAssetFlowEnabled: true },
+    centerHeadRoles: [],
+    roleDefaults: [],
+    dashboardWidgets: [],
+  })
 
   const [newCenterName, setNewCenterName] = useState('')
   const [newDeptName, setNewDeptName] = useState('')
@@ -66,7 +73,7 @@ export default function AccessControlPage() {
   }
 
   useEffect(() => {
-    Promise.all([loadCenters(), loadPages(), loadRoles()]).catch(() => toast.error('Failed to load access control data'))
+    Promise.all([loadCenters(), loadPages(), loadRoles(), productConfigApi.get().then(r => setProductConfig(r.data))]).catch(() => toast.error('Failed to load access control data'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -233,6 +240,29 @@ export default function AccessControlPage() {
     }
   }
 
+  const toggleRoleSms = (roleName: string) => {
+    setProductConfig((prev: any) => {
+      const existing = (prev.roleDefaults || []).find((x: any) => x.role === roleName)
+      const roleDefaults = existing
+        ? (prev.roleDefaults || []).map((x: any) => x.role === roleName ? { ...x, smsEnabled: !x.smsEnabled } : x)
+        : [...(prev.roleDefaults || []), { role: roleName, smsEnabled: false }]
+      return { ...prev, roleDefaults }
+    })
+  }
+
+  const saveConfig = async () => {
+    setConfigSaving(true)
+    try {
+      const next = { ...productConfig, centerHeadRoles: Array.from(new Set(productConfig.centerHeadRoles || [])) }
+      await productConfigApi.update(next)
+      toast.success('Product configuration saved')
+    } catch {
+      toast.error('Failed to save product configuration')
+    } finally {
+      setConfigSaving(false)
+    }
+  }
+
   return (
     <AdminLayout title="Access Control">
       <div className="space-y-4">
@@ -363,6 +393,69 @@ export default function AccessControlPage() {
               </div>
             )}
           </div>
+        </div>
+
+        <div className="card space-y-4">
+          <div className="font-semibold text-gray-800">Product Configuration</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={!!productConfig.featureFlags?.unifiedAssetsEnabled}
+                onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, unifiedAssetsEnabled: e.target.checked } }))} />
+              Unified Assets Module
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={!!productConfig.featureFlags?.legacyWirelessEnabled}
+                onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, legacyWirelessEnabled: e.target.checked } }))} />
+              Legacy Wireless Module
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={!!productConfig.featureFlags?.qrAssetFlowEnabled}
+                onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, qrAssetFlowEnabled: e.target.checked } }))} />
+              QR Asset Flow
+            </label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div className="label">Center-head roles (cross-department in same center)</div>
+              <div className="space-y-1 max-h-40 overflow-auto border rounded-lg p-2">
+                {roles.map((r) => {
+                  const checked = (productConfig.centerHeadRoles || []).includes(r.name)
+                  return (
+                    <label key={r.id} className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={checked}
+                        onChange={(e) => setProductConfig((p: any) => ({
+                          ...p,
+                          centerHeadRoles: e.target.checked
+                            ? [...(p.centerHeadRoles || []), r.name]
+                            : (p.centerHeadRoles || []).filter((x: string) => x !== r.name),
+                        }))} />
+                      {r.name}
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
+            <div>
+              <div className="label">SMS default by role</div>
+              <div className="space-y-1 max-h-40 overflow-auto border rounded-lg p-2">
+                {roles.map((r) => {
+                  const entry = (productConfig.roleDefaults || []).find((x: any) => x.role === r.name)
+                  const smsEnabled = entry ? !!entry.smsEnabled : true
+                  return (
+                    <label key={r.id} className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={smsEnabled} onChange={() => toggleRoleSms(r.name)} />
+                      {r.name} ({smsEnabled ? 'SMS ON' : 'SMS OFF'})
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          <button onClick={saveConfig} disabled={configSaving} className="btn-primary w-full md:w-auto">
+            {configSaving ? 'Saving config...' : 'Save Product Config'}
+          </button>
         </div>
       </div>
     </AdminLayout>

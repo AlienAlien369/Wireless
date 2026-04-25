@@ -10,23 +10,6 @@ import { Shield } from 'lucide-react'
 import { Boxes, UserCog } from 'lucide-react'
 import { menuApi } from '../../services/api'
 
-const fallbackNavItems = [
-  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/visits', label: 'Visits', icon: MapPin },
-  { href: '/admin/inventory', label: 'Inventory', icon: Package },
-  { href: '/admin/incharges', label: 'Incharges', icon: Users },
-  { href: '/admin/issue', label: 'Issue Wireless', icon: ArrowDownToLine },
-  { href: '/admin/issue-assets', label: 'Issue Assets', icon: ArrowDownToLine },
-  { href: '/admin/bulk-issue', label: 'Bulk Issue', icon: ArrowDownToLine },
-  { href: '/admin/receive', label: 'Receive Wireless', icon: ArrowUpFromLine },
-  { href: '/admin/bulk-receive', label: 'Bulk Receive', icon: ArrowUpFromLine },
-  { href: '/admin/breakage', label: 'Breakage', icon: AlertTriangle },
-  { href: '/admin/reports', label: 'Reports', icon: FileBarChart },
-  { href: '/admin/assets', label: 'Assets', icon: Boxes },
-  { href: '/admin/users', label: 'Users', icon: UserCog },
-  { href: '/admin/access', label: 'Access Control', icon: Shield },
-]
-
 interface Props {
   children: React.ReactNode
   title?: string
@@ -36,7 +19,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
-  const [navItems, setNavItems] = useState(fallbackNavItems)
+  const [navItems, setNavItems] = useState<any[]>([])
 
   useEffect(() => {
     const stored = localStorage.getItem('user')
@@ -69,14 +52,14 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
           label: x.label,
           icon: iconMap[x.icon] || LayoutDashboard,
         }))
-        const resolvedItems = items.length > 0 ? items : fallbackNavItems
+        const resolvedItems = items
         setNavItems(resolvedItems)
 
         // Route-level RBAC: redirect to first allowed admin page when a URL is not assigned.
         const isAllowed = resolvedItems.some((i: any) => router.pathname === i.href || (i.href !== '/admin' && router.pathname.startsWith(i.href)))
         if (!isAllowed && resolvedItems.length > 0) router.replace(resolvedItems[0].href)
       })
-      .catch(() => setNavItems(fallbackNavItems))
+      .catch(() => setNavItems([]))
   }, [router])
 
   const logout = () => {

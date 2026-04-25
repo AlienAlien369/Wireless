@@ -4,6 +4,10 @@ namespace RSSBWireless.API.Models;
 public class Visit
 {
     public int Id { get; set; }
+    public int? CenterId { get; set; }
+    public Center? Center { get; set; }
+    public int? DepartmentId { get; set; }
+    public Department? Department { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Location { get; set; } = string.Empty;
     public DateTime VisitDate { get; set; } = DateTime.UtcNow;
@@ -19,6 +23,10 @@ public class Visit
 public class Incharge
 {
     public int Id { get; set; }
+    public int? CenterId { get; set; }
+    public Center? Center { get; set; }
+    public int? DepartmentId { get; set; }
+    public Department? Department { get; set; }
     public string Name { get; set; } = string.Empty;
     public string BadgeNumber { get; set; } = string.Empty;
     public string MobileNumber { get; set; } = string.Empty;
@@ -73,6 +81,10 @@ public class Kit
 public class Issue
 {
     public int Id { get; set; }
+    public int? CenterId { get; set; }
+    public Center? Center { get; set; }
+    public int? DepartmentId { get; set; }
+    public Department? Department { get; set; }
     public int VisitId { get; set; }
     public Visit Visit { get; set; } = null!;
     public int InchargeId { get; set; }

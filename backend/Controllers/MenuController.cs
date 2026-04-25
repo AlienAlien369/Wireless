@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using RSSBWireless.API.Services;
 using System;
 
 [ApiController]
@@ -15,7 +16,8 @@ using System;
 public class MenuController : ControllerBase
 {
     private readonly AppDbContext _db;
-    public MenuController(AppDbContext db) => _db = db;
+    private readonly AccessScopeService _scope;
+    public MenuController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet("my")]
     public async Task<IActionResult> GetMyMenu()
@@ -31,15 +33,19 @@ public class MenuController : ControllerBase
         var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == normalizedRole && x.IsActive);
         var audience = role?.Audience ?? (string.Equals(normalizedRole, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Incharge");
 
-        var items = await _db.MenuPagePermissions
+        var menuPageIds = await _db.MenuPagePermissions
             .Where(p =>
                 p.CenterId == user.CenterId &&
                 p.Role == normalizedRole &&
                 (p.DepartmentId == null || p.DepartmentId == user.DepartmentId))
-            .Select(p => p.MenuPage)
-            .Where(p => p.IsActive && p.Audience == audience)
-            .GroupBy(p => p.Id)
-            .Select(g => g.First())
+            .Select(p => p.MenuPageId)
+            .Distinct()
+            .ToListAsync();
+
+        if (menuPageIds.Count == 0) return Ok(new List<MenuMyItemDto>());
+
+        var items = await _db.MenuPages
+            .Where(p => menuPageIds.Contains(p.Id) && p.IsActive && p.Audience == audience)
             .OrderBy(p => p.SortOrder)
             .Select(p => new MenuMyItemDto(p.Code, p.Label, p.Path, p.Icon, p.SortOrder))
             .ToListAsync();
@@ -48,9 +54,9 @@ public class MenuController : ControllerBase
     }
 
     [HttpGet("pages")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetPages()
     {
+        await _scope.RequireAdminUiAsync(User);
         var list = await _db.MenuPages
             .OrderBy(x => x.SortOrder)
             .Select(x => new MenuPageDto(x.Id, x.Code, x.Label, x.Path, x.Icon, x.Audience, x.SortOrder, x.IsActive))
@@ -59,9 +65,11 @@ public class MenuController : ControllerBase
     }
 
     [HttpGet("assignments")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAssignment([FromQuery] int centerId, [FromQuery] int? departmentId, [FromQuery] string role)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        _scope.EnsureCenterAccess(scope, centerId);
+        _scope.EnsureDepartmentAccess(scope, departmentId);
         role = role?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(role)) return BadRequest(new { message = "role is required" });
         if (!await _db.AppRoles.AnyAsync(x => x.Name == role && x.IsActive)) return BadRequest(new { message = "Invalid role" });
@@ -85,9 +93,11 @@ public class MenuController : ControllerBase
     }
 
     [HttpPut("assignments")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpsertAssignment([FromBody] MenuAssignmentUpdateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        _scope.EnsureCenterAccess(scope, dto.CenterId);
+        _scope.EnsureDepartmentAccess(scope, dto.DepartmentId);
         var role = dto.Role?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(role)) return BadRequest(new { message = "role is required" });
         if (!await _db.AppRoles.AnyAsync(x => x.Name == role && x.IsActive)) return BadRequest(new { message = "Invalid role" });

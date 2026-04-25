@@ -6,19 +6,23 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using RSSBWireless.API.Services;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
+[Authorize]
 public class TenantsController : ControllerBase
 {
     private readonly AppDbContext _db;
-    public TenantsController(AppDbContext db) => _db = db;
+    private readonly AccessScopeService _scope;
+    public TenantsController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet("centers")]
     public async Task<IActionResult> GetCenters()
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var list = await _db.Centers
+            .Where(x => scope.IsGlobalAdmin || x.Id == scope.CenterId)
             .OrderBy(x => x.Name)
             .Select(x => new CenterDto(x.Id, x.Name, x.IsActive))
             .ToListAsync();
@@ -28,6 +32,8 @@ public class TenantsController : ControllerBase
     [HttpPost("centers")]
     public async Task<IActionResult> CreateCenter([FromBody] CenterCreateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        if (!scope.IsGlobalAdmin) return Forbid();
         var name = dto.Name.Trim();
         if (string.IsNullOrWhiteSpace(name))
             return BadRequest(new { message = "Center name is required" });
@@ -44,6 +50,8 @@ public class TenantsController : ControllerBase
     [HttpPut("centers/{id:int}")]
     public async Task<IActionResult> UpdateCenter(int id, [FromBody] CenterUpdateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        _scope.EnsureCenterAccess(scope, id);
         var center = await _db.Centers.FirstOrDefaultAsync(x => x.Id == id);
         if (center == null) return NotFound();
 
@@ -63,6 +71,9 @@ public class TenantsController : ControllerBase
     [HttpDelete("centers/{id:int}")]
     public async Task<IActionResult> DeleteCenter(int id)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        _scope.EnsureCenterAccess(scope, id);
+        if (!scope.IsGlobalAdmin) return Forbid();
         var center = await _db.Centers.FirstOrDefaultAsync(x => x.Id == id);
         if (center == null) return NotFound();
 
@@ -81,7 +92,9 @@ public class TenantsController : ControllerBase
     [HttpGet("departments")]
     public async Task<IActionResult> GetDepartments([FromQuery] int? centerId)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var q = _db.Departments.AsQueryable();
+        if (!scope.IsGlobalAdmin && scope.CenterId != null) q = q.Where(x => x.CenterId == scope.CenterId);
         if (centerId != null) q = q.Where(x => x.CenterId == centerId);
 
         var list = await q.OrderBy(x => x.Name)
@@ -93,6 +106,8 @@ public class TenantsController : ControllerBase
     [HttpPost("departments")]
     public async Task<IActionResult> CreateDepartment([FromBody] DepartmentCreateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        _scope.EnsureCenterAccess(scope, dto.CenterId);
         var name = dto.Name.Trim();
         if (string.IsNullOrWhiteSpace(name))
             return BadRequest(new { message = "Department name is required" });
@@ -112,8 +127,10 @@ public class TenantsController : ControllerBase
     [HttpPut("departments/{id:int}")]
     public async Task<IActionResult> UpdateDepartment(int id, [FromBody] DepartmentUpdateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var dept = await _db.Departments.FirstOrDefaultAsync(x => x.Id == id);
         if (dept == null) return NotFound();
+        _scope.EnsureCenterAccess(scope, dept.CenterId);
 
         var name = (dto.Name ?? "").Trim();
         if (string.IsNullOrWhiteSpace(name))
@@ -131,8 +148,10 @@ public class TenantsController : ControllerBase
     [HttpDelete("departments/{id:int}")]
     public async Task<IActionResult> DeleteDepartment(int id)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var dept = await _db.Departments.FirstOrDefaultAsync(x => x.Id == id);
         if (dept == null) return NotFound();
+        _scope.EnsureCenterAccess(scope, dept.CenterId);
 
         var hasUsage = await _db.Users.AnyAsync(x => x.DepartmentId == id)
             || await _db.MenuPagePermissions.AnyAsync(x => x.DepartmentId == id);

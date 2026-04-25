@@ -7,29 +7,40 @@ using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
+using RSSBWireless.API.Services;
 using System;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly AccessScopeService _scope;
 
-    public UsersController(AppDbContext db, UserManager<ApplicationUser> userManager)
+    public UsersController(AppDbContext db, UserManager<ApplicationUser> userManager, AccessScopeService scope)
     {
         _db = db;
         _userManager = userManager;
+        _scope = scope;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] int? centerId, [FromQuery] int? departmentId, [FromQuery] string? role)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var q = _userManager.Users
             .Include(x => x.Center)
             .Include(x => x.Department)
             .AsQueryable();
+
+        if (!scope.IsGlobalAdmin)
+        {
+            if (scope.CenterId == null) return Forbid();
+            q = q.Where(x => x.CenterId == scope.CenterId);
+            if (!scope.IsCenterHead && scope.DepartmentId != null) q = q.Where(x => x.DepartmentId == scope.DepartmentId);
+        }
 
         if (centerId != null) q = q.Where(x => x.CenterId == centerId);
         if (departmentId != null) q = q.Where(x => x.DepartmentId == departmentId);
@@ -59,6 +70,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AdminUserCreateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var username = (dto.Username ?? "").Trim();
         if (string.IsNullOrWhiteSpace(username)) return BadRequest(new { message = "Username is required" });
         if (string.IsNullOrWhiteSpace(dto.Password)) return BadRequest(new { message = "Password is required" });
@@ -71,6 +83,8 @@ public class UsersController : ControllerBase
             return BadRequest(new { message = "Invalid centerId" });
         if (dto.DepartmentId != null && !await _db.Departments.AnyAsync(x => x.Id == dto.DepartmentId))
             return BadRequest(new { message = "Invalid departmentId" });
+        if (dto.CenterId != null) _scope.EnsureCenterAccess(scope, dto.CenterId.Value);
+        _scope.EnsureDepartmentAccess(scope, dto.DepartmentId);
 
         var email = string.IsNullOrWhiteSpace(dto.Email) ? $"{username}@rssb.local" : dto.Email.Trim();
 
@@ -115,6 +129,7 @@ public class UsersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, [FromBody] AdminUserUpdateDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
         if (user == null) return NotFound();
 
@@ -126,6 +141,8 @@ public class UsersController : ControllerBase
             return BadRequest(new { message = "Invalid centerId" });
         if (dto.DepartmentId != null && !await _db.Departments.AnyAsync(x => x.Id == dto.DepartmentId))
             return BadRequest(new { message = "Invalid departmentId" });
+        if (dto.CenterId != null) _scope.EnsureCenterAccess(scope, dto.CenterId.Value);
+        _scope.EnsureDepartmentAccess(scope, dto.DepartmentId);
 
         user.FullName = dto.FullName?.Trim() ?? "";
         user.Role = role;
@@ -143,8 +160,11 @@ public class UsersController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         var user = await _userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
+        if (user.CenterId != null) _scope.EnsureCenterAccess(scope, user.CenterId.Value);
+        _scope.EnsureDepartmentAccess(scope, user.DepartmentId);
 
         if (string.Equals(user.UserName, "admin", StringComparison.OrdinalIgnoreCase))
             return BadRequest(new { message = "Default admin user cannot be deleted" });
@@ -157,9 +177,12 @@ public class UsersController : ControllerBase
     [HttpPost("{id}/set-password")]
     public async Task<IActionResult> SetPassword(string id, [FromBody] AdminSetPasswordDto dto)
     {
+        var scope = await _scope.RequireAdminUiAsync(User);
         if (string.IsNullOrWhiteSpace(dto.NewPassword)) return BadRequest(new { message = "NewPassword is required" });
         var user = await _userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
+        if (user.CenterId != null) _scope.EnsureCenterAccess(scope, user.CenterId.Value);
+        _scope.EnsureDepartmentAccess(scope, user.DepartmentId);
 
         // Force-reset regardless of existing password.
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);

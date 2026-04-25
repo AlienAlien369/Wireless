@@ -156,6 +156,13 @@ export const assetsApi = {
   createAsset: (data: any) => api.post('/assets', data),
   updateAsset: (id: number, data: any) => api.put(`/assets/${id}`, data),
   deleteAsset: (id: number) => api.delete(`/assets/${id}`),
+  getQr: (id: number) => api.get(`/assets/${id}/qr`),
+  scanQr: (qrValue: string) => api.get(`/assets/scan/${encodeURIComponent(qrValue)}`),
+}
+
+export const productConfigApi = {
+  get: () => api.get('/productconfig'),
+  update: (data: any) => api.put('/productconfig', data),
 }
 
 export default api
