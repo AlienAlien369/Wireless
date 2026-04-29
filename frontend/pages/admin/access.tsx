@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { assetsApi, menuApi, tenantsApi, rolesApi, productConfigApi } from '../../services/api'
@@ -82,7 +82,7 @@ export default function AccessControlPage() {
   }
 
   const loadAssetTypes = async (cId: number, dId: number | null) => {
-    const res = await assetsApi.getTypes(cId, dId ?? undefined)
+    const res = await assetsApi.getTypes(cId, dId ?? undefined, true)
     setAssetTypes((res.data || []).filter((x: any) => x.isActive))
   }
 
@@ -99,8 +99,13 @@ export default function AccessControlPage() {
   }, [centerId])
 
   useEffect(() => {
-    if (!centerId) { setSelectedPageIds([]); return }
+    if (!centerId) { 
+      setSelectedPageIds([]); 
+      setAssetTypes([]);
+      return 
+    }
     loadAssignment(centerId, departmentId, role).catch(() => setSelectedPageIds([]))
+    loadAssetTypes(centerId, departmentId).catch(() => setAssetTypes([]))
   }, [centerId, departmentId, role])
 
   useEffect(() => {
@@ -110,8 +115,30 @@ export default function AccessControlPage() {
       .filter((x: any) => x.centerId === centerId && x.role === role && (x.departmentId ?? null) === departmentId)
       .map((x: any) => x.assetTypeId)
     setSelectedAssetTypeIds(ids)
-    loadAssetTypes(centerId, departmentId).catch(() => setAssetTypes([]))
   }, [centerId, departmentId, role, productConfig])
+
+  // ── Role dropdown filtering rule (mirrors users.tsx) ──────────────────────
+  // All Departments (departmentId = null)  →  only "Center Head"
+  // Specific department selected           →  only "Admin" and "Sewadaar"
+  const availableRoles = useMemo(() => {
+    const active = roles.filter(r => r.isActive)
+    if (departmentId === null || departmentId === undefined) {
+      return active.filter(r => r.name === 'Center Head')
+    }
+    return active.filter(r => r.name === 'Admin' || r.name === 'Sewadaar')
+  }, [departmentId, roles])
+
+  // Auto-correct role when department changes and current role becomes invalid.
+  // Guard: skip when availableRoles is empty (roles API not yet loaded) to
+  // avoid blanking the role before data arrives.
+  useEffect(() => {
+    if (availableRoles.length === 0) return
+    const validNames = availableRoles.map(r => r.name)
+    if (!role || !validNames.includes(role)) {
+      setRole(availableRoles[0].name)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availableRoles])
 
   const visiblePages = useMemo(() => {
     const selectedRole = roles.find(r => r.name === role)
@@ -342,9 +369,12 @@ export default function AccessControlPage() {
             <div>
               <label className="label">Department</label>
               <select className="input" value={departmentId ?? ''} onChange={(e) => setDepartmentId(e.target.value === '' ? null : Number(e.target.value))}>
-                <option value="">All departments</option>
+                <option value="">All Departments — Center Head role only</option>
                 {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
               </select>
+              <p className="text-xs text-gray-400 mt-1">
+                {departmentId ? '✅ Specific department → Admin or Sewadaar roles available' : '⚠️ No department → only Center Head role allowed'}
+              </p>
               <div className="flex gap-2 mt-2">
                 <input className="input" placeholder="New department name" value={newDeptName} onChange={(e) => setNewDeptName(e.target.value)} />
                 <button onClick={createDepartment} className="btn-primary flex items-center gap-2 whitespace-nowrap" disabled={!centerId}>
@@ -364,7 +394,10 @@ export default function AccessControlPage() {
             <div>
               <label className="label">Role</label>
               <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
-                {roles.map(r => <option key={r.id} value={r.name}>{r.name}</option>)}
+                {availableRoles.length === 0
+                  ? <option value="">— Select center &amp; department first —</option>
+                  : availableRoles.map(r => <option key={r.id} value={r.name}>{r.name}</option>)
+                }
               </select>
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <input className="input" placeholder="New role name" value={newRoleName} onChange={(e) => setNewRoleName(e.target.value)} />

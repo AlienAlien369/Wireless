@@ -148,7 +148,7 @@ export const usersApi = {
 }
 
 export const assetsApi = {
-  getTypes: (centerId?: number, departmentId?: number) => api.get('/assets/types', { params: { centerId, departmentId } }),
+  getTypes: (centerId?: number, departmentId?: number, forSetup?: boolean) => api.get('/assets/types', { params: { centerId, departmentId, forSetup } }),
   createType: (data: any) => api.post('/assets/types', data),
   updateType: (id: number, data: any) => api.put(`/assets/types/${id}`, data),
   deleteType: (id: number) => api.delete(`/assets/types/${id}`),

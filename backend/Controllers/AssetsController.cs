@@ -21,7 +21,7 @@ public class AssetsController : ControllerBase
     public AssetsController(AppDbContext db, AccessScopeService scope, QrCodeHelper qr, ProductConfigService config) { _db = db; _scope = scope; _qr = qr; _config = config; }
 
     [HttpGet("types")]
-    public async Task<IActionResult> GetTypes([FromQuery] int? centerId, [FromQuery] int? departmentId)
+    public async Task<IActionResult> GetTypes([FromQuery] int? centerId, [FromQuery] int? departmentId, [FromQuery] bool forSetup = false)
     {
         var scope = await _scope.RequireAdminUiAsync(User);
         var q = _db.AssetTypes.Include(x => x.Center).AsQueryable();
@@ -30,8 +30,11 @@ public class AssetsController : ControllerBase
         if (effectiveCenterId != null) q = q.Where(x => x.CenterId == effectiveCenterId);
         if (departmentId != null && !scope.IsGlobalAdmin && !scope.IsCenterHead) _scope.EnsureDepartmentAccess(scope, departmentId);
 
-        var allowedAssetTypeIds = await GetAllowedAssetTypeIdsAsync(scope, effectiveCenterId, departmentId);
-        if (allowedAssetTypeIds != null) q = q.Where(x => allowedAssetTypeIds.Contains(x.Id));
+        if (!forSetup)
+        {
+            var allowedAssetTypeIds = await GetAllowedAssetTypeIdsAsync(scope, effectiveCenterId, departmentId);
+            if (allowedAssetTypeIds != null) q = q.Where(x => allowedAssetTypeIds.Contains(x.Id));
+        }
 
         var list = await q.OrderBy(x => x.Name)
             .Select(x => new AssetTypeDto(x.Id, x.CenterId, x.Code, x.Name, x.TrackingMode, x.IsActive))

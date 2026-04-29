@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { rolesApi, tenantsApi, usersApi } from '../../services/api'
@@ -68,6 +68,28 @@ export default function UsersPage() {
       setForm((p: any) => ({ ...p, departmentId: null }))
     }).catch(() => setDepartments([]))
   }, [form.centerId])
+
+  // ── Role dropdown filtering rule ───────────────────────────────────────────
+  // All Departments (departmentId = null)  →  only "Center Head"
+  // Specific department selected           →  only "Admin" and "Sewadaar"
+  const availableRoles = useMemo(() => {
+    const active = roles.filter(r => r.isActive)
+    if (form.departmentId === null || form.departmentId === undefined) {
+      return active.filter(r => r.name === 'Center Head')
+    }
+    return active.filter(r => r.name === 'Admin' || r.name === 'Sewadaar')
+  }, [form.departmentId, roles])
+
+  // Auto-correct role when the department changes and the current role is invalid.
+  // Guard: skip when availableRoles is empty (roles API not yet loaded).
+  useEffect(() => {
+    if (availableRoles.length === 0) return
+    const validNames = availableRoles.map(r => r.name)
+    if (!form.role || !validNames.includes(form.role)) {
+      setForm((p: any) => ({ ...p, role: availableRoles[0].name }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availableRoles])
 
   const roleOptions = useMemo(() => roles.map(r => r.name), [roles])
 
@@ -268,23 +290,29 @@ export default function UsersPage() {
                   <input className="input" value={form.fullName} onChange={(e) => setForm((p: any) => ({ ...p, fullName: e.target.value }))} />
                 </div>
                 <div>
-                  <label className="label">Role *</label>
-                  <select className="input" value={form.role} onChange={(e) => setForm((p: any) => ({ ...p, role: e.target.value }))}>
-                    {roles.filter(r => r.isActive).map(r => <option key={r.id} value={r.name}>{r.name}</option>)}
-                  </select>
-                </div>
-                <div>
                   <label className="label">Center</label>
                   <select className="input" value={form.centerId ?? ''} onChange={(e) => setForm((p: any) => ({ ...p, centerId: e.target.value ? Number(e.target.value) : null }))}>
                     <option value="">Select center...</option>
                     {centers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
                 </div>
-                <div>
+                <div className="md:col-span-2">
                   <label className="label">Department</label>
                   <select className="input" value={form.departmentId ?? ''} onChange={(e) => setForm((p: any) => ({ ...p, departmentId: e.target.value ? Number(e.target.value) : null }))}>
-                    <option value="">Select department...</option>
+                    <option value="">All Departments — Center Head role only</option>
                     {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {form.departmentId ? '✅ Specific department → Admin or Sewadaar roles available' : '⚠️ No department → only Center Head role allowed'}
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="label">Role *</label>
+                  <select className="input" value={form.role} onChange={(e) => setForm((p: any) => ({ ...p, role: e.target.value }))}>
+                    {availableRoles.length === 0
+                      ? <option value="">— Select center &amp; department first —</option>
+                      : availableRoles.map(r => <option key={r.id} value={r.name}>{r.name}</option>)
+                    }
                   </select>
                 </div>
                 <div>
@@ -333,23 +361,29 @@ export default function UsersPage() {
                   <input className="input" value={form.fullName} onChange={(e) => setForm((p: any) => ({ ...p, fullName: e.target.value }))} />
                 </div>
                 <div>
-                  <label className="label">Role *</label>
-                  <select className="input" value={form.role} onChange={(e) => setForm((p: any) => ({ ...p, role: e.target.value }))}>
-                    {roles.filter(r => r.isActive).map(r => <option key={r.id} value={r.name}>{r.name}</option>)}
-                  </select>
-                </div>
-                <div>
                   <label className="label">Center</label>
                   <select className="input" value={form.centerId ?? ''} onChange={(e) => setForm((p: any) => ({ ...p, centerId: e.target.value ? Number(e.target.value) : null }))}>
                     <option value="">Select center...</option>
                     {centers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
                 </div>
-                <div>
+                <div className="md:col-span-2">
                   <label className="label">Department</label>
                   <select className="input" value={form.departmentId ?? ''} onChange={(e) => setForm((p: any) => ({ ...p, departmentId: e.target.value ? Number(e.target.value) : null }))}>
-                    <option value="">Select department...</option>
+                    <option value="">All Departments — Center Head role only</option>
                     {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                  </select>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {form.departmentId ? '✅ Specific department → Admin or Sewadaar roles available' : '⚠️ No department → only Center Head role allowed'}
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="label">Role *</label>
+                  <select className="input" value={form.role} onChange={(e) => setForm((p: any) => ({ ...p, role: e.target.value }))}>
+                    {availableRoles.length === 0
+                      ? <option value="">— Select center &amp; department first —</option>
+                      : availableRoles.map(r => <option key={r.id} value={r.name}>{r.name}</option>)
+                    }
                   </select>
                 </div>
                 <div>

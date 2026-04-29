@@ -18,12 +18,14 @@ public class UsersController : ControllerBase
     private readonly AppDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly AccessScopeService _scope;
+    private readonly ProductConfigService _config;
 
-    public UsersController(AppDbContext db, UserManager<ApplicationUser> userManager, AccessScopeService scope)
+    public UsersController(AppDbContext db, UserManager<ApplicationUser> userManager, AccessScopeService scope, ProductConfigService config)
     {
         _db = db;
         _userManager = userManager;
         _scope = scope;
+        _config = config;
     }
 
     [HttpGet]
@@ -80,6 +82,16 @@ public class UsersController : ControllerBase
         if (!roleExists) return BadRequest(new { message = "Invalid role" });
         if (string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) && !scope.IsSuperAdmin)
             return Forbid();
+
+        // Enforce role↔department assignment rule:
+        // Center Head  → department must be null (accesses all depts in center)
+        // Admin/Sewadaar → department must be specified
+        var isCenterHeadRole = _config.GetSnapshot().CenterHeadRoles
+            .Any(r => string.Equals(r, role, StringComparison.OrdinalIgnoreCase));
+        if (isCenterHeadRole && dto.DepartmentId != null)
+            return BadRequest(new { message = "Center Head must be assigned to 'All Departments' (no specific department)." });
+        if (!isCenterHeadRole && !string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) && dto.DepartmentId == null)
+            return BadRequest(new { message = "Admin and Sewadaar must be assigned to a specific department." });
 
         if (dto.CenterId != null && !await _db.Centers.AnyAsync(x => x.Id == dto.CenterId))
             return BadRequest(new { message = "Invalid centerId" });
@@ -140,6 +152,14 @@ public class UsersController : ControllerBase
         if (!roleExists) return BadRequest(new { message = "Invalid role" });
         if (string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) && !scope.IsSuperAdmin)
             return Forbid();
+
+        // Enforce role↔department assignment rule on update
+        var isCenterHeadRoleUpdate = _config.GetSnapshot().CenterHeadRoles
+            .Any(r => string.Equals(r, role, StringComparison.OrdinalIgnoreCase));
+        if (isCenterHeadRoleUpdate && dto.DepartmentId != null)
+            return BadRequest(new { message = "Center Head must be assigned to 'All Departments' (no specific department)." });
+        if (!isCenterHeadRoleUpdate && !string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) && dto.DepartmentId == null)
+            return BadRequest(new { message = "Admin and Sewadaar must be assigned to a specific department." });
 
         if (dto.CenterId != null && !await _db.Centers.AnyAsync(x => x.Id == dto.CenterId))
             return BadRequest(new { message = "Invalid centerId" });
