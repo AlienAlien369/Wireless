@@ -154,3 +154,11 @@ frontend/.nyc_output/
 secrets.json
 credentials.json
 *.env.backup
+
+# ─── GRAPHIFY (knowledge graph) ──────────────────────────────
+# Keep: graph.html, GRAPH_REPORT.md, graph.json (main outputs)
+# Ignore: internal cache and temp files
+graphify-out/cache/
+graphify-out/.graphify_python
+graphify-out/.graphify_*.json
+graphify-out/cost.json
