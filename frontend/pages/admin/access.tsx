@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { assetsApi, menuApi, tenantsApi, rolesApi, productConfigApi } from '../../services/api'
-import { Plus, Save, RefreshCw, Pencil, Trash2 } from 'lucide-react'
+import { Plus, Save, RefreshCw, Pencil, Trash2, ChevronRight, Shield, Building2, Users, Eye, Settings, LayoutGrid } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type Department = { id: number; centerId: number; name: string; isActive: boolean }
@@ -28,7 +28,7 @@ export default function AccessControlPage() {
   const [assetTypes, setAssetTypes] = useState<AssetType[]>([])
 
   const [centerId, setCenterId] = useState<number | null>(null)
-  const [departmentId, setDepartmentId] = useState<number | null>(null) // null => all departments
+  const [departmentId, setDepartmentId] = useState<number | null>(null)
   const [role, setRole] = useState<string>('Admin')
   const [selectedPageIds, setSelectedPageIds] = useState<number[]>([])
   const [selectedAssetTypeIds, setSelectedAssetTypeIds] = useState<number[]>([])
@@ -88,7 +88,6 @@ export default function AccessControlPage() {
 
   useEffect(() => {
     Promise.all([loadCenters(), loadPages(), loadRoles(), productConfigApi.get().then(r => setProductConfig(r.data))]).catch(() => toast.error('Failed to load access control data'))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -99,11 +98,7 @@ export default function AccessControlPage() {
   }, [centerId])
 
   useEffect(() => {
-    if (!centerId) { 
-      setSelectedPageIds([]); 
-      setAssetTypes([]);
-      return 
-    }
+    if (!centerId) { setSelectedPageIds([]); setAssetTypes([]); return }
     loadAssignment(centerId, departmentId, role).catch(() => setSelectedPageIds([]))
     loadAssetTypes(centerId, departmentId).catch(() => setAssetTypes([]))
   }, [centerId, departmentId, role])
@@ -117,9 +112,6 @@ export default function AccessControlPage() {
     setSelectedAssetTypeIds(ids)
   }, [centerId, departmentId, role, productConfig])
 
-  // ── Role dropdown filtering rule (mirrors users.tsx) ──────────────────────
-  // All Departments (departmentId = null)  →  only "Center Head"
-  // Specific department selected           →  only "Admin" and "Sewadaar"
   const availableRoles = useMemo(() => {
     const active = roles.filter(r => r.isActive)
     if (departmentId === null || departmentId === undefined) {
@@ -128,16 +120,12 @@ export default function AccessControlPage() {
     return active.filter(r => r.name === 'Admin' || r.name === 'Sewadaar')
   }, [departmentId, roles])
 
-  // Auto-correct role when department changes and current role becomes invalid.
-  // Guard: skip when availableRoles is empty (roles API not yet loaded) to
-  // avoid blanking the role before data arrives.
   useEffect(() => {
     if (availableRoles.length === 0) return
     const validNames = availableRoles.map(r => r.name)
     if (!role || !validNames.includes(role)) {
       setRole(availableRoles[0].name)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableRoles])
 
   const visiblePages = useMemo(() => {
@@ -326,259 +314,364 @@ export default function AccessControlPage() {
     }
   }
 
+  // Breadcrumb summary of current scope
+  const scopeSummary = [
+    centers.find(c => c.id === centerId)?.name,
+    departmentId ? departments.find(d => d.id === departmentId)?.name : 'All Departments',
+    role,
+  ].filter(Boolean)
+
   return (
     <AdminLayout title="Access Control">
-      <div className="space-y-4">
+      <div className="space-y-6">
+
+        {/* ── HEADER STRIP ── */}
         <div className="card">
-          <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
-              <div className="font-semibold text-gray-800">Assign menu pages by tenant scope</div>
-              <div className="text-sm text-gray-500">Rules are applied by Center, Department (optional), and Role.</div>
+              <div className="font-semibold text-gray-800 text-base">Access Control</div>
+              <div className="text-sm text-gray-500 mt-0.5">Assign menu pages and asset visibility by Center → Department → Role</div>
+              {scopeSummary.length > 0 && (
+                <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+                  {scopeSummary.map((s, i) => (
+                    <span key={i} className="flex items-center gap-1.5">
+                      <span className="text-xs bg-blue-50 text-blue-700 border border-blue-100 rounded-full px-2.5 py-0.5 font-medium">{s}</span>
+                      {i < scopeSummary.length - 1 && <ChevronRight size={12} className="text-gray-300" />}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-            <button onClick={() => centerId && loadAssignment(centerId, departmentId, role)}
-              className="btn-secondary flex items-center gap-2">
-              <RefreshCw size={16} /> Refresh
+            <button
+              onClick={() => centerId && loadAssignment(centerId, departmentId, role)}
+              className="btn-secondary flex items-center gap-2"
+            >
+              <RefreshCw size={15} /> Refresh
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="card space-y-3">
-            <div>
-              <label className="label">Center</label>
+        {/* ── STEP 1: SCOPE SELECTOR ── */}
+        <div className="card space-y-4">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+            <div className="font-semibold text-gray-800">Select Scope</div>
+            <div className="text-sm text-gray-400">— Choose center, department and role to configure access for</div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* CENTER */}
+            <div className="border border-gray-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Building2 size={15} className="text-gray-400" />
+                <label className="label mb-0 text-sm font-semibold">Center</label>
+              </div>
               <select className="input" value={centerId ?? ''} onChange={(e) => setCenterId(e.target.value ? Number(e.target.value) : null)}>
-                <option value="">Select center...</option>
+                <option value="">Select center…</option>
                 {centers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
-              <div className="flex gap-2 mt-2">
-                <input className="input" placeholder="New center name" value={newCenterName} onChange={(e) => setNewCenterName(e.target.value)} />
-                <button onClick={createCenter} className="btn-primary flex items-center gap-2 whitespace-nowrap">
-                  <Plus size={16} /> Add
+              <div className="flex gap-2">
+                <input className="input flex-1 min-w-0" placeholder="New center name" value={newCenterName} onChange={(e) => setNewCenterName(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && createCenter()} />
+                <button onClick={createCenter} className="btn-primary flex items-center gap-1 whitespace-nowrap px-3">
+                  <Plus size={14} />
                 </button>
               </div>
-              <div className="flex gap-2 mt-2">
-                <button onClick={updateCenter} className="btn-secondary flex items-center gap-2" disabled={!centerId}>
-                  <Pencil size={16} /> Edit
+              <div className="flex gap-2">
+                <button onClick={updateCenter} className="btn-secondary flex items-center gap-1.5 flex-1 justify-center text-xs" disabled={!centerId}>
+                  <Pencil size={13} /> Edit
                 </button>
-                <button onClick={deleteCenter} className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50" disabled={!centerId}>
-                  <Trash2 size={16} /> Delete
+                <button onClick={deleteCenter} className="btn-secondary flex items-center gap-1.5 flex-1 justify-center text-xs text-red-600 border-red-300 hover:bg-red-50" disabled={!centerId}>
+                  <Trash2 size={13} /> Delete
                 </button>
               </div>
             </div>
 
-            <div>
-              <label className="label">Department</label>
+            {/* DEPARTMENT */}
+            <div className="border border-gray-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <LayoutGrid size={15} className="text-gray-400" />
+                <label className="label mb-0 text-sm font-semibold">Department</label>
+              </div>
               <select className="input" value={departmentId ?? ''} onChange={(e) => setDepartmentId(e.target.value === '' ? null : Number(e.target.value))}>
-                <option value="">All Departments — Center Head role only</option>
+                <option value="">All Departments</option>
                 {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
               </select>
-              <p className="text-xs text-gray-400 mt-1">
-                {departmentId ? '✅ Specific department → Admin or Sewadaar roles available' : '⚠️ No department → only Center Head role allowed'}
-              </p>
-              <div className="flex gap-2 mt-2">
-                <input className="input" placeholder="New department name" value={newDeptName} onChange={(e) => setNewDeptName(e.target.value)} />
-                <button onClick={createDepartment} className="btn-primary flex items-center gap-2 whitespace-nowrap" disabled={!centerId}>
-                  <Plus size={16} /> Add
+              <div className={`text-xs rounded-lg px-2.5 py-1.5 ${departmentId ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
+                {departmentId ? '✓ Admin & Sewadaar roles available' : '⚠ Center Head role only'}
+              </div>
+              <div className="flex gap-2">
+                <input className="input flex-1 min-w-0" placeholder="New department" value={newDeptName} onChange={(e) => setNewDeptName(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && createDepartment()} disabled={!centerId} />
+                <button onClick={createDepartment} className="btn-primary flex items-center gap-1 px-3" disabled={!centerId}>
+                  <Plus size={14} />
                 </button>
               </div>
-              <div className="flex gap-2 mt-2">
-                <button onClick={updateDepartment} className="btn-secondary flex items-center gap-2" disabled={!departmentId}>
-                  <Pencil size={16} /> Edit
+              <div className="flex gap-2">
+                <button onClick={updateDepartment} className="btn-secondary flex items-center gap-1.5 flex-1 justify-center text-xs" disabled={!departmentId}>
+                  <Pencil size={13} /> Edit
                 </button>
-                <button onClick={deleteDepartment} className="btn-secondary flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50" disabled={!departmentId}>
-                  <Trash2 size={16} /> Delete
+                <button onClick={deleteDepartment} className="btn-secondary flex items-center gap-1.5 flex-1 justify-center text-xs text-red-600 border-red-300 hover:bg-red-50" disabled={!departmentId}>
+                  <Trash2 size={13} /> Delete
                 </button>
               </div>
             </div>
 
-            <div>
-              <label className="label">Role</label>
+            {/* ROLE */}
+            <div className="border border-gray-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Users size={15} className="text-gray-400" />
+                <label className="label mb-0 text-sm font-semibold">Role</label>
+              </div>
               <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
                 {availableRoles.length === 0
-                  ? <option value="">— Select center &amp; department first —</option>
+                  ? <option value="">— Select center & department first —</option>
                   : availableRoles.map(r => <option key={r.id} value={r.name}>{r.name}</option>)
                 }
               </select>
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="grid grid-cols-2 gap-2">
                 <input className="input" placeholder="New role name" value={newRoleName} onChange={(e) => setNewRoleName(e.target.value)} />
                 <select className="input" value={newRoleAudience} onChange={(e) => setNewRoleAudience(e.target.value as any)}>
                   <option value="Admin">Admin UI</option>
                   <option value="Sewadaar">Sewadaar UI</option>
                 </select>
               </div>
-              <button onClick={createRole} className="btn-primary flex items-center gap-2 mt-2 w-full justify-center">
-                <Plus size={16} /> Add Role
+              <button onClick={createRole} className="btn-primary flex items-center gap-1.5 w-full justify-center text-sm">
+                <Plus size={14} /> Add Role
               </button>
-              <div className="flex gap-2 mt-2">
-                <button onClick={updateRole} className="btn-secondary flex items-center gap-2 flex-1">
-                  <Pencil size={16} /> Edit Role
+              <div className="flex gap-2">
+                <button onClick={updateRole} className="btn-secondary flex items-center gap-1.5 flex-1 justify-center text-xs">
+                  <Pencil size={13} /> Edit
                 </button>
-                <button onClick={deleteRole} className="btn-secondary flex items-center gap-2 flex-1 text-red-600 border-red-300 hover:bg-red-50">
-                  <Trash2 size={16} /> Delete Role
+                <button onClick={deleteRole} className="btn-secondary flex items-center gap-1.5 flex-1 justify-center text-xs text-red-600 border-red-300 hover:bg-red-50">
+                  <Trash2 size={13} /> Delete
                 </button>
               </div>
-            </div>
-
-            <button onClick={save} className="btn-primary flex items-center justify-center gap-2" disabled={saving || !centerId}>
-              <Save size={16} /> {saving ? 'Saving...' : 'Save Rules'}
-            </button>
-
-            <div className="text-xs text-gray-500">
-              Tip: Use “All departments” to define center-wide defaults, then override per-department if needed.
             </div>
           </div>
+        </div>
 
-          <div className="card lg:col-span-2">
-            <div className="flex items-center justify-between flex-wrap gap-2 mb-4">
+        {/* ── STEP 2: PAGE ACCESS + ASSET VISIBILITY (side by side) ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* PAGE ACCESS */}
+          <div className="card space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
               <div>
-                <div className="font-semibold text-gray-800">Pages</div>
-                <div className="text-sm text-gray-500">{visiblePages.length} pages available for {role}</div>
+                <div className="font-semibold text-gray-800">Page Access</div>
+                <div className="text-sm text-gray-500">{visiblePages.length} pages for <span className="font-medium text-gray-700">{role || '—'}</span></div>
               </div>
-              <div className="text-sm text-gray-500">
-                Selected: <span className="font-medium text-gray-800">{selectedPageIds.length}</span>
+              <div className="ml-auto">
+                <span className="text-xs bg-gray-100 text-gray-600 rounded-full px-2.5 py-1 font-medium">
+                  {selectedPageIds.length} / {visiblePages.length} selected
+                </span>
               </div>
             </div>
 
             {!centerId ? (
-              <div className="text-sm text-gray-500">Select a center to manage access rules.</div>
-            ) : visiblePages.length === 0 ? (
-              <div className="text-sm text-gray-500">No pages available for this role.</div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {visiblePages.map(p => (
-                  <label key={p.id} className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={selectedPageIds.includes(p.id)}
-                      onChange={() => togglePage(p.id)}
-                      className="mt-1"
-                    />
-                    <div className="min-w-0">
-                      <div className="text-sm font-medium text-gray-800">{p.label}</div>
-                      <div className="text-xs text-gray-500 truncate">{p.path}</div>
-                    </div>
-                  </label>
-                ))}
+              <div className="text-sm text-gray-400 text-center py-8 border border-dashed border-gray-200 rounded-xl">
+                Select a center to manage page access
               </div>
+            ) : visiblePages.length === 0 ? (
+              <div className="text-sm text-gray-400 text-center py-8 border border-dashed border-gray-200 rounded-xl">
+                No pages available for this role
+              </div>
+            ) : (
+              <>
+                <div className="flex gap-2">
+                  <button className="btn-secondary text-xs px-3 py-1.5" onClick={() => setSelectedPageIds(visiblePages.map(p => p.id))}>
+                    Select all
+                  </button>
+                  <button className="btn-secondary text-xs px-3 py-1.5" onClick={() => setSelectedPageIds([])}>
+                    Clear all
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1">
+                  {visiblePages.map(p => (
+                    <label key={p.id} className={`flex items-start gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${selectedPageIds.includes(p.id) ? 'border-blue-300 bg-blue-50' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <input
+                        type="checkbox"
+                        checked={selectedPageIds.includes(p.id)}
+                        onChange={() => togglePage(p.id)}
+                        className="mt-0.5"
+                      />
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-gray-800 leading-tight">{p.label}</div>
+                        <div className="text-xs text-gray-400 truncate mt-0.5">{p.path}</div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* ASSET VISIBILITY */}
+          <div className="card space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
+              <div>
+                <div className="font-semibold text-gray-800">Asset Visibility</div>
+                <div className="text-sm text-gray-500">Which asset types <span className="font-medium text-gray-700">{role || '—'}</span> can see</div>
+              </div>
+              <div className="ml-auto">
+                <span className="text-xs bg-gray-100 text-gray-600 rounded-full px-2.5 py-1 font-medium">
+                  {selectedAssetTypeIds.length} / {assetTypes.length} selected
+                </span>
+              </div>
+            </div>
+
+            {!centerId ? (
+              <div className="text-sm text-gray-400 text-center py-8 border border-dashed border-gray-200 rounded-xl">
+                Select a center to manage asset visibility
+              </div>
+            ) : assetTypes.length === 0 ? (
+              <div className="text-sm text-gray-400 text-center py-8 border border-dashed border-gray-200 rounded-xl">
+                No asset types available for this scope
+              </div>
+            ) : (
+              <>
+                <div className="flex gap-2">
+                  <button className="btn-secondary text-xs px-3 py-1.5" onClick={() => setSelectedAssetTypeIds(assetTypes.map(t => t.id))}>
+                    Select all
+                  </button>
+                  <button className="btn-secondary text-xs px-3 py-1.5" onClick={() => setSelectedAssetTypeIds([])}>
+                    Clear all
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1">
+                  {assetTypes.map((t) => (
+                    <label key={t.id} className={`flex items-start gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${selectedAssetTypeIds.includes(t.id) ? 'border-blue-300 bg-blue-50' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <input
+                        type="checkbox"
+                        checked={selectedAssetTypeIds.includes(t.id)}
+                        onChange={() => toggleAssetType(t.id)}
+                        className="mt-0.5"
+                      />
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-gray-800 leading-tight">{t.name}</div>
+                        <div className="text-xs text-gray-400 truncate mt-0.5">{t.code} · {t.trackingMode}</div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>
 
-        <div className="card space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
+        {/* ── SAVE ACCESS RULES ── */}
+        <div className="card">
+          <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
-              <div className="font-semibold text-gray-800">Asset Visibility Rules</div>
-              <div className="text-sm text-gray-500">Choose which asset types the selected role can see for this center/department scope.</div>
+              <div className="font-semibold text-gray-800">Save Access Rules</div>
+              <div className="text-sm text-gray-500">Saves page access for the selected center / department / role scope.</div>
             </div>
-            <div className="text-sm text-gray-500">Selected asset types: {selectedAssetTypeIds.length}</div>
+            <div className="flex gap-3">
+              <button onClick={saveConfig} disabled={configSaving || !isSuperAdmin} className="btn-secondary flex items-center gap-2">
+                <Settings size={15} /> {configSaving ? 'Saving…' : 'Save Asset Config'}
+              </button>
+              <button onClick={save} className="btn-primary flex items-center gap-2" disabled={saving || !centerId}>
+                <Save size={15} /> {saving ? 'Saving…' : 'Save Page Rules'}
+              </button>
+            </div>
           </div>
-          {!centerId ? (
-            <div className="text-sm text-gray-500">Select a center to manage asset visibility.</div>
-          ) : assetTypes.length === 0 ? (
-            <div className="text-sm text-gray-500">No asset types available for this scope.</div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {assetTypes.map((t) => (
-                <label key={t.id} className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={selectedAssetTypeIds.includes(t.id)}
-                    onChange={() => toggleAssetType(t.id)}
-                    className="mt-1"
-                  />
-                  <div className="min-w-0">
-                    <div className="text-sm font-medium text-gray-800">{t.name}</div>
-                    <div className="text-xs text-gray-500 truncate">{t.code} · {t.trackingMode}</div>
-                  </div>
-                </label>
-              ))}
-            </div>
+          {!isSuperAdmin && (
+            <div className="text-xs text-amber-700 mt-2">Only SUPER_ADMIN can save product configuration.</div>
           )}
         </div>
 
-        <div className="card space-y-4">
-          <div className="font-semibold text-gray-800">Product Configuration</div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={!!productConfig.sms?.issueEnabled}
-                onChange={(e) => setProductConfig((p: any) => ({ ...p, sms: { ...p.sms, issueEnabled: e.target.checked } }))} />
-              SMS on Issue Assets
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={!!productConfig.sms?.receiveEnabled}
-                onChange={(e) => setProductConfig((p: any) => ({ ...p, sms: { ...p.sms, receiveEnabled: e.target.checked } }))} />
-              SMS on Receive Assets
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={!!productConfig.featureFlags?.unifiedAssetsEnabled}
-                onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, unifiedAssetsEnabled: e.target.checked } }))} />
-              Unified Assets Module
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={!!productConfig.featureFlags?.legacyWirelessEnabled}
-                onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, legacyWirelessEnabled: e.target.checked } }))} />
-              Legacy Wireless Module
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={!!productConfig.featureFlags?.qrAssetFlowEnabled}
-                onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, qrAssetFlowEnabled: e.target.checked } }))} />
-              QR Asset Flow
-            </label>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <label className="label">App Name</label>
-              <input className="input" value={productConfig.branding?.appName || ''} onChange={(e) => setProductConfig((p: any) => ({ ...p, branding: { ...p.branding, appName: e.target.value } }))} />
-            </div>
-            <div>
-              <label className="label">Default Center Name</label>
-              <input className="input" value={productConfig.branding?.defaultCenterName || ''} onChange={(e) => setProductConfig((p: any) => ({ ...p, branding: { ...p.branding, defaultCenterName: e.target.value } }))} />
-            </div>
+        {/* ── PRODUCT CONFIG (collapsible-style, grouped) ── */}
+        <div className="card space-y-5">
+          <div className="flex items-center gap-2">
+            <Settings size={16} className="text-gray-400" />
+            <div className="font-semibold text-gray-800">Product Configuration</div>
+            {!isSuperAdmin && <span className="ml-auto text-xs text-amber-600 bg-amber-50 border border-amber-100 rounded-full px-2.5 py-0.5">Super Admin only</span>}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <div className="label">Center-head roles (cross-department in same center)</div>
-              <div className="space-y-1 max-h-40 overflow-auto border rounded-lg p-2">
-                {roles.map((r) => {
-                  const checked = (productConfig.centerHeadRoles || []).includes(r.name)
-                  return (
-                    <label key={r.id} className="flex items-center gap-2 text-sm">
-                      <input type="checkbox" checked={checked}
-                        onChange={(e) => setProductConfig((p: any) => ({
-                          ...p,
-                          centerHeadRoles: e.target.checked
-                            ? [...(p.centerHeadRoles || []), r.name]
-                            : (p.centerHeadRoles || []).filter((x: string) => x !== r.name),
-                        }))} />
-                      {r.name}
-                    </label>
-                  )
-                })}
+          {/* Branding */}
+          <div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Branding</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label className="label">App Name</label>
+                <input className="input" value={productConfig.branding?.appName || ''} onChange={(e) => setProductConfig((p: any) => ({ ...p, branding: { ...p.branding, appName: e.target.value } }))} />
               </div>
-            </div>
-            <div>
-              <div className="label">SMS default by role</div>
-              <div className="space-y-1 max-h-40 overflow-auto border rounded-lg p-2">
-                {roles.map((r) => {
-                  const entry = (productConfig.roleDefaults || []).find((x: any) => x.role === r.name)
-                  const smsEnabled = entry ? !!entry.smsEnabled : true
-                  return (
-                    <label key={r.id} className="flex items-center gap-2 text-sm">
-                      <input type="checkbox" checked={smsEnabled} onChange={() => toggleRoleSms(r.name)} />
-                      {r.name} ({smsEnabled ? 'SMS ON' : 'SMS OFF'})
-                    </label>
-                  )
-                })}
+              <div>
+                <label className="label">Default Center Name</label>
+                <input className="input" value={productConfig.branding?.defaultCenterName || ''} onChange={(e) => setProductConfig((p: any) => ({ ...p, branding: { ...p.branding, defaultCenterName: e.target.value } }))} />
               </div>
             </div>
           </div>
 
-          <button onClick={saveConfig} disabled={configSaving || !isSuperAdmin} className="btn-primary w-full md:w-auto">
-            {configSaving ? 'Saving config...' : 'Save Product Config'}
-          </button>
-          {!isSuperAdmin && <div className="text-xs text-amber-700">Only SUPER_ADMIN can change product configuration.</div>}
+          {/* Feature flags + SMS toggles */}
+          <div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Features & SMS</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2">
+              {[
+                { label: 'SMS on Issue Assets', key: 'sms.issueEnabled', get: () => !!productConfig.sms?.issueEnabled, set: (v: boolean) => setProductConfig((p: any) => ({ ...p, sms: { ...p.sms, issueEnabled: v } })) },
+                { label: 'SMS on Receive Assets', key: 'sms.receiveEnabled', get: () => !!productConfig.sms?.receiveEnabled, set: (v: boolean) => setProductConfig((p: any) => ({ ...p, sms: { ...p.sms, receiveEnabled: v } })) },
+                { label: 'Unified Assets Module', key: 'ff.unified', get: () => !!productConfig.featureFlags?.unifiedAssetsEnabled, set: (v: boolean) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, unifiedAssetsEnabled: v } })) },
+                { label: 'Legacy Wireless Module', key: 'ff.legacy', get: () => !!productConfig.featureFlags?.legacyWirelessEnabled, set: (v: boolean) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, legacyWirelessEnabled: v } })) },
+                { label: 'QR Asset Flow', key: 'ff.qr', get: () => !!productConfig.featureFlags?.qrAssetFlowEnabled, set: (v: boolean) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, qrAssetFlowEnabled: v } })) },
+              ].map(item => (
+                <label key={item.key} className="flex items-center gap-2.5 py-1.5 cursor-pointer group">
+                  <input type="checkbox" checked={item.get()} onChange={(e) => item.set(e.target.checked)} className="mt-0" />
+                  <span className="text-sm text-gray-700 group-hover:text-gray-900">{item.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Role config */}
+          <div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Role Configuration</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <div className="text-sm font-medium text-gray-700 mb-2">Center-head roles <span className="text-gray-400 font-normal text-xs">(cross-department access)</span></div>
+                <div className="border border-gray-200 rounded-xl divide-y divide-gray-100 overflow-hidden">
+                  {roles.map((r) => {
+                    const checked = (productConfig.centerHeadRoles || []).includes(r.name)
+                    return (
+                      <label key={r.id} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" checked={checked}
+                          onChange={(e) => setProductConfig((p: any) => ({
+                            ...p,
+                            centerHeadRoles: e.target.checked
+                              ? [...(p.centerHeadRoles || []), r.name]
+                              : (p.centerHeadRoles || []).filter((x: string) => x !== r.name),
+                          }))} />
+                        <span className="text-sm text-gray-700">{r.name}</span>
+                      </label>
+                    )
+                  })}
+                  {roles.length === 0 && <div className="px-3 py-2.5 text-sm text-gray-400">No roles loaded</div>}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-medium text-gray-700 mb-2">SMS defaults <span className="text-gray-400 font-normal text-xs">per role</span></div>
+                <div className="border border-gray-200 rounded-xl divide-y divide-gray-100 overflow-hidden">
+                  {roles.map((r) => {
+                    const entry = (productConfig.roleDefaults || []).find((x: any) => x.role === r.name)
+                    const smsEnabled = entry ? !!entry.smsEnabled : true
+                    return (
+                      <label key={r.id} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" checked={smsEnabled} onChange={() => toggleRoleSms(r.name)} />
+                        <span className="text-sm text-gray-700 flex-1">{r.name}</span>
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${smsEnabled ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                          {smsEnabled ? 'SMS ON' : 'SMS OFF'}
+                        </span>
+                      </label>
+                    )
+                  })}
+                  {roles.length === 0 && <div className="px-3 py-2.5 text-sm text-gray-400">No roles loaded</div>}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </AdminLayout>
   )
