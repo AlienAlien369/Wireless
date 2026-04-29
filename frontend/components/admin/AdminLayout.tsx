@@ -71,11 +71,11 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
   return (
     <div className="min-h-screen flex bg-gray-50">
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-primary transform transition-transform duration-200
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-primary transform transition-transform duration-200 flex flex-col
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:sticky lg:top-0 lg:h-screen lg:translate-x-0`}>
 
         {/* Logo */}
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-primary-light">
+        <div className="flex-shrink-0 flex items-center gap-3 px-6 py-5 border-b border-primary-light">
           <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
             <Wifi size={22} className="text-white" />
           </div>
@@ -86,7 +86,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
         </div>
 
         {/* Nav */}
-        <nav className="px-3 py-4 space-y-1">
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
           {navItems.map(({ href, label, icon: Icon }) => {
             const active = router.pathname === href || (href !== '/admin' && router.pathname.startsWith(href))
             return (
@@ -101,7 +101,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
         </nav>
 
         {/* User info */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-primary-light">
+        <div className="flex-shrink-0 p-4 border-t border-primary-light">
           <div className="flex items-center justify-between">
             <div>
               <div className="text-white text-sm font-medium">{user?.fullName}</div>
