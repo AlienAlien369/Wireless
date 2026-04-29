@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AdminLayout from '../../components/admin/AdminLayout'
-import { reportsApi, productConfigApi, tenantsApi } from '../../services/api'
-import { Radio, Users, AlertTriangle, CheckCircle, Clock, MapPin, Calendar, Activity, TrendingUp, Send } from 'lucide-react'
+import { reportsApi, productConfigApi, tenantsApi, assetsApi } from '../../services/api'
+import { Radio, Users, AlertTriangle, CheckCircle, Clock, MapPin, Calendar, Activity, TrendingUp, Send, Package } from 'lucide-react'
 import { APP_NAME, DEFAULT_CENTER_NAME } from '../../config/app'
 
 interface Stats {
@@ -33,6 +33,15 @@ interface VisitStat {
   asperaChargersRemaining: number
   kitsCurrentlyIssued: number
   kitsRemaining: number
+}
+
+interface AssetTypeSummary {
+  typeId: number
+  typeName: string
+  typeCode: string
+  issued: number
+  available: number
+  broken: number
 }
 
 function StatCard({ label, value, icon: Icon, color }: { label: string; value: number; icon: any; color: string }) {
@@ -73,6 +82,7 @@ function CountPair({
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null)
   const [visitStats, setVisitStats] = useState<VisitStat[]>([])
+  const [assetSummary, setAssetSummary] = useState<AssetTypeSummary[]>([])
   const [widgetConfig, setWidgetConfig] = useState<Record<string, boolean>>({})
   const [centers, setCenters] = useState<any[]>([])
   const [departments, setDepartments] = useState<any[]>([])
@@ -102,6 +112,50 @@ export default function AdminDashboard() {
     reportsApi.getDashboard({ centerId: centerId ?? undefined, departmentId: departmentId ?? undefined }).then(r => setStats(r.data)).catch(console.error)
     reportsApi.getVisitWiseDashboard({ centerId: centerId ?? undefined, departmentId: departmentId ?? undefined }).then(r => setVisitStats(r.data)).catch(console.error)
   }, [centerId, departmentId])
+
+  // Fetch asset summary by type for the current role/center/dept
+  useEffect(() => {
+    if (!centerId) { setAssetSummary([]); return }
+    Promise.all([
+      assetsApi.getTypes(centerId, departmentId ?? undefined),
+      assetsApi.getAssets(centerId, undefined, undefined, departmentId ?? undefined),
+    ]).then(([tRes, aRes]) => {
+      const types: any[] = tRes.data || []
+      const assets: any[] = aRes.data || []
+      const summary: AssetTypeSummary[] = types.map(t => {
+        const items = assets.filter(a => a.assetTypeId === t.id)
+        return {
+          typeId: t.id,
+          typeName: t.name,
+          typeCode: t.code,
+          issued: items.filter(a => a.status === 'Issued').length,
+          available: items.filter(a => a.status === 'Available').length,
+          broken: items.filter(a => a.status === 'Broken').length,
+        }
+      }).filter(s => s.issued + s.available + s.broken > 0)
+      setAssetSummary(summary)
+    }).catch(() => setAssetSummary([]))
+  }, [centerId, departmentId])
+
+  // Determine which wireless columns have any data across all visits
+  const hasKenwoodSets = visitStats.some(v => v.kenwoodSetsCurrentlyIssued + v.kenwoodSetsRemaining > 0)
+  const hasVertelSets = visitStats.some(v => v.vertelSetsCurrentlyIssued + v.vertelSetsRemaining > 0)
+  const hasAsperaSets = visitStats.some(v => v.asperaSetsCurrentlyIssued + v.asperaSetsRemaining > 0)
+  const hasKenwoodChargers = visitStats.some(v => v.kenwoodChargersCurrentlyIssued + v.kenwoodChargersRemaining > 0)
+  const hasVertelChargers = visitStats.some(v => v.vertelChargersCurrentlyIssued + v.vertelChargersRemaining > 0)
+  const hasAsperaChargers = visitStats.some(v => v.asperaChargersCurrentlyIssued + v.asperaChargersRemaining > 0)
+  const hasKits = visitStats.some(v => v.kitsCurrentlyIssued + v.kitsRemaining > 0)
+
+  const wirelessHeaders = [
+    'Visit Name', 'Total Issued',
+    ...(hasKenwoodSets ? ['Kenwood Sets'] : []),
+    ...(hasVertelSets ? ['Vertel Sets'] : []),
+    ...(hasAsperaSets ? ['Aspera Sets'] : []),
+    ...(hasKenwoodChargers ? ['Kenwood Chargers'] : []),
+    ...(hasVertelChargers ? ['Vertel Chargers'] : []),
+    ...(hasAsperaChargers ? ['Aspera Chargers'] : []),
+    ...(hasKits ? ['Kits'] : []),
+  ]
 
   const isWidgetEnabled = (key: string) => widgetConfig[key] !== false
 
@@ -227,24 +281,14 @@ export default function AdminDashboard() {
             <table className="w-full text-sm">
               <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                 <tr>
-                  {[
-                    'Visit Name',
-                    'Total Currently Issued',
-                    'Kenwood Sets',
-                    'Vertel Sets',
-                    'Aspera Sets',
-                    'Kenwood Chargers',
-                    'Vertel Chargers',
-                    'Aspera Chargers',
-                    'Kits',
-                  ].map(h => (
+                  {wirelessHeaders.map(h => (
                     <th key={h} className="text-left px-4 py-3 font-semibold text-gray-700 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {visitStats.length === 0 ? (
-                  <tr><td colSpan={9} className="text-center py-4 text-gray-500">No visit data available</td></tr>
+                  <tr><td colSpan={wirelessHeaders.length} className="text-center py-4 text-gray-500">No visit data available</td></tr>
                 ) : (
                   visitStats.map((visit, idx) => (
                     <tr key={idx} className="border-b border-gray-100 hover:bg-blue-50 transition-colors">
@@ -254,18 +298,50 @@ export default function AdminDashboard() {
                           {visit.totalCurrentlyIssued}
                         </span>
                       </td>
-                      <td className="px-4 py-3"><CountPair issued={visit.kenwoodSetsCurrentlyIssued} remaining={visit.kenwoodSetsRemaining} /></td>
-                      <td className="px-4 py-3"><CountPair issued={visit.vertelSetsCurrentlyIssued} remaining={visit.vertelSetsRemaining} /></td>
-                      <td className="px-4 py-3"><CountPair issued={visit.asperaSetsCurrentlyIssued} remaining={visit.asperaSetsRemaining} /></td>
-                      <td className="px-4 py-3"><CountPair issued={visit.kenwoodChargersCurrentlyIssued} remaining={visit.kenwoodChargersRemaining} /></td>
-                      <td className="px-4 py-3"><CountPair issued={visit.vertelChargersCurrentlyIssued} remaining={visit.vertelChargersRemaining} /></td>
-                      <td className="px-4 py-3"><CountPair issued={visit.asperaChargersCurrentlyIssued} remaining={visit.asperaChargersRemaining} /></td>
-                      <td className="px-4 py-3"><CountPair issued={visit.kitsCurrentlyIssued} remaining={visit.kitsRemaining} /></td>
+                      {hasKenwoodSets && <td className="px-4 py-3"><CountPair issued={visit.kenwoodSetsCurrentlyIssued} remaining={visit.kenwoodSetsRemaining} /></td>}
+                      {hasVertelSets && <td className="px-4 py-3"><CountPair issued={visit.vertelSetsCurrentlyIssued} remaining={visit.vertelSetsRemaining} /></td>}
+                      {hasAsperaSets && <td className="px-4 py-3"><CountPair issued={visit.asperaSetsCurrentlyIssued} remaining={visit.asperaSetsRemaining} /></td>}
+                      {hasKenwoodChargers && <td className="px-4 py-3"><CountPair issued={visit.kenwoodChargersCurrentlyIssued} remaining={visit.kenwoodChargersRemaining} /></td>}
+                      {hasVertelChargers && <td className="px-4 py-3"><CountPair issued={visit.vertelChargersCurrentlyIssued} remaining={visit.vertelChargersRemaining} /></td>}
+                      {hasAsperaChargers && <td className="px-4 py-3"><CountPair issued={visit.asperaChargersCurrentlyIssued} remaining={visit.asperaChargersRemaining} /></td>}
+                      {hasKits && <td className="px-4 py-3"><CountPair issued={visit.kitsCurrentlyIssued} remaining={visit.kitsRemaining} /></td>}
                     </tr>
                   ))
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+        )}
+
+        {/* Asset Summary by Type (role-filtered) */}
+        {isWidgetEnabled('assets.summary') && assetSummary.length > 0 && (
+        <div className="card">
+          <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <Package size={20} /> Asset Inventory — Issued &amp; Remaining
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {assetSummary.map(s => (
+              <div key={s.typeId} className="rounded-lg border border-gray-200 p-4 bg-gray-50">
+                <div className="font-semibold text-gray-800 mb-2">{s.typeName}</div>
+                <div className="space-y-1 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Issued</span>
+                    <span className="font-bold text-yellow-600">{s.issued}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Available</span>
+                    <span className="font-bold text-green-600">{s.available}</span>
+                  </div>
+                  {s.broken > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Broken</span>
+                      <span className="font-bold text-red-500">{s.broken}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         )}
