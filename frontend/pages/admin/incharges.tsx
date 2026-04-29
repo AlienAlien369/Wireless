@@ -10,7 +10,7 @@ interface Sewadaar { id: number; name: string; badgeNumber: string; mobileNumber
 export default function InchargesPage() {
   const [incharges, setIncharges] = useState<Sewadaar[]>([])
   const [showForm, setShowForm] = useState(false)
-  const [editing, setEditing] = useState<Incharge | null>(null)
+  const [editing, setEditing] = useState<Sewadaar | null>(null)
   const [search, setSearch] = useState('')
   const { register, handleSubmit, reset, setValue } = useForm<any>()
 
