@@ -332,6 +332,105 @@ using (var scope = app.Services.CreateScope())
         await db.SaveChangesAsync();
     }
 
+    // Backfill legacy chargers into unified assets.
+    var chargerAssetType = await db.AssetTypes.FirstOrDefaultAsync(x => x.CenterId == center.Id && x.Code == "charger");
+    if (chargerAssetType == null)
+    {
+        chargerAssetType = new AssetType { CenterId = center.Id, Code = "charger", Name = "Charger", TrackingMode = "Individual" };
+        db.AssetTypes.Add(chargerAssetType);
+        await db.SaveChangesAsync();
+    }
+
+    var existingChargerNumbers = await db.Assets
+        .Where(x => x.CenterId == center.Id && x.AssetTypeId == chargerAssetType.Id && x.ItemNumber != null)
+        .Select(x => x.ItemNumber!)
+        .ToListAsync();
+    var existingChargerSet = new HashSet<string>(existingChargerNumbers, StringComparer.OrdinalIgnoreCase);
+    var legacyChargers = await db.Chargers.ToListAsync();
+    var migratedChargers = 0;
+    foreach (var c in legacyChargers)
+    {
+        if (string.IsNullOrWhiteSpace(c.ItemNumber) || existingChargerSet.Contains(c.ItemNumber)) continue;
+        db.Assets.Add(new Asset
+        {
+            CenterId = center.Id,
+            AssetTypeId = chargerAssetType.Id,
+            ItemNumber = c.ItemNumber,
+            Brand = c.Brand,
+            Status = c.Status,
+            Remarks = c.Remarks,
+            CreatedAt = c.CreatedAt
+        });
+        existingChargerSet.Add(c.ItemNumber);
+        migratedChargers++;
+    }
+    if (migratedChargers > 0) await db.SaveChangesAsync();
+
+    // Backfill IssueItems.AssetId from legacy WirelessSet/Charger/Kit references.
+    // Build asset lookup maps (O(1) per item) to avoid N+1 queries.
+    var wirelessAssetMap = await db.Assets
+        .Where(a => a.CenterId == center.Id && a.AssetTypeId == wirelessAssetType.Id && a.ItemNumber != null)
+        .Select(a => new { a.Id, Number = a.ItemNumber! })
+        .ToDictionaryAsync(a => a.Number.ToLowerInvariant(), a => a.Id);
+    var kitAssetMap = await db.Assets
+        .Where(a => a.CenterId == center.Id && a.AssetTypeId == kitAssetType.Id && a.ItemNumber != null)
+        .Select(a => new { a.Id, Number = a.ItemNumber! })
+        .ToDictionaryAsync(a => a.Number.ToLowerInvariant(), a => a.Id);
+    var chargerAssetMap = await db.Assets
+        .Where(a => a.CenterId == center.Id && a.AssetTypeId == chargerAssetType.Id && a.ItemNumber != null)
+        .Select(a => new { a.Id, Number = a.ItemNumber! })
+        .ToDictionaryAsync(a => a.Number.ToLowerInvariant(), a => a.Id);
+
+    var itemsToLink = await db.IssueItems
+        .Where(ii => ii.AssetId == null && (ii.WirelessSetId != null || ii.KitId != null || ii.ChargerId != null))
+        .Include(ii => ii.WirelessSet)
+        .Include(ii => ii.Kit)
+        .Include(ii => ii.Charger)
+        .ToListAsync();
+
+    var linkedCount = 0;
+    foreach (var ii in itemsToLink)
+    {
+        if (ii.WirelessSetId != null && ii.WirelessSet?.ItemNumber != null &&
+            wirelessAssetMap.TryGetValue(ii.WirelessSet.ItemNumber.ToLowerInvariant(), out var wid))
+        {
+            ii.AssetId = wid;
+            ii.ItemType = "Asset";
+            linkedCount++;
+        }
+        else if (ii.KitId != null && ii.Kit?.ItemNumber != null &&
+                 kitAssetMap.TryGetValue(ii.Kit.ItemNumber.ToLowerInvariant(), out var kid))
+        {
+            ii.AssetId = kid;
+            ii.ItemType = "Asset";
+            linkedCount++;
+        }
+        else if (ii.ChargerId != null && ii.Charger?.ItemNumber != null &&
+                 chargerAssetMap.TryGetValue(ii.Charger.ItemNumber.ToLowerInvariant(), out var cid))
+        {
+            ii.AssetId = cid;
+            ii.ItemType = "Asset";
+            linkedCount++;
+        }
+    }
+    if (linkedCount > 0) await db.SaveChangesAsync();
+
+    // Sync Asset.Status to match active IssueItems (fixes status drift from legacy issues).
+    var activeAssetIds = await db.IssueItems
+        .Where(ii => ii.AssetId != null && !ii.IsReturned)
+        .Select(ii => ii.AssetId!.Value)
+        .Distinct()
+        .ToListAsync();
+    var assetsToMarkIssued = await db.Assets
+        .Where(a => a.CenterId == center.Id && a.Status == "Available" && activeAssetIds.Contains(a.Id))
+        .ToListAsync();
+    foreach (var a in assetsToMarkIssued) a.Status = "Issued";
+    var assetsToMarkAvailable = await db.Assets
+        .Where(a => a.CenterId == center.Id && a.Status == "Issued" && !activeAssetIds.Contains(a.Id))
+        .ToListAsync();
+    foreach (var a in assetsToMarkAvailable) a.Status = "Available";
+    if (assetsToMarkIssued.Count > 0 || assetsToMarkAvailable.Count > 0) await db.SaveChangesAsync();
+
     // Seed default admin user.
     var adminUser = await userMgr.FindByNameAsync("admin");
     if (adminUser == null)

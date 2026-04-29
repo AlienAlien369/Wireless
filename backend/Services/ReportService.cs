@@ -16,28 +16,37 @@ public class ReportService
 
     public async Task<List<VisitWiseDashboardDto>> GetVisitWiseDashboardAsync()
     {
-        var visits = await _db.Visits
-            .Include(v => v.Issues)
-                .ThenInclude(i => i.Items)
-                    .ThenInclude(ii => ii.WirelessSet)
-            .Include(v => v.Issues)
-                .ThenInclude(i => i.Items)
-                    .ThenInclude(ii => ii.Charger)
-            .Include(v => v.Issues)
-                .ThenInclude(i => i.Items)
-                    .ThenInclude(ii => ii.Kit)
-            .OrderByDescending(v => v.VisitDate)
+        // Load all assets with their types once – avoids N+1 and WirelessSets/Chargers/Kits tables.
+        var allAssets = await _db.Assets
+            .AsNoTracking()
+            .Include(a => a.AssetType)
             .ToListAsync();
 
-        var totalKenwoodSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Kenwood" && w.Status != "Broken");
-        var totalVertelSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Vertel" && w.Status != "Broken");
-        var totalAsperaSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Aspera" && w.Status != "Broken");
+        // Build a fast lookup: AssetId → Asset (with AssetType pre-loaded).
+        var assetById = allAssets.ToDictionary(a => a.Id);
 
-        var totalKenwoodChargers = await _db.Chargers.CountAsync(c => c.Brand == "Kenwood" && c.Status != "Broken");
-        var totalVertelChargers = await _db.Chargers.CountAsync(c => c.Brand == "Vertel" && c.Status != "Broken");
-        var totalAsperaChargers = await _db.Chargers.CountAsync(c => c.Brand == "Aspera" && c.Status != "Broken");
+        // Total inventory counts (non-broken) by type code + brand.
+        int TotalByTypeAndBrand(string typeCode, string? brand) =>
+            allAssets.Count(a =>
+                a.AssetType.Code == typeCode &&
+                (brand == null || a.Brand == brand) &&
+                a.Status != "Broken");
 
-        var totalKits = await _db.Kits.CountAsync(k => k.Status != "Broken");
+        var totalKenwoodSets = TotalByTypeAndBrand("wireless-set", "Kenwood");
+        var totalVertelSets  = TotalByTypeAndBrand("wireless-set", "Vertel");
+        var totalAsperaSets  = TotalByTypeAndBrand("wireless-set", "Aspera");
+        var totalKenwoodChargers = TotalByTypeAndBrand("charger", "Kenwood");
+        var totalVertelChargers  = TotalByTypeAndBrand("charger", "Vertel");
+        var totalAsperaChargers  = TotalByTypeAndBrand("charger", "Aspera");
+        var totalKits = TotalByTypeAndBrand("kit", null);
+
+        // Load visits with only IssueItem IDs + AssetId (no deep navigation needed).
+        var visits = await _db.Visits
+            .AsNoTracking()
+            .Include(v => v.Issues)
+                .ThenInclude(i => i.Items)
+            .OrderByDescending(v => v.VisitDate)
+            .ToListAsync();
 
         var result = new List<VisitWiseDashboardDto>();
         foreach (var visit in visits)
@@ -47,35 +56,40 @@ public class ReportService
                 .Where(ii => !ii.IsReturned)
                 .ToList();
 
-            var kenwoodSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Kenwood");
-            var vertelSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Vertel");
-            var asperaSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Aspera");
+            int CountIssued(string typeCode, string? brand) =>
+                activeItems.Count(ii =>
+                    ii.AssetId.HasValue &&
+                    assetById.TryGetValue(ii.AssetId.Value, out var a) &&
+                    a.AssetType.Code == typeCode &&
+                    (brand == null || a.Brand == brand));
 
-            var kenwoodChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Kenwood");
-            var vertelChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Vertel");
-            var asperaChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Aspera");
-
-            var kitsIssued = activeItems.Count(ii => ii.KitId.HasValue);
+            var kenwoodSetsIssued    = CountIssued("wireless-set", "Kenwood");
+            var vertelSetsIssued     = CountIssued("wireless-set", "Vertel");
+            var asperaSetsIssued     = CountIssued("wireless-set", "Aspera");
+            var kenwoodChargersIssued = CountIssued("charger", "Kenwood");
+            var vertelChargersIssued  = CountIssued("charger", "Vertel");
+            var asperaChargersIssued  = CountIssued("charger", "Aspera");
+            var kitsIssued           = CountIssued("kit", null);
 
             result.Add(new VisitWiseDashboardDto
             {
                 VisitId = visit.Id,
                 VisitName = visit.Name,
                 TotalCurrentlyIssued = activeItems.Count,
-                KenwoodSetsCurrentlyIssued = kenwoodSetsIssued,
-                KenwoodSetsRemaining = Math.Max(0, totalKenwoodSets - kenwoodSetsIssued),
-                VertelSetsCurrentlyIssued = vertelSetsIssued,
-                VertelSetsRemaining = Math.Max(0, totalVertelSets - vertelSetsIssued),
-                AsperaSetsCurrentlyIssued = asperaSetsIssued,
-                AsperaSetsRemaining = Math.Max(0, totalAsperaSets - asperaSetsIssued),
+                KenwoodSetsCurrentlyIssued  = kenwoodSetsIssued,
+                KenwoodSetsRemaining        = Math.Max(0, totalKenwoodSets - kenwoodSetsIssued),
+                VertelSetsCurrentlyIssued   = vertelSetsIssued,
+                VertelSetsRemaining         = Math.Max(0, totalVertelSets - vertelSetsIssued),
+                AsperaSetsCurrentlyIssued   = asperaSetsIssued,
+                AsperaSetsRemaining         = Math.Max(0, totalAsperaSets - asperaSetsIssued),
                 KenwoodChargersCurrentlyIssued = kenwoodChargersIssued,
-                KenwoodChargersRemaining = Math.Max(0, totalKenwoodChargers - kenwoodChargersIssued),
-                VertelChargersCurrentlyIssued = vertelChargersIssued,
-                VertelChargersRemaining = Math.Max(0, totalVertelChargers - vertelChargersIssued),
-                AsperaChargersCurrentlyIssued = asperaChargersIssued,
-                AsperaChargersRemaining = Math.Max(0, totalAsperaChargers - asperaChargersIssued),
+                KenwoodChargersRemaining       = Math.Max(0, totalKenwoodChargers - kenwoodChargersIssued),
+                VertelChargersCurrentlyIssued  = vertelChargersIssued,
+                VertelChargersRemaining        = Math.Max(0, totalVertelChargers - vertelChargersIssued),
+                AsperaChargersCurrentlyIssued  = asperaChargersIssued,
+                AsperaChargersRemaining        = Math.Max(0, totalAsperaChargers - asperaChargersIssued),
                 KitsCurrentlyIssued = kitsIssued,
-                KitsRemaining = Math.Max(0, totalKits - kitsIssued)
+                KitsRemaining       = Math.Max(0, totalKits - kitsIssued)
             });
         }
 
