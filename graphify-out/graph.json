@@ -53,7 +53,7 @@
       "source_file": "backend\\Program.cs",
       "source_location": "L1",
       "id": "backend_program_cs",
-      "community": 36,
+      "community": 37,
       "norm_label": "program.cs"
     },
     {
@@ -512,7 +512,7 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L1",
       "id": "backend_controllers_issuescontroller_cs",
-      "community": 4,
+      "community": 3,
       "norm_label": "issuescontroller.cs"
     },
     {
@@ -521,7 +521,7 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L12",
       "id": "issuescontroller_issuescontroller",
-      "community": 4,
+      "community": 3,
       "norm_label": "issuescontroller"
     },
     {
@@ -530,7 +530,7 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L28",
       "id": "issuescontroller_issuescontroller_getbyvisit",
-      "community": 4,
+      "community": 3,
       "norm_label": ".getbyvisit()"
     },
     {
@@ -539,7 +539,7 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L35",
       "id": "issuescontroller_issuescontroller_getbyid",
-      "community": 4,
+      "community": 3,
       "norm_label": ".getbyid()"
     },
     {
@@ -548,7 +548,7 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L43",
       "id": "issuescontroller_issuescontroller_getbyincharge",
-      "community": 4,
+      "community": 3,
       "norm_label": ".getbyincharge()"
     },
     {
@@ -575,7 +575,7 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L109",
       "id": "issuescontroller_issuescontroller_uploadphoto",
-      "community": 4,
+      "community": 3,
       "norm_label": ".uploadphoto()"
     },
     {
@@ -674,7 +674,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L1",
       "id": "backend_controllers_reportscontroller_cs",
-      "community": 6,
+      "community": 5,
       "norm_label": "reportscontroller.cs"
     },
     {
@@ -683,7 +683,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L10",
       "id": "reportscontroller_reportscontroller",
-      "community": 6,
+      "community": 5,
       "norm_label": "reportscontroller"
     },
     {
@@ -692,7 +692,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L21",
       "id": "reportscontroller_reportscontroller_getdashboard",
-      "community": 6,
+      "community": 5,
       "norm_label": ".getdashboard()"
     },
     {
@@ -701,7 +701,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L61",
       "id": "reportscontroller_reportscontroller_getvisitwisedashboard",
-      "community": 6,
+      "community": 5,
       "norm_label": ".getvisitwisedashboard()"
     },
     {
@@ -710,7 +710,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L80",
       "id": "reportscontroller_reportscontroller_visitexcel",
-      "community": 6,
+      "community": 5,
       "norm_label": ".visitexcel()"
     },
     {
@@ -719,7 +719,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L87",
       "id": "reportscontroller_reportscontroller_inventoryexcel",
-      "community": 6,
+      "community": 5,
       "norm_label": ".inventoryexcel()"
     },
     {
@@ -728,7 +728,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L94",
       "id": "reportscontroller_reportscontroller_breakagespdf",
-      "community": 6,
+      "community": 5,
       "norm_label": ".breakagespdf()"
     },
     {
@@ -737,7 +737,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L101",
       "id": "reportscontroller_reportscontroller_getallowedassettypeids",
-      "community": 6,
+      "community": 5,
       "norm_label": ".getallowedassettypeids()"
     },
     {
@@ -818,7 +818,7 @@
       "source_file": "backend\\Controllers\\TenantsController.cs",
       "source_location": "L20",
       "id": "tenantscontroller_tenantscontroller_getcenters",
-      "community": 1,
+      "community": 7,
       "norm_label": ".getcenters()"
     },
     {
@@ -854,7 +854,7 @@
       "source_file": "backend\\Controllers\\TenantsController.cs",
       "source_location": "L92",
       "id": "tenantscontroller_tenantscontroller_getdepartments",
-      "community": 1,
+      "community": 7,
       "norm_label": ".getdepartments()"
     },
     {
@@ -1016,7 +1016,7 @@
       "source_file": "backend\\Data\\AppDbContext.cs",
       "source_location": "L1",
       "id": "backend_data_appdbcontext_cs",
-      "community": 14,
+      "community": 15,
       "norm_label": "appdbcontext.cs"
     },
     {
@@ -1025,7 +1025,7 @@
       "source_file": "backend\\Data\\AppDbContext.cs",
       "source_location": "L7",
       "id": "appdbcontext_appdbcontext",
-      "community": 14,
+      "community": 15,
       "norm_label": "appdbcontext"
     },
     {
@@ -1034,7 +1034,7 @@
       "source_file": "",
       "source_location": "",
       "id": "identitydbcontext",
-      "community": 14,
+      "community": 15,
       "norm_label": "identitydbcontext"
     },
     {
@@ -1043,7 +1043,7 @@
       "source_file": "backend\\Data\\AppDbContext.cs",
       "source_location": "L33",
       "id": "appdbcontext_appdbcontext_onmodelcreating",
-      "community": 14,
+      "community": 15,
       "norm_label": ".onmodelcreating()"
     },
     {
@@ -1151,7 +1151,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L1",
       "id": "backend_helpers_cloudinaryhelper_cs",
-      "community": 4,
+      "community": 3,
       "norm_label": "cloudinaryhelper.cs"
     },
     {
@@ -1160,7 +1160,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L5",
       "id": "cloudinaryhelper_cloudinaryhelper",
-      "community": 4,
+      "community": 3,
       "norm_label": "cloudinaryhelper"
     },
     {
@@ -1169,7 +1169,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L13",
       "id": "cloudinaryhelper_cloudinaryhelper_uploadimageasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".uploadimageasync()"
     },
     {
@@ -1178,7 +1178,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L24",
       "id": "cloudinaryhelper_cloudinaryhelper_deleteimageasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".deleteimageasync()"
     },
     {
@@ -1268,7 +1268,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L1",
       "id": "backend_helpers_smshelper_cs",
-      "community": 4,
+      "community": 3,
       "norm_label": "smshelper.cs"
     },
     {
@@ -1277,7 +1277,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L8",
       "id": "smshelper_smshelper",
-      "community": 4,
+      "community": 3,
       "norm_label": "smshelper"
     },
     {
@@ -1286,7 +1286,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L28",
       "id": "smshelper_smshelper_configurehttpclient",
-      "community": 4,
+      "community": 3,
       "norm_label": ".configurehttpclient()"
     },
     {
@@ -1295,7 +1295,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L53",
       "id": "smshelper_smshelper_sendsmsasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".sendsmsasync()"
     },
     {
@@ -1304,7 +1304,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L129",
       "id": "smshelper_smshelper_buildrequest",
-      "community": 4,
+      "community": 3,
       "norm_label": ".buildrequest()"
     },
     {
@@ -1313,7 +1313,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L158",
       "id": "smshelper_smshelper_formatphonenumber",
-      "community": 4,
+      "community": 3,
       "norm_label": ".formatphonenumber()"
     },
     {
@@ -1322,7 +1322,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260306153528_initialcreate_cs",
-      "community": 7,
+      "community": 6,
       "norm_label": "20260306153528_initialcreate.cs"
     },
     {
@@ -1331,7 +1331,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L7",
       "id": "20260306153528_initialcreate_rssbwireless_api_migrations",
-      "community": 7,
+      "community": 6,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1340,7 +1340,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L10",
       "id": "20260306153528_initialcreate_initialcreate",
-      "community": 7,
+      "community": 6,
       "norm_label": "initialcreate"
     },
     {
@@ -1349,7 +1349,7 @@
       "source_file": "",
       "source_location": "",
       "id": "migration",
-      "community": 7,
+      "community": 6,
       "norm_label": "migration"
     },
     {
@@ -1358,7 +1358,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L13",
       "id": "20260306153528_initialcreate_initialcreate_up",
-      "community": 7,
+      "community": 6,
       "norm_label": ".up()"
     },
     {
@@ -1367,7 +1367,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L531",
       "id": "20260306153528_initialcreate_initialcreate_down",
-      "community": 7,
+      "community": 6,
       "norm_label": ".down()"
     },
     {
@@ -1376,7 +1376,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.Designer.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260306153528_initialcreate_designer_cs",
-      "community": 5,
+      "community": 1,
       "norm_label": "20260306153528_initialcreate.designer.cs"
     },
     {
@@ -1385,7 +1385,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.Designer.cs",
       "source_location": "L12",
       "id": "20260306153528_initialcreate_designer_rssbwireless_api_migrations",
-      "community": 5,
+      "community": 1,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1394,7 +1394,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.Designer.cs",
       "source_location": "L14",
       "id": "20260306153528_initialcreate_designer_initialcreate",
-      "community": 5,
+      "community": 1,
       "norm_label": "initialcreate"
     },
     {
@@ -1403,7 +1403,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.Designer.cs",
       "source_location": "L19",
       "id": "20260306153528_initialcreate_designer_initialcreate_buildtargetmodel",
-      "community": 5,
+      "community": 1,
       "norm_label": ".buildtargetmodel()"
     },
     {
@@ -1412,7 +1412,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260415111620_addtenancyandmenu_cs",
-      "community": 7,
+      "community": 6,
       "norm_label": "20260415111620_addtenancyandmenu.cs"
     },
     {
@@ -1421,7 +1421,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L7",
       "id": "20260415111620_addtenancyandmenu_rssbwireless_api_migrations",
-      "community": 7,
+      "community": 6,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1430,7 +1430,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L10",
       "id": "20260415111620_addtenancyandmenu_addtenancyandmenu",
-      "community": 7,
+      "community": 6,
       "norm_label": "addtenancyandmenu"
     },
     {
@@ -1439,7 +1439,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L13",
       "id": "20260415111620_addtenancyandmenu_addtenancyandmenu_up",
-      "community": 7,
+      "community": 6,
       "norm_label": ".up()"
     },
     {
@@ -1448,7 +1448,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L184",
       "id": "20260415111620_addtenancyandmenu_addtenancyandmenu_down",
-      "community": 7,
+      "community": 6,
       "norm_label": ".down()"
     },
     {
@@ -1457,7 +1457,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.Designer.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260415111620_addtenancyandmenu_designer_cs",
-      "community": 5,
+      "community": 1,
       "norm_label": "20260415111620_addtenancyandmenu.designer.cs"
     },
     {
@@ -1466,7 +1466,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.Designer.cs",
       "source_location": "L12",
       "id": "20260415111620_addtenancyandmenu_designer_rssbwireless_api_migrations",
-      "community": 5,
+      "community": 1,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1475,7 +1475,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.Designer.cs",
       "source_location": "L14",
       "id": "20260415111620_addtenancyandmenu_designer_addtenancyandmenu",
-      "community": 5,
+      "community": 1,
       "norm_label": "addtenancyandmenu"
     },
     {
@@ -1484,7 +1484,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.Designer.cs",
       "source_location": "L19",
       "id": "20260415111620_addtenancyandmenu_designer_addtenancyandmenu_buildtargetmodel",
-      "community": 5,
+      "community": 1,
       "norm_label": ".buildtargetmodel()"
     },
     {
@@ -1493,7 +1493,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260425122927_addtenantscopetooperationalentities_cs",
-      "community": 7,
+      "community": 6,
       "norm_label": "20260425122927_addtenantscopetooperationalentities.cs"
     },
     {
@@ -1502,7 +1502,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L5",
       "id": "20260425122927_addtenantscopetooperationalentities_rssbwireless_api_migrations",
-      "community": 7,
+      "community": 6,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1511,7 +1511,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L8",
       "id": "20260425122927_addtenantscopetooperationalentities_addtenantscopetooperationalentities",
-      "community": 7,
+      "community": 6,
       "norm_label": "addtenantscopetooperationalentities"
     },
     {
@@ -1520,7 +1520,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L11",
       "id": "20260425122927_addtenantscopetooperationalentities_addtenantscopetooperationalentities_up",
-      "community": 7,
+      "community": 6,
       "norm_label": ".up()"
     },
     {
@@ -1529,7 +1529,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L17",
       "id": "20260425122927_addtenantscopetooperationalentities_addtenantscopetooperationalentities_down",
-      "community": 7,
+      "community": 6,
       "norm_label": ".down()"
     },
     {
@@ -1538,7 +1538,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.Designer.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260425122927_addtenantscopetooperationalentities_designer_cs",
-      "community": 5,
+      "community": 1,
       "norm_label": "20260425122927_addtenantscopetooperationalentities.designer.cs"
     },
     {
@@ -1547,7 +1547,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.Designer.cs",
       "source_location": "L12",
       "id": "20260425122927_addtenantscopetooperationalentities_designer_rssbwireless_api_migrations",
-      "community": 5,
+      "community": 1,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1556,7 +1556,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.Designer.cs",
       "source_location": "L14",
       "id": "20260425122927_addtenantscopetooperationalentities_designer_addtenantscopetooperationalentities",
-      "community": 5,
+      "community": 1,
       "norm_label": "addtenantscopetooperationalentities"
     },
     {
@@ -1565,7 +1565,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.Designer.cs",
       "source_location": "L19",
       "id": "20260425122927_addtenantscopetooperationalentities_designer_addtenantscopetooperationalentities_buildtargetmodel",
-      "community": 5,
+      "community": 1,
       "norm_label": ".buildtargetmodel()"
     },
     {
@@ -1574,7 +1574,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260425141549_fixtenantscopecolumns_cs",
-      "community": 7,
+      "community": 6,
       "norm_label": "20260425141549_fixtenantscopecolumns.cs"
     },
     {
@@ -1583,7 +1583,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L5",
       "id": "20260425141549_fixtenantscopecolumns_rssbwireless_api_migrations",
-      "community": 7,
+      "community": 6,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1592,7 +1592,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L8",
       "id": "20260425141549_fixtenantscopecolumns_fixtenantscopecolumns",
-      "community": 7,
+      "community": 6,
       "norm_label": "fixtenantscopecolumns"
     },
     {
@@ -1601,7 +1601,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L11",
       "id": "20260425141549_fixtenantscopecolumns_fixtenantscopecolumns_up",
-      "community": 7,
+      "community": 6,
       "norm_label": ".up()"
     },
     {
@@ -1610,7 +1610,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L123",
       "id": "20260425141549_fixtenantscopecolumns_fixtenantscopecolumns_down",
-      "community": 7,
+      "community": 6,
       "norm_label": ".down()"
     },
     {
@@ -1619,7 +1619,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.Designer.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260425141549_fixtenantscopecolumns_designer_cs",
-      "community": 5,
+      "community": 1,
       "norm_label": "20260425141549_fixtenantscopecolumns.designer.cs"
     },
     {
@@ -1628,7 +1628,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.Designer.cs",
       "source_location": "L12",
       "id": "20260425141549_fixtenantscopecolumns_designer_rssbwireless_api_migrations",
-      "community": 5,
+      "community": 1,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1637,7 +1637,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.Designer.cs",
       "source_location": "L14",
       "id": "20260425141549_fixtenantscopecolumns_designer_fixtenantscopecolumns",
-      "community": 5,
+      "community": 1,
       "norm_label": "fixtenantscopecolumns"
     },
     {
@@ -1646,7 +1646,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.Designer.cs",
       "source_location": "L19",
       "id": "20260425141549_fixtenantscopecolumns_designer_fixtenantscopecolumns_buildtargetmodel",
-      "community": 5,
+      "community": 1,
       "norm_label": ".buildtargetmodel()"
     },
     {
@@ -1655,7 +1655,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L1",
       "id": "backend_migrations_appdbcontextmodelsnapshot_cs",
-      "community": 5,
+      "community": 13,
       "norm_label": "appdbcontextmodelsnapshot.cs"
     },
     {
@@ -1664,7 +1664,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L11",
       "id": "appdbcontextmodelsnapshot_rssbwireless_api_migrations",
-      "community": 5,
+      "community": 13,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1673,7 +1673,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L13",
       "id": "appdbcontextmodelsnapshot_appdbcontextmodelsnapshot",
-      "community": 5,
+      "community": 13,
       "norm_label": "appdbcontextmodelsnapshot"
     },
     {
@@ -1682,7 +1682,7 @@
       "source_file": "",
       "source_location": "",
       "id": "modelsnapshot",
-      "community": 5,
+      "community": 13,
       "norm_label": "modelsnapshot"
     },
     {
@@ -1691,7 +1691,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L16",
       "id": "appdbcontextmodelsnapshot_appdbcontextmodelsnapshot_buildmodel",
-      "community": 5,
+      "community": 13,
       "norm_label": ".buildmodel()"
     },
     {
@@ -1700,7 +1700,7 @@
       "source_file": "backend\\Models\\AssetModels.cs",
       "source_location": "L1",
       "id": "backend_models_assetmodels_cs",
-      "community": 17,
+      "community": 18,
       "norm_label": "assetmodels.cs"
     },
     {
@@ -1709,7 +1709,7 @@
       "source_file": "backend\\Models\\AssetModels.cs",
       "source_location": "L3",
       "id": "assetmodels_assettype",
-      "community": 17,
+      "community": 18,
       "norm_label": "assettype"
     },
     {
@@ -1718,7 +1718,7 @@
       "source_file": "backend\\Models\\AssetModels.cs",
       "source_location": "L18",
       "id": "assetmodels_asset",
-      "community": 17,
+      "community": 18,
       "norm_label": "asset"
     },
     {
@@ -1835,7 +1835,7 @@
       "source_file": "backend\\Models\\SecurityModels.cs",
       "source_location": "L1",
       "id": "backend_models_securitymodels_cs",
-      "community": 18,
+      "community": 19,
       "norm_label": "securitymodels.cs"
     },
     {
@@ -1844,7 +1844,7 @@
       "source_file": "backend\\Models\\SecurityModels.cs",
       "source_location": "L3",
       "id": "securitymodels_approle",
-      "community": 18,
+      "community": 19,
       "norm_label": "approle"
     },
     {
@@ -1853,7 +1853,7 @@
       "source_file": "backend\\Models\\SecurityModels.cs",
       "source_location": "L12",
       "id": "securitymodels_passwordresetrequest",
-      "community": 18,
+      "community": 19,
       "norm_label": "passwordresetrequest"
     },
     {
@@ -1862,7 +1862,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L1",
       "id": "backend_models_tenantmodels_cs",
-      "community": 13,
+      "community": 14,
       "norm_label": "tenantmodels.cs"
     },
     {
@@ -1871,7 +1871,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L3",
       "id": "tenantmodels_center",
-      "community": 13,
+      "community": 14,
       "norm_label": "center"
     },
     {
@@ -1880,7 +1880,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L14",
       "id": "tenantmodels_department",
-      "community": 13,
+      "community": 14,
       "norm_label": "department"
     },
     {
@@ -1889,7 +1889,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L26",
       "id": "tenantmodels_menupage",
-      "community": 13,
+      "community": 14,
       "norm_label": "menupage"
     },
     {
@@ -1898,7 +1898,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L41",
       "id": "tenantmodels_menupagepermission",
-      "community": 13,
+      "community": 14,
       "norm_label": "menupagepermission"
     },
     {
@@ -1907,7 +1907,7 @@
       "source_file": "backend\\Models\\User.cs",
       "source_location": "L1",
       "id": "backend_models_user_cs",
-      "community": 19,
+      "community": 20,
       "norm_label": "user.cs"
     },
     {
@@ -1916,7 +1916,7 @@
       "source_file": "backend\\Models\\User.cs",
       "source_location": "L6",
       "id": "user_applicationuser",
-      "community": 19,
+      "community": 20,
       "norm_label": "applicationuser"
     },
     {
@@ -1925,7 +1925,7 @@
       "source_file": "",
       "source_location": "",
       "id": "identityuser",
-      "community": 19,
+      "community": 20,
       "norm_label": "identityuser"
     },
     {
@@ -1934,7 +1934,7 @@
       "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.AssemblyInfo.cs",
       "source_location": "L1",
       "id": "backend_obj_debug_net8_0_rssbwireless_api_assemblyinfo_cs",
-      "community": 37,
+      "community": 38,
       "norm_label": "rssbwireless.api.assemblyinfo.cs"
     },
     {
@@ -1943,7 +1943,7 @@
       "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.GlobalUsings.g.cs",
       "source_location": "L1",
       "id": "backend_obj_debug_net8_0_rssbwireless_api_globalusings_g_cs",
-      "community": 38,
+      "community": 39,
       "norm_label": "rssbwireless.api.globalusings.g.cs"
     },
     {
@@ -1952,7 +1952,7 @@
       "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.MvcApplicationPartsAssemblyInfo.cs",
       "source_location": "L1",
       "id": "backend_obj_debug_net8_0_rssbwireless_api_mvcapplicationpartsassemblyinfo_cs",
-      "community": 39,
+      "community": 40,
       "norm_label": "rssbwireless.api.mvcapplicationpartsassemblyinfo.cs"
     },
     {
@@ -2024,7 +2024,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L1",
       "id": "backend_services_issueservice_cs",
-      "community": 4,
+      "community": 3,
       "norm_label": "issueservice.cs"
     },
     {
@@ -2033,7 +2033,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L9",
       "id": "issueservice_issueservice",
-      "community": 4,
+      "community": 3,
       "norm_label": "issueservice"
     },
     {
@@ -2042,7 +2042,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L28",
       "id": "issueservice_issueservice_createissueasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".createissueasync()"
     },
     {
@@ -2051,7 +2051,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L104",
       "id": "issueservice_issueservice_sendissuesmsasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".sendissuesmsasync()"
     },
     {
@@ -2060,7 +2060,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L174",
       "id": "issueservice_issueservice_getissuebyidasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".getissuebyidasync()"
     },
     {
@@ -2069,7 +2069,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L195",
       "id": "issueservice_issueservice_getissuesbyvisitasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".getissuesbyvisitasync()"
     },
     {
@@ -2078,7 +2078,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L215",
       "id": "issueservice_issueservice_returnissueasync",
-      "community": 4,
+      "community": 3,
       "norm_label": ".returnissueasync()"
     },
     {
@@ -2087,7 +2087,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L275",
       "id": "issueservice_issueservice_maptodto",
-      "community": 4,
+      "community": 3,
       "norm_label": ".maptodto()"
     },
     {
@@ -2213,7 +2213,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L1",
       "id": "backend_services_reportservice_cs",
-      "community": 6,
+      "community": 5,
       "norm_label": "reportservice.cs"
     },
     {
@@ -2222,7 +2222,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L12",
       "id": "reportservice_reportservice",
-      "community": 6,
+      "community": 5,
       "norm_label": "reportservice"
     },
     {
@@ -2231,7 +2231,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L17",
       "id": "reportservice_reportservice_getvisitwisedashboardasync",
-      "community": 6,
+      "community": 5,
       "norm_label": ".getvisitwisedashboardasync()"
     },
     {
@@ -2240,7 +2240,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L85",
       "id": "reportservice_reportservice_generatevisitexcelreportasync",
-      "community": 6,
+      "community": 5,
       "norm_label": ".generatevisitexcelreportasync()"
     },
     {
@@ -2249,7 +2249,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L135",
       "id": "reportservice_reportservice_generateinventoryexcelreportasync",
-      "community": 6,
+      "community": 5,
       "norm_label": ".generateinventoryexcelreportasync()"
     },
     {
@@ -2258,7 +2258,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L179",
       "id": "reportservice_reportservice_generatebreakagepdfreportasync",
-      "community": 6,
+      "community": 5,
       "norm_label": ".generatebreakagepdfreportasync()"
     },
     {
@@ -2267,7 +2267,7 @@
       "source_file": "frontend\\next-env.d.ts",
       "source_location": "L1",
       "id": "frontend_next_env_d_ts",
-      "community": 40,
+      "community": 41,
       "norm_label": "next-env.d.ts"
     },
     {
@@ -2276,7 +2276,7 @@
       "source_file": "frontend\\next.config.js",
       "source_location": "L1",
       "id": "frontend_next_config_js",
-      "community": 41,
+      "community": 42,
       "norm_label": "next.config.js"
     },
     {
@@ -2285,7 +2285,7 @@
       "source_file": "frontend\\postcss.config.js",
       "source_location": "L1",
       "id": "frontend_postcss_config_js",
-      "community": 42,
+      "community": 43,
       "norm_label": "postcss.config.js"
     },
     {
@@ -2294,7 +2294,7 @@
       "source_file": "frontend\\tailwind.config.js",
       "source_location": "L1",
       "id": "frontend_tailwind_config_js",
-      "community": 43,
+      "community": 44,
       "norm_label": "tailwind.config.js"
     },
     {
@@ -2303,7 +2303,7 @@
       "source_file": "frontend\\components\\BulkEntryModal.tsx",
       "source_location": "L1",
       "id": "frontend_components_bulkentrymodal_tsx",
-      "community": 20,
+      "community": 21,
       "norm_label": "bulkentrymodal.tsx"
     },
     {
@@ -2312,7 +2312,7 @@
       "source_file": "frontend\\components\\BulkEntryModal.tsx",
       "source_location": "L29",
       "id": "bulkentrymodal_handleparse",
-      "community": 20,
+      "community": 21,
       "norm_label": "handleparse()"
     },
     {
@@ -2321,43 +2321,43 @@
       "source_file": "frontend\\components\\BulkEntryModal.tsx",
       "source_location": "L55",
       "id": "bulkentrymodal_handleadd",
-      "community": 20,
+      "community": 21,
       "norm_label": "handleadd()"
     },
     {
       "label": "SearchDropdown.tsx",
       "file_type": "code",
-      "source_file": "frontend\\components\\SearchDropdown.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\SearchDropdown.tsx",
       "source_location": "L1",
-      "id": "frontend_components_searchdropdown_tsx",
-      "community": 21,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_searchdropdown_tsx",
+      "community": 22,
       "norm_label": "searchdropdown.tsx"
     },
     {
       "label": "handleClickOutside()",
       "file_type": "code",
-      "source_file": "frontend\\components\\SearchDropdown.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\SearchDropdown.tsx",
       "source_location": "L37",
       "id": "searchdropdown_handleclickoutside",
-      "community": 21,
+      "community": 22,
       "norm_label": "handleclickoutside()"
     },
     {
       "label": "AdminLayout.tsx",
       "file_type": "code",
-      "source_file": "frontend\\components\\admin\\AdminLayout.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\admin\\AdminLayout.tsx",
       "source_location": "L1",
-      "id": "frontend_components_admin_adminlayout_tsx",
-      "community": 22,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_admin_adminlayout_tsx",
+      "community": 23,
       "norm_label": "adminlayout.tsx"
     },
     {
       "label": "logout()",
       "file_type": "code",
-      "source_file": "frontend\\components\\admin\\AdminLayout.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\admin\\AdminLayout.tsx",
       "source_location": "L66",
       "id": "adminlayout_logout",
-      "community": 22,
+      "community": 23,
       "norm_label": "logout()"
     },
     {
@@ -2366,7 +2366,7 @@
       "source_file": "frontend\\config\\app.ts",
       "source_location": "L1",
       "id": "frontend_config_app_ts",
-      "community": 44,
+      "community": 45,
       "norm_label": "app.ts"
     },
     {
@@ -2375,7 +2375,7 @@
       "source_file": "frontend\\hooks\\useAuth.ts",
       "source_location": "L1",
       "id": "frontend_hooks_useauth_ts",
-      "community": 23,
+      "community": 24,
       "norm_label": "useauth.ts"
     },
     {
@@ -2384,7 +2384,7 @@
       "source_file": "frontend\\hooks\\useAuth.ts",
       "source_location": "L15",
       "id": "useauth_useauthstate",
-      "community": 23,
+      "community": 24,
       "norm_label": "useauthstate()"
     },
     {
@@ -2393,7 +2393,7 @@
       "source_file": "frontend\\pages\\index.tsx",
       "source_location": "L1",
       "id": "frontend_pages_index_tsx",
-      "community": 24,
+      "community": 25,
       "norm_label": "index.tsx"
     },
     {
@@ -2402,7 +2402,7 @@
       "source_file": "frontend\\pages\\index.tsx",
       "source_location": "L4",
       "id": "index_home",
-      "community": 24,
+      "community": 25,
       "norm_label": "home()"
     },
     {
@@ -2411,7 +2411,7 @@
       "source_file": "frontend\\pages\\login.tsx",
       "source_location": "L1",
       "id": "frontend_pages_login_tsx",
-      "community": 25,
+      "community": 26,
       "norm_label": "login.tsx"
     },
     {
@@ -2420,7 +2420,7 @@
       "source_file": "frontend\\pages\\login.tsx",
       "source_location": "L15",
       "id": "login_loginpage",
-      "community": 25,
+      "community": 26,
       "norm_label": "loginpage()"
     },
     {
@@ -2429,7 +2429,7 @@
       "source_file": "frontend\\pages\\_app.tsx",
       "source_location": "L1",
       "id": "frontend_pages_app_tsx",
-      "community": 26,
+      "community": 27,
       "norm_label": "_app.tsx"
     },
     {
@@ -2438,7 +2438,7 @@
       "source_file": "frontend\\pages\\_app.tsx",
       "source_location": "L5",
       "id": "app_app",
-      "community": 26,
+      "community": 27,
       "norm_label": "app()"
     },
     {
@@ -2447,7 +2447,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_access_tsx",
-      "community": 1,
+      "community": 7,
       "norm_label": "access.tsx"
     },
     {
@@ -2456,7 +2456,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L52",
       "id": "access_loadcenters",
-      "community": 1,
+      "community": 7,
       "norm_label": "loadcenters()"
     },
     {
@@ -2465,7 +2465,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L61",
       "id": "access_loaddepartments",
-      "community": 1,
+      "community": 7,
       "norm_label": "loaddepartments()"
     },
     {
@@ -2492,7 +2492,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L79",
       "id": "access_loadassignment",
-      "community": 1,
+      "community": 7,
       "norm_label": "loadassignment()"
     },
     {
@@ -2510,7 +2510,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L139",
       "id": "access_togglepage",
-      "community": 1,
+      "community": 7,
       "norm_label": "togglepage()"
     },
     {
@@ -2519,7 +2519,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L143",
       "id": "access_toggleassettype",
-      "community": 1,
+      "community": 7,
       "norm_label": "toggleassettype()"
     },
     {
@@ -2528,7 +2528,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L147",
       "id": "access_save",
-      "community": 1,
+      "community": 7,
       "norm_label": "save()"
     },
     {
@@ -2537,7 +2537,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L160",
       "id": "access_createcenter",
-      "community": 1,
+      "community": 7,
       "norm_label": "createcenter()"
     },
     {
@@ -2546,7 +2546,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L174",
       "id": "access_updatecenter",
-      "community": 1,
+      "community": 7,
       "norm_label": "updatecenter()"
     },
     {
@@ -2555,7 +2555,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L189",
       "id": "access_deletecenter",
-      "community": 1,
+      "community": 7,
       "norm_label": "deletecenter()"
     },
     {
@@ -2564,7 +2564,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L202",
       "id": "access_createdepartment",
-      "community": 1,
+      "community": 7,
       "norm_label": "createdepartment()"
     },
     {
@@ -2573,7 +2573,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L216",
       "id": "access_updatedepartment",
-      "community": 1,
+      "community": 7,
       "norm_label": "updatedepartment()"
     },
     {
@@ -2582,7 +2582,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L231",
       "id": "access_deletedepartment",
-      "community": 1,
+      "community": 7,
       "norm_label": "deletedepartment()"
     },
     {
@@ -2618,7 +2618,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L287",
       "id": "access_togglerolesms",
-      "community": 1,
+      "community": 7,
       "norm_label": "togglerolesms()"
     },
     {
@@ -2633,16 +2633,16 @@
     {
       "label": "assets.tsx",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
       "source_location": "L1",
-      "id": "frontend_pages_admin_assets_tsx",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "community": 11,
       "norm_label": "assets.tsx"
     },
     {
       "label": "load()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
       "source_location": "L27",
       "id": "assets_load",
       "community": 11,
@@ -2651,8 +2651,8 @@
     {
       "label": "createType()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L62",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L73",
       "id": "assets_createtype",
       "community": 11,
       "norm_label": "createtype()"
@@ -2660,8 +2660,8 @@
     {
       "label": "createAsset()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L77",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L88",
       "id": "assets_createasset",
       "community": 11,
       "norm_label": "createasset()"
@@ -2669,8 +2669,8 @@
     {
       "label": "updateStatus()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L96",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L107",
       "id": "assets_updatestatus",
       "community": 11,
       "norm_label": "updatestatus()"
@@ -2678,8 +2678,8 @@
     {
       "label": "updateType()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L106",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L117",
       "id": "assets_updatetype",
       "community": 11,
       "norm_label": "updatetype()"
@@ -2687,8 +2687,8 @@
     {
       "label": "deleteType()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L122",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L133",
       "id": "assets_deletetype",
       "community": 11,
       "norm_label": "deletetype()"
@@ -2696,8 +2696,8 @@
     {
       "label": "updateAssetDetails()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L133",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L144",
       "id": "assets_updateassetdetails",
       "community": 11,
       "norm_label": "updateassetdetails()"
@@ -2705,8 +2705,8 @@
     {
       "label": "deleteAsset()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L149",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L160",
       "id": "assets_deleteasset",
       "community": 11,
       "norm_label": "deleteasset()"
@@ -2744,7 +2744,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-issue.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_bulk_issue_tsx",
-      "community": 27,
+      "community": 28,
       "norm_label": "bulk-issue.tsx"
     },
     {
@@ -2753,7 +2753,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-issue.tsx",
       "source_location": "L4",
       "id": "bulk_issue_legacybulkissueredirect",
-      "community": 27,
+      "community": 28,
       "norm_label": "legacybulkissueredirect()"
     },
     {
@@ -2762,7 +2762,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-receive.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_bulk_receive_tsx",
-      "community": 28,
+      "community": 29,
       "norm_label": "bulk-receive.tsx"
     },
     {
@@ -2771,7 +2771,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-receive.tsx",
       "source_location": "L4",
       "id": "bulk_receive_legacybulkreceiveredirect",
-      "community": 28,
+      "community": 29,
       "norm_label": "legacybulkreceiveredirect()"
     },
     {
@@ -2780,7 +2780,7 @@
       "source_file": "frontend\\pages\\admin\\incharge-history.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_incharge_history_tsx",
-      "community": 29,
+      "community": 30,
       "norm_label": "incharge-history.tsx"
     },
     {
@@ -2789,7 +2789,7 @@
       "source_file": "frontend\\pages\\admin\\incharge-history.tsx",
       "source_location": "L17",
       "id": "incharge_history_getstatuscolor",
-      "community": 29,
+      "community": 30,
       "norm_label": "getstatuscolor()"
     },
     {
@@ -2840,53 +2840,53 @@
     {
       "label": "index.tsx",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
       "source_location": "L1",
-      "id": "frontend_pages_admin_index_tsx",
-      "community": 15,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
+      "community": 16,
       "norm_label": "index.tsx"
     },
     {
       "label": "StatCard()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
-      "source_location": "L38",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
+      "source_location": "L47",
       "id": "index_statcard",
-      "community": 15,
+      "community": 16,
       "norm_label": "statcard()"
     },
     {
       "label": "CountPair()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
-      "source_location": "L52",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
+      "source_location": "L61",
       "id": "index_countpair",
-      "community": 15,
+      "community": 16,
       "norm_label": "countpair()"
     },
     {
       "label": "isWidgetEnabled()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
-      "source_location": "L106",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
+      "source_location": "L160",
       "id": "index_iswidgetenabled",
-      "community": 15,
+      "community": 16,
       "norm_label": "iswidgetenabled()"
     },
     {
       "label": "issue-assets.tsx",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L1",
-      "id": "frontend_pages_admin_issue_assets_tsx",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "community": 2,
       "norm_label": "issue-assets.tsx"
     },
     {
       "label": "addByQr()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
-      "source_location": "L64",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
+      "source_location": "L65",
       "id": "issue_assets_addbyqr",
       "community": 2,
       "norm_label": "addbyqr()"
@@ -2894,8 +2894,8 @@
     {
       "label": "toggle()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
-      "source_location": "L100",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
+      "source_location": "L101",
       "id": "issue_assets_toggle",
       "community": 2,
       "norm_label": "toggle()"
@@ -2903,8 +2903,8 @@
     {
       "label": "submit()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
-      "source_location": "L105",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
+      "source_location": "L106",
       "id": "issue_assets_submit",
       "community": 2,
       "norm_label": "submit()"
@@ -2915,7 +2915,7 @@
       "source_file": "frontend\\pages\\admin\\issue.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_issue_tsx",
-      "community": 30,
+      "community": 31,
       "norm_label": "issue.tsx"
     },
     {
@@ -2924,7 +2924,7 @@
       "source_file": "frontend\\pages\\admin\\issue.tsx",
       "source_location": "L4",
       "id": "issue_legacyissueredirect",
-      "community": 30,
+      "community": 31,
       "norm_label": "legacyissueredirect()"
     },
     {
@@ -2933,7 +2933,7 @@
       "source_file": "frontend\\pages\\admin\\notifications.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_notifications_tsx",
-      "community": 31,
+      "community": 32,
       "norm_label": "notifications.tsx"
     },
     {
@@ -2942,34 +2942,34 @@
       "source_file": "frontend\\pages\\admin\\notifications.tsx",
       "source_location": "L60",
       "id": "notifications_getstatusbadge",
-      "community": 31,
+      "community": 32,
       "norm_label": "getstatusbadge()"
     },
     {
       "label": "receive-assets.tsx",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
       "source_location": "L1",
-      "id": "frontend_pages_admin_receive_assets_tsx",
-      "community": 4,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_receive_assets_tsx",
+      "community": 3,
       "norm_label": "receive-assets.tsx"
     },
     {
       "label": "toggle()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
-      "source_location": "L31",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
+      "source_location": "L32",
       "id": "receive_assets_toggle",
-      "community": 4,
+      "community": 3,
       "norm_label": "toggle()"
     },
     {
       "label": "receive()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
-      "source_location": "L33",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
+      "source_location": "L34",
       "id": "receive_assets_receive",
-      "community": 4,
+      "community": 3,
       "norm_label": "receive()"
     },
     {
@@ -2978,7 +2978,7 @@
       "source_file": "frontend\\pages\\admin\\receive.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_receive_tsx",
-      "community": 32,
+      "community": 33,
       "norm_label": "receive.tsx"
     },
     {
@@ -2987,7 +2987,7 @@
       "source_file": "frontend\\pages\\admin\\receive.tsx",
       "source_location": "L4",
       "id": "receive_legacyreceiveredirect",
-      "community": 32,
+      "community": 33,
       "norm_label": "legacyreceiveredirect()"
     },
     {
@@ -2996,7 +2996,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_reports_tsx",
-      "community": 6,
+      "community": 5,
       "norm_label": "reports.tsx"
     },
     {
@@ -3005,7 +3005,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L8",
       "id": "reports_downloadblob",
-      "community": 6,
+      "community": 5,
       "norm_label": "downloadblob()"
     },
     {
@@ -3014,7 +3014,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L15",
       "id": "reports_formatdatetime",
-      "community": 6,
+      "community": 5,
       "norm_label": "formatdatetime()"
     },
     {
@@ -3023,7 +3023,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L20",
       "id": "reports_renderissueditems",
-      "community": 6,
+      "community": 5,
       "norm_label": "renderissueditems()"
     },
     {
@@ -3032,7 +3032,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L34",
       "id": "reports_getreceiveremarks",
-      "community": 6,
+      "community": 5,
       "norm_label": "getreceiveremarks()"
     },
     {
@@ -3041,7 +3041,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L89",
       "id": "reports_loadvisitdetails",
-      "community": 6,
+      "community": 5,
       "norm_label": "loadvisitdetails()"
     },
     {
@@ -3050,7 +3050,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L105",
       "id": "reports_handlevisitselect",
-      "community": 6,
+      "community": 5,
       "norm_label": "handlevisitselect()"
     },
     {
@@ -3059,7 +3059,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L116",
       "id": "reports_download",
-      "community": 6,
+      "community": 5,
       "norm_label": "download()"
     },
     {
@@ -3068,7 +3068,7 @@
       "source_file": "frontend\\pages\\admin\\scanner.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_scanner_tsx",
-      "community": 33,
+      "community": 34,
       "norm_label": "scanner.tsx"
     },
     {
@@ -3077,7 +3077,7 @@
       "source_file": "frontend\\pages\\admin\\scanner.tsx",
       "source_location": "L4",
       "id": "scanner_legacyscannerredirect",
-      "community": 33,
+      "community": 34,
       "norm_label": "legacyscannerredirect()"
     },
     {
@@ -3158,7 +3158,7 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_visits_tsx",
-      "community": 5,
+      "community": 1,
       "norm_label": "visits.tsx"
     },
     {
@@ -3167,7 +3167,7 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L19",
       "id": "visits_load",
-      "community": 5,
+      "community": 1,
       "norm_label": "load()"
     },
     {
@@ -3176,7 +3176,7 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L22",
       "id": "visits_opencreate",
-      "community": 5,
+      "community": 1,
       "norm_label": "opencreate()"
     },
     {
@@ -3185,7 +3185,7 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L23",
       "id": "visits_openedit",
-      "community": 5,
+      "community": 1,
       "norm_label": "openedit()"
     },
     {
@@ -3194,7 +3194,7 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L30",
       "id": "visits_onsubmit",
-      "community": 5,
+      "community": 1,
       "norm_label": "onsubmit()"
     },
     {
@@ -3203,7 +3203,7 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L39",
       "id": "visits_ondelete",
-      "community": 5,
+      "community": 1,
       "norm_label": "ondelete()"
     },
     {
@@ -3212,7 +3212,7 @@
       "source_file": "frontend\\pages\\incharge\\index.tsx",
       "source_location": "L1",
       "id": "frontend_pages_incharge_index_tsx",
-      "community": 34,
+      "community": 35,
       "norm_label": "index.tsx"
     },
     {
@@ -3221,7 +3221,7 @@
       "source_file": "frontend\\pages\\incharge\\index.tsx",
       "source_location": "L6",
       "id": "index_inchargedashboard",
-      "community": 34,
+      "community": 35,
       "norm_label": "inchargedashboard()"
     },
     {
@@ -3230,7 +3230,7 @@
       "source_file": "frontend\\pages\\set\\[number].tsx",
       "source_location": "L1",
       "id": "frontend_pages_set_number_tsx",
-      "community": 45,
+      "community": 46,
       "norm_label": "[number].tsx"
     },
     {
@@ -3239,7 +3239,7 @@
       "source_file": "frontend\\services\\api.ts",
       "source_location": "L1",
       "id": "frontend_services_api_ts",
-      "community": 46,
+      "community": 47,
       "norm_label": "api.ts"
     },
     {
@@ -3248,7 +3248,7 @@
       "source_file": "frontend\\utils\\cn.ts",
       "source_location": "L1",
       "id": "frontend_utils_cn_ts",
-      "community": 35,
+      "community": 36,
       "norm_label": "cn.ts"
     },
     {
@@ -3257,7 +3257,7 @@
       "source_file": "frontend\\utils\\cn.ts",
       "source_location": "L3",
       "id": "cn_cn",
-      "community": 35,
+      "community": 36,
       "norm_label": "cn()"
     },
     {
@@ -3266,7 +3266,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L1",
       "id": "frontend_utils_visits_ts",
-      "community": 16,
+      "community": 17,
       "norm_label": "visits.ts"
     },
     {
@@ -3275,7 +3275,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L6",
       "id": "visits_getlatestvisit",
-      "community": 16,
+      "community": 17,
       "norm_label": "getlatestvisit()"
     },
     {
@@ -3284,7 +3284,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L10",
       "id": "visits_getactivevisits",
-      "community": 16,
+      "community": 17,
       "norm_label": "getactivevisits()"
     },
     {
@@ -3293,7 +3293,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L14",
       "id": "visits_getlatestactivevisit",
-      "community": 16,
+      "community": 17,
       "norm_label": "getlatestactivevisit()"
     },
     {
@@ -3305,9 +3305,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_rssb_wireless_system",
-      "community": 3,
-      "norm_label": "rssb wireless management system"
+      "community": 4,
+      "norm_label": "rssb wireless management system",
+      "id": "readme_rssb_wireless_system"
     },
     {
       "label": "Frontend (Next.js + Tailwind + shadcn)",
@@ -3318,9 +3318,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_frontend",
-      "community": 3,
-      "norm_label": "frontend (next.js + tailwind + shadcn)"
+      "community": 4,
+      "norm_label": "frontend (next.js + tailwind + shadcn)",
+      "id": "readme_frontend"
     },
     {
       "label": "Backend (ASP.NET Core 8 Web API)",
@@ -3331,9 +3331,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_backend",
-      "community": 3,
-      "norm_label": "backend (asp.net core 8 web api)"
+      "community": 4,
+      "norm_label": "backend (asp.net core 8 web api)",
+      "id": "readme_backend"
     },
     {
       "label": "PostgreSQL Database",
@@ -3344,9 +3344,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_postgresql",
-      "community": 3,
-      "norm_label": "postgresql database"
+      "community": 4,
+      "norm_label": "postgresql database",
+      "id": "readme_postgresql"
     },
     {
       "label": "Cloudinary (Photo Storage)",
@@ -3357,9 +3357,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_cloudinary",
-      "community": 3,
-      "norm_label": "cloudinary (photo storage)"
+      "community": 4,
+      "norm_label": "cloudinary (photo storage)",
+      "id": "readme_cloudinary"
     },
     {
       "label": "Twilio (SMS Notifications)",
@@ -3370,9 +3370,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_twilio",
-      "community": 3,
-      "norm_label": "twilio (sms notifications)"
+      "community": 4,
+      "norm_label": "twilio (sms notifications)",
+      "id": "readme_twilio"
     },
     {
       "label": "QRCoder (QR Code Generation)",
@@ -3383,9 +3383,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_qrcoder",
-      "community": 3,
-      "norm_label": "qrcoder (qr code generation)"
+      "community": 4,
+      "norm_label": "qrcoder (qr code generation)",
+      "id": "readme_qrcoder"
     },
     {
       "label": "EPPlus (Excel Reports)",
@@ -3396,9 +3396,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_epplus",
-      "community": 3,
-      "norm_label": "epplus (excel reports)"
+      "community": 4,
+      "norm_label": "epplus (excel reports)",
+      "id": "readme_epplus"
     },
     {
       "label": "iText7 (PDF Reports)",
@@ -3409,9 +3409,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_itext7",
-      "community": 3,
-      "norm_label": "itext7 (pdf reports)"
+      "community": 4,
+      "norm_label": "itext7 (pdf reports)",
+      "id": "readme_itext7"
     },
     {
       "label": "JWT Authentication",
@@ -3422,9 +3422,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_jwt",
-      "community": 3,
-      "norm_label": "jwt authentication"
+      "community": 4,
+      "norm_label": "jwt authentication",
+      "id": "readme_jwt"
     },
     {
       "label": "Visits Module",
@@ -3435,9 +3435,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_visits_module",
-      "community": 3,
-      "norm_label": "visits module"
+      "community": 4,
+      "norm_label": "visits module",
+      "id": "readme_visits_module"
     },
     {
       "label": "Inventory Module (Wireless Sets)",
@@ -3448,9 +3448,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_inventory_module",
-      "community": 3,
-      "norm_label": "inventory module (wireless sets)"
+      "community": 4,
+      "norm_label": "inventory module (wireless sets)",
+      "id": "readme_inventory_module"
     },
     {
       "label": "Incharges Module (Sewadar Management)",
@@ -3461,9 +3461,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_incharges_module",
-      "community": 3,
-      "norm_label": "incharges module (sewadar management)"
+      "community": 4,
+      "norm_label": "incharges module (sewadar management)",
+      "id": "readme_incharges_module"
     },
     {
       "label": "Issue/Return Workflow",
@@ -3474,9 +3474,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_issue_return_workflow",
-      "community": 3,
-      "norm_label": "issue/return workflow"
+      "community": 4,
+      "norm_label": "issue/return workflow",
+      "id": "readme_issue_return_workflow"
     },
     {
       "label": "Breakage Module",
@@ -3487,9 +3487,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_breakage_module",
-      "community": 3,
-      "norm_label": "breakage module"
+      "community": 4,
+      "norm_label": "breakage module",
+      "id": "readme_breakage_module"
     },
     {
       "label": "Reports Module (Excel + PDF)",
@@ -3500,9 +3500,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_reports_module",
-      "community": 3,
-      "norm_label": "reports module (excel + pdf)"
+      "community": 4,
+      "norm_label": "reports module (excel + pdf)",
+      "id": "readme_reports_module"
     },
     {
       "label": "QR Scanner Module",
@@ -3513,9 +3513,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_qr_scanner",
-      "community": 3,
-      "norm_label": "qr scanner module"
+      "community": 4,
+      "norm_label": "qr scanner module",
+      "id": "readme_qr_scanner"
     },
     {
       "label": "Admin Dashboard",
@@ -3526,9 +3526,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_admin_dashboard",
-      "community": 3,
-      "norm_label": "admin dashboard"
+      "community": 4,
+      "norm_label": "admin dashboard",
+      "id": "readme_admin_dashboard"
     },
     {
       "label": "Kenwood Wireless Brand",
@@ -3539,9 +3539,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_kenwood",
-      "community": 3,
-      "norm_label": "kenwood wireless brand"
+      "community": 4,
+      "norm_label": "kenwood wireless brand",
+      "id": "readme_kenwood"
     },
     {
       "label": "Vertel Wireless Brand",
@@ -3552,9 +3552,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_vertel",
-      "community": 3,
-      "norm_label": "vertel wireless brand"
+      "community": 4,
+      "norm_label": "vertel wireless brand",
+      "id": "readme_vertel"
     },
     {
       "label": "Aspera Wireless Brand",
@@ -3565,9 +3565,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_aspera",
-      "community": 3,
-      "norm_label": "aspera wireless brand"
+      "community": 4,
+      "norm_label": "aspera wireless brand",
+      "id": "readme_aspera"
     },
     {
       "label": "Entity Framework Core (ORM)",
@@ -3578,9 +3578,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_entity_framework",
-      "community": 3,
-      "norm_label": "entity framework core (orm)"
+      "community": 4,
+      "norm_label": "entity framework core (orm)",
+      "id": "readme_entity_framework"
     },
     {
       "label": "Docker Compose Deployment",
@@ -3591,74 +3591,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "readme_docker",
-      "community": 3,
-      "norm_label": "docker compose deployment"
-    },
-    {
-      "label": "AutoMapper",
-      "file_type": "code",
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "filelist_automapper",
-      "community": 3,
-      "norm_label": "automapper"
-    },
-    {
-      "label": "BCrypt.Net (Password Hashing)",
-      "file_type": "code",
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "filelist_bcrypt",
-      "community": 3,
-      "norm_label": "bcrypt.net (password hashing)"
-    },
-    {
-      "label": "Npgsql (PostgreSQL .NET Driver)",
-      "file_type": "code",
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "filelist_npgsql",
-      "community": 3,
-      "norm_label": "npgsql (postgresql .net driver)"
-    },
-    {
-      "label": "Swashbuckle / Swagger UI",
-      "file_type": "code",
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "filelist_swashbuckle",
-      "community": 3,
-      "norm_label": "swashbuckle / swagger ui"
-    },
-    {
-      "label": "RSSBWireless.API Assembly",
-      "file_type": "code",
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "id": "filelist_rssb_api_dll",
-      "community": 3,
-      "norm_label": "rssbwireless.api assembly"
+      "community": 4,
+      "norm_label": "docker compose deployment",
+      "id": "readme_docker"
     },
     {
       "label": "Graphify Knowledge Graph Rules",
@@ -3669,9 +3604,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "claude_graphify_rules",
-      "community": 3,
-      "norm_label": "graphify knowledge graph rules"
+      "community": 4,
+      "norm_label": "graphify knowledge graph rules",
+      "id": "claude_graphify_rules"
     }
   ],
   "links": [
@@ -4030,8 +3965,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L85",
       "weight": 1.0,
-      "_src": "access_loadassettypes",
-      "_tgt": "assetscontroller_assetscontroller_gettypes",
+      "_src": "assetscontroller_assetscontroller_gettypes",
+      "_tgt": "access_loadassettypes",
       "source": "assetscontroller_assetscontroller_gettypes",
       "target": "access_loadassettypes"
     },
@@ -4042,8 +3977,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L29",
       "weight": 1.0,
-      "_src": "assets_load",
-      "_tgt": "assetscontroller_assetscontroller_gettypes",
+      "_src": "assetscontroller_assetscontroller_gettypes",
+      "_tgt": "assets_load",
       "source": "assetscontroller_assetscontroller_gettypes",
       "target": "assets_load"
     },
@@ -4186,8 +4121,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L30",
       "weight": 1.0,
-      "_src": "assets_load",
-      "_tgt": "assetscontroller_assetscontroller_getassets",
+      "_src": "assetscontroller_assetscontroller_getassets",
+      "_tgt": "assets_load",
       "source": "assetscontroller_assetscontroller_getassets",
       "target": "assets_load"
     },
@@ -4198,8 +4133,8 @@
       "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L141",
       "weight": 1.0,
-      "_src": "issue_assets_submit",
-      "_tgt": "assetscontroller_assetscontroller_getassets",
+      "_src": "assetscontroller_assetscontroller_getassets",
+      "_tgt": "issue_assets_submit",
       "source": "assetscontroller_assetscontroller_getassets",
       "target": "issue_assets_submit"
     },
@@ -4270,8 +4205,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L98",
       "weight": 1.0,
-      "_src": "assets_updatestatus",
-      "_tgt": "assetscontroller_assetscontroller_updateasset",
+      "_src": "assetscontroller_assetscontroller_updateasset",
+      "_tgt": "assets_updatestatus",
       "source": "assetscontroller_assetscontroller_updateasset",
       "target": "assets_updatestatus"
     },
@@ -4282,8 +4217,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L135",
       "weight": 1.0,
-      "_src": "assets_updateassetdetails",
-      "_tgt": "assetscontroller_assetscontroller_updateasset",
+      "_src": "assetscontroller_assetscontroller_updateasset",
+      "_tgt": "assets_updateassetdetails",
       "source": "assetscontroller_assetscontroller_updateasset",
       "target": "assets_updateassetdetails"
     },
@@ -5398,8 +5333,8 @@
       "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
       "source_location": "L39",
       "weight": 1.0,
-      "_src": "receive_assets_receive",
-      "_tgt": "issuescontroller_issuescontroller_getbyvisit",
+      "_src": "issuescontroller_issuescontroller_getbyvisit",
+      "_tgt": "receive_assets_receive",
       "source": "issuescontroller_issuescontroller_getbyvisit",
       "target": "receive_assets_receive"
     },
@@ -5410,8 +5345,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L92",
       "weight": 1.0,
-      "_src": "reports_loadvisitdetails",
-      "_tgt": "issuescontroller_issuescontroller_getbyvisit",
+      "_src": "issuescontroller_issuescontroller_getbyvisit",
+      "_tgt": "reports_loadvisitdetails",
       "source": "issuescontroller_issuescontroller_getbyvisit",
       "target": "reports_loadvisitdetails"
     },
@@ -5542,8 +5477,8 @@
       "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
       "source_location": "L37",
       "weight": 1.0,
-      "_src": "receive_assets_receive",
-      "_tgt": "issuescontroller_issuescontroller_return",
+      "_src": "issuescontroller_issuescontroller_return",
+      "_tgt": "receive_assets_receive",
       "source": "issuescontroller_issuescontroller_return",
       "target": "receive_assets_receive"
     },
@@ -5650,8 +5585,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L67",
       "weight": 1.0,
-      "_src": "access_loadpages",
-      "_tgt": "menucontroller_menucontroller_getpages",
+      "_src": "menucontroller_menucontroller_getpages",
+      "_tgt": "access_loadpages",
       "source": "menucontroller_menucontroller_getpages",
       "target": "access_loadpages"
     },
@@ -5698,8 +5633,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L80",
       "weight": 1.0,
-      "_src": "access_loadassignment",
-      "_tgt": "menucontroller_menucontroller_getassignment",
+      "_src": "menucontroller_menucontroller_getassignment",
+      "_tgt": "access_loadassignment",
       "source": "menucontroller_menucontroller_getassignment",
       "target": "access_loadassignment"
     },
@@ -5746,8 +5681,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L151",
       "weight": 1.0,
-      "_src": "access_save",
-      "_tgt": "menucontroller_menucontroller_upsertassignment",
+      "_src": "menucontroller_menucontroller_upsertassignment",
+      "_tgt": "access_save",
       "source": "menucontroller_menucontroller_upsertassignment",
       "target": "access_save"
     },
@@ -5986,8 +5921,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L122",
       "weight": 1.0,
-      "_src": "reports_download",
-      "_tgt": "reportscontroller_reportscontroller_visitexcel",
+      "_src": "reportscontroller_reportscontroller_visitexcel",
+      "_tgt": "reports_download",
       "source": "reportscontroller_reportscontroller_visitexcel",
       "target": "reports_download"
     },
@@ -6010,8 +5945,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L125",
       "weight": 1.0,
-      "_src": "reports_download",
-      "_tgt": "reportscontroller_reportscontroller_inventoryexcel",
+      "_src": "reportscontroller_reportscontroller_inventoryexcel",
+      "_tgt": "reports_download",
       "source": "reportscontroller_reportscontroller_inventoryexcel",
       "target": "reports_download"
     },
@@ -6034,8 +5969,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L128",
       "weight": 1.0,
-      "_src": "reports_download",
-      "_tgt": "reportscontroller_reportscontroller_breakagespdf",
+      "_src": "reportscontroller_reportscontroller_breakagespdf",
+      "_tgt": "reports_download",
       "source": "reportscontroller_reportscontroller_breakagespdf",
       "target": "reports_download"
     },
@@ -6286,8 +6221,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L53",
       "weight": 1.0,
-      "_src": "access_loadcenters",
-      "_tgt": "tenantscontroller_tenantscontroller_getcenters",
+      "_src": "tenantscontroller_tenantscontroller_getcenters",
+      "_tgt": "access_loadcenters",
       "source": "tenantscontroller_tenantscontroller_getcenters",
       "target": "access_loadcenters"
     },
@@ -6298,8 +6233,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L53",
       "weight": 1.0,
-      "_src": "users_load",
-      "_tgt": "tenantscontroller_tenantscontroller_getcenters",
+      "_src": "tenantscontroller_tenantscontroller_getcenters",
+      "_tgt": "users_load",
       "source": "tenantscontroller_tenantscontroller_getcenters",
       "target": "users_load"
     },
@@ -6382,8 +6317,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L62",
       "weight": 1.0,
-      "_src": "access_loaddepartments",
-      "_tgt": "tenantscontroller_tenantscontroller_getdepartments",
+      "_src": "tenantscontroller_tenantscontroller_getdepartments",
+      "_tgt": "access_loaddepartments",
       "source": "tenantscontroller_tenantscontroller_getdepartments",
       "target": "access_loaddepartments"
     },
@@ -6802,8 +6737,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L72",
       "weight": 1.0,
-      "_src": "access_loadroles",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "access_loadroles",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "access_loadroles"
     },
@@ -6814,8 +6749,8 @@
       "source_file": "frontend\\pages\\admin\\breakage.tsx",
       "source_location": "L18",
       "weight": 1.0,
-      "_src": "breakage_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "breakage_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "breakage_load"
     },
@@ -6826,8 +6761,8 @@
       "source_file": "frontend\\pages\\admin\\incharges.tsx",
       "source_location": "L17",
       "weight": 1.0,
-      "_src": "incharges_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "incharges_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "incharges_load"
     },
@@ -6838,8 +6773,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L53",
       "weight": 1.0,
-      "_src": "users_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "users_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "users_load"
     },
@@ -6850,8 +6785,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L19",
       "weight": 1.0,
-      "_src": "visits_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "visits_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "visits_load"
     },
@@ -6886,8 +6821,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L248",
       "weight": 1.0,
-      "_src": "access_createrole",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "access_createrole",
       "source": "visitscontroller_visitscontroller_create",
       "target": "access_createrole"
     },
@@ -6898,8 +6833,8 @@
       "source_file": "frontend\\pages\\admin\\breakage.tsx",
       "source_location": "L63",
       "weight": 1.0,
-      "_src": "breakage_onsubmit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "breakage_onsubmit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "breakage_onsubmit"
     },
@@ -6910,8 +6845,8 @@
       "source_file": "frontend\\pages\\admin\\incharges.tsx",
       "source_location": "L35",
       "weight": 1.0,
-      "_src": "incharges_onsubmit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "incharges_onsubmit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "incharges_onsubmit"
     },
@@ -6922,8 +6857,8 @@
       "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L133",
       "weight": 1.0,
-      "_src": "issue_assets_submit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "issue_assets_submit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "issue_assets_submit"
     },
@@ -6934,8 +6869,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L120",
       "weight": 1.0,
-      "_src": "users_createuser",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "users_createuser",
       "source": "visitscontroller_visitscontroller_create",
       "target": "users_createuser"
     },
@@ -6946,8 +6881,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L33",
       "weight": 1.0,
-      "_src": "visits_onsubmit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "visits_onsubmit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "visits_onsubmit"
     },
@@ -6982,8 +6917,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L278",
       "weight": 1.0,
-      "_src": "access_deleterole",
-      "_tgt": "visitscontroller_visitscontroller_delete",
+      "_src": "visitscontroller_visitscontroller_delete",
+      "_tgt": "access_deleterole",
       "source": "visitscontroller_visitscontroller_delete",
       "target": "access_deleterole"
     },
@@ -6994,8 +6929,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L205",
       "weight": 1.0,
-      "_src": "users_deleteuser",
-      "_tgt": "visitscontroller_visitscontroller_delete",
+      "_src": "visitscontroller_visitscontroller_delete",
+      "_tgt": "users_deleteuser",
       "source": "visitscontroller_visitscontroller_delete",
       "target": "users_deleteuser"
     },
@@ -7006,8 +6941,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L41",
       "weight": 1.0,
-      "_src": "visits_ondelete",
-      "_tgt": "visitscontroller_visitscontroller_delete",
+      "_src": "visitscontroller_visitscontroller_delete",
+      "_tgt": "visits_ondelete",
       "source": "visitscontroller_visitscontroller_delete",
       "target": "visits_ondelete"
     },
@@ -7366,8 +7301,8 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L133",
       "weight": 1.0,
-      "_src": "issueservice_issueservice_sendissuesmsasync",
-      "_tgt": "smshelper_smshelper_sendsmsasync",
+      "_src": "smshelper_smshelper_sendsmsasync",
+      "_tgt": "issueservice_issueservice_sendissuesmsasync",
       "source": "smshelper_smshelper_sendsmsasync",
       "target": "issueservice_issueservice_sendissuesmsasync"
     },
@@ -7378,8 +7313,8 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L262",
       "weight": 1.0,
-      "_src": "issueservice_issueservice_returnissueasync",
-      "_tgt": "smshelper_smshelper_sendsmsasync",
+      "_src": "smshelper_smshelper_sendsmsasync",
+      "_tgt": "issueservice_issueservice_returnissueasync",
       "source": "smshelper_smshelper_sendsmsasync",
       "target": "issueservice_issueservice_returnissueasync"
     },
@@ -8530,8 +8465,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L264",
       "weight": 1.0,
-      "_src": "access_updaterole",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "access_updaterole",
       "source": "productconfigservice_productconfigservice_update",
       "target": "access_updaterole"
     },
@@ -8542,8 +8477,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L307",
       "weight": 1.0,
-      "_src": "access_saveconfig",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "access_saveconfig",
       "source": "productconfigservice_productconfigservice_update",
       "target": "access_saveconfig"
     },
@@ -8554,8 +8489,8 @@
       "source_file": "frontend\\pages\\admin\\incharges.tsx",
       "source_location": "L34",
       "weight": 1.0,
-      "_src": "incharges_onsubmit",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "incharges_onsubmit",
       "source": "productconfigservice_productconfigservice_update",
       "target": "incharges_onsubmit"
     },
@@ -8566,8 +8501,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L182",
       "weight": 1.0,
-      "_src": "users_updateuser",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "users_updateuser",
       "source": "productconfigservice_productconfigservice_update",
       "target": "users_updateuser"
     },
@@ -8578,8 +8513,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L32",
       "weight": 1.0,
-      "_src": "visits_onsubmit",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "visits_onsubmit",
       "source": "productconfigservice_productconfigservice_update",
       "target": "visits_onsubmit"
     },
@@ -8670,24 +8605,24 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\components\\SearchDropdown.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\SearchDropdown.tsx",
       "source_location": "L37",
       "weight": 1.0,
-      "_src": "frontend_components_searchdropdown_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_searchdropdown_tsx",
       "_tgt": "searchdropdown_handleclickoutside",
-      "source": "frontend_components_searchdropdown_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_searchdropdown_tsx",
       "target": "searchdropdown_handleclickoutside",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\components\\admin\\AdminLayout.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\admin\\AdminLayout.tsx",
       "source_location": "L66",
       "weight": 1.0,
-      "_src": "frontend_components_admin_adminlayout_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_admin_adminlayout_tsx",
       "_tgt": "adminlayout_logout",
-      "source": "frontend_components_admin_adminlayout_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_admin_adminlayout_tsx",
       "target": "adminlayout_logout",
       "confidence_score": 1.0
     },
@@ -9090,104 +9025,104 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
       "source_location": "L27",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_load",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_load",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L62",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L73",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_createtype",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_createtype",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L77",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L88",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_createasset",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_createasset",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L96",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L107",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_updatestatus",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_updatestatus",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L106",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L117",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_updatetype",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_updatetype",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L122",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L133",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_deletetype",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_deletetype",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L133",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L144",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_updateassetdetails",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_updateassetdetails",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L149",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L160",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_deleteasset",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_deleteasset",
       "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L71",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L82",
       "weight": 1.0,
       "_src": "assets_createtype",
       "_tgt": "assets_load",
@@ -9198,8 +9133,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L90",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L101",
       "weight": 1.0,
       "_src": "assets_createasset",
       "_tgt": "assets_load",
@@ -9210,8 +9145,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L116",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L127",
       "weight": 1.0,
       "_src": "assets_updatetype",
       "_tgt": "assets_load",
@@ -9222,8 +9157,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L127",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L138",
       "weight": 1.0,
       "_src": "assets_deletetype",
       "_tgt": "assets_load",
@@ -9234,8 +9169,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L143",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L154",
       "weight": 1.0,
       "_src": "assets_updateassetdetails",
       "_tgt": "assets_load",
@@ -9246,8 +9181,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L154",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L165",
       "weight": 1.0,
       "_src": "assets_deleteasset",
       "_tgt": "assets_load",
@@ -9390,72 +9325,72 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
-      "source_location": "L38",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
+      "source_location": "L47",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_index_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
       "_tgt": "index_statcard",
-      "source": "frontend_pages_admin_index_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
       "target": "index_statcard",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
-      "source_location": "L52",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
+      "source_location": "L61",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_index_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
       "_tgt": "index_countpair",
-      "source": "frontend_pages_admin_index_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
       "target": "index_countpair",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\index.tsx",
-      "source_location": "L106",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
+      "source_location": "L160",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_index_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
       "_tgt": "index_iswidgetenabled",
-      "source": "frontend_pages_admin_index_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
       "target": "index_iswidgetenabled",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
-      "source_location": "L64",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
+      "source_location": "L65",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_issue_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "_tgt": "issue_assets_addbyqr",
-      "source": "frontend_pages_admin_issue_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "target": "issue_assets_addbyqr",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
-      "source_location": "L100",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
+      "source_location": "L101",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_issue_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "_tgt": "issue_assets_toggle",
-      "source": "frontend_pages_admin_issue_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "target": "issue_assets_toggle",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\issue-assets.tsx",
-      "source_location": "L105",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
+      "source_location": "L106",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_issue_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "_tgt": "issue_assets_submit",
-      "source": "frontend_pages_admin_issue_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
       "target": "issue_assets_submit",
       "confidence_score": 1.0
     },
@@ -9486,24 +9421,24 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
-      "source_location": "L31",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
+      "source_location": "L32",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_receive_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_receive_assets_tsx",
       "_tgt": "receive_assets_toggle",
-      "source": "frontend_pages_admin_receive_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_receive_assets_tsx",
       "target": "receive_assets_toggle",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\receive-assets.tsx",
-      "source_location": "L33",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
+      "source_location": "L34",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_receive_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_receive_assets_tsx",
       "_tgt": "receive_assets_receive",
-      "source": "frontend_pages_admin_receive_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_receive_assets_tsx",
       "target": "receive_assets_receive",
       "confidence_score": 1.0
     },
@@ -10078,8 +10013,8 @@
       "source_file": "CLAUDE.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "claude_graphify_rules",
-      "_tgt": "readme_rssb_wireless_system",
+      "_src": "readme_rssb_wireless_system",
+      "_tgt": "claude_graphify_rules",
       "source": "readme_rssb_wireless_system",
       "target": "claude_graphify_rules"
     },
@@ -10192,30 +10127,6 @@
       "target": "readme_entity_framework"
     },
     {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "readme_backend",
-      "_tgt": "filelist_rssb_api_dll",
-      "source": "readme_backend",
-      "target": "filelist_rssb_api_dll"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "weight": 0.9,
-      "_src": "filelist_npgsql",
-      "_tgt": "readme_postgresql",
-      "source": "readme_postgresql",
-      "target": "filelist_npgsql"
-    },
-    {
       "relation": "conceptually_related_to",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -10234,8 +10145,8 @@
       "source_file": "README.md",
       "source_location": "Modules - Issue Wireless SMS notification",
       "weight": 1.0,
-      "_src": "readme_issue_return_workflow",
-      "_tgt": "readme_twilio",
+      "_src": "readme_twilio",
+      "_tgt": "readme_issue_return_workflow",
       "source": "readme_twilio",
       "target": "readme_issue_return_workflow"
     },
@@ -10246,8 +10157,8 @@
       "source_file": "README.md",
       "source_location": "Brand Rules - Kenwood has QR Code",
       "weight": 1.0,
-      "_src": "readme_kenwood",
-      "_tgt": "readme_qrcoder",
+      "_src": "readme_qrcoder",
+      "_tgt": "readme_kenwood",
       "source": "readme_qrcoder",
       "target": "readme_kenwood"
     },
@@ -10258,8 +10169,8 @@
       "source_file": "README.md",
       "source_location": "API Endpoints - Excel reports",
       "weight": 1.0,
-      "_src": "readme_reports_module",
-      "_tgt": "readme_epplus",
+      "_src": "readme_epplus",
+      "_tgt": "readme_reports_module",
       "source": "readme_epplus",
       "target": "readme_reports_module"
     },
@@ -10282,22 +10193,10 @@
       "source_file": "README.md",
       "source_location": "API Endpoints - PDF reports",
       "weight": 1.0,
-      "_src": "readme_reports_module",
-      "_tgt": "readme_itext7",
+      "_src": "readme_itext7",
+      "_tgt": "readme_reports_module",
       "source": "readme_itext7",
       "target": "readme_reports_module"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": null,
-      "weight": 0.8,
-      "_src": "filelist_bcrypt",
-      "_tgt": "readme_jwt",
-      "source": "readme_jwt",
-      "target": "filelist_bcrypt"
     },
     {
       "relation": "references",
@@ -10334,54 +10233,6 @@
       "_tgt": "readme_aspera",
       "source": "readme_inventory_module",
       "target": "readme_aspera"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": "Build output file list",
-      "weight": 1.0,
-      "_src": "filelist_rssb_api_dll",
-      "_tgt": "filelist_automapper",
-      "source": "filelist_automapper",
-      "target": "filelist_rssb_api_dll"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": "Build output file list",
-      "weight": 1.0,
-      "_src": "filelist_rssb_api_dll",
-      "_tgt": "filelist_bcrypt",
-      "source": "filelist_bcrypt",
-      "target": "filelist_rssb_api_dll"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": "Build output file list",
-      "weight": 1.0,
-      "_src": "filelist_rssb_api_dll",
-      "_tgt": "filelist_npgsql",
-      "source": "filelist_npgsql",
-      "target": "filelist_rssb_api_dll"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.csproj.FileListAbsolute.txt",
-      "source_location": "Build output file list",
-      "weight": 1.0,
-      "_src": "filelist_rssb_api_dll",
-      "_tgt": "filelist_swashbuckle",
-      "source": "filelist_swashbuckle",
-      "target": "filelist_rssb_api_dll"
     }
   ],
   "hyperedges": [
