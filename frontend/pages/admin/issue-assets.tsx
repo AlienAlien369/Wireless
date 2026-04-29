@@ -4,7 +4,7 @@ import AdminLayout from '../../components/admin/AdminLayout'
 import SearchDropdown from '../../components/SearchDropdown'
 import { assetsApi, issuesApi, productConfigApi, sewadaarsApi, tenantsApi, visitsApi } from '../../services/api'
 import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
-import { Plus, X } from 'lucide-react'
+import { X } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type Visit = any
@@ -31,6 +31,7 @@ export default function IssueAssetsPage() {
   const [submitting, setSubmitting] = useState(false)
   const [sendSms, setSendSms] = useState(true)
   const [qrInput, setQrInput] = useState('')
+  const [assetSearch, setAssetSearch] = useState('')
 
   useEffect(() => {
     Promise.all([
@@ -236,11 +237,25 @@ export default function IssueAssetsPage() {
               <button className="btn-secondary" type="button" onClick={addByQr}>Add by QR</button>
             </div>
 
+            <div className="mb-3">
+              <input
+                className="input"
+                value={assetSearch}
+                onChange={(e) => setAssetSearch(e.target.value)}
+                placeholder="Search by item number or type..."
+              />
+            </div>
+
             {assets.length === 0 ? (
               <div className="text-sm text-gray-500">No available assets found for this type.</div>
             ) : (
               <div className="space-y-2">
-                {assets.map(a => {
+                {assets
+                  .filter(a => {
+                    const q = assetSearch.toLowerCase()
+                    return !q || (a.itemNumber || '').toLowerCase().includes(q) || a.assetTypeName.toLowerCase().includes(q) || (a.brand || '').toLowerCase().includes(q)
+                  })
+                  .map(a => {
                   const active = !!selected.find(x => x.id === a.id)
                   return (
                     <button key={a.id} type="button" onClick={() => toggle(a)}
@@ -257,12 +272,6 @@ export default function IssueAssetsPage() {
                 })}
               </div>
             )}
-
-            <div className="pt-4">
-              <a href="/admin/assets" className="btn-secondary w-full inline-flex items-center justify-center gap-2">
-                <Plus size={16} /> Add more assets
-              </a>
-            </div>
           </div>
         </div>
       </div>
