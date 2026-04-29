@@ -31,7 +31,7 @@ export default function SearchDropdown({
     getLabel(item).toLowerCase().includes(search.toLowerCase())
   )
 
-  const selectedItem = items.find(item => getValue(item) === value)
+  const selectedItem = items.find(item => String(getValue(item)) === String(value))
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
