@@ -9,6 +9,7 @@ export default function ReceiveAssetsPage() {
   const [visits, setVisits] = useState<any[]>([])
   const [issues, setIssues] = useState<any[]>([])
   const [selected, setSelected] = useState<Record<number, boolean>>({})
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     visitsApi.getAll().then((res) => {
@@ -47,19 +48,42 @@ export default function ReceiveAssetsPage() {
   return (
     <AdminLayout title="Receive Assets">
       <div className="space-y-4">
-        <div className="card">
-          <label className="label">Visit</label>
-          <select className="input max-w-md" value={visitId} onChange={(e) => setVisitId(e.target.value)}>
-            <option value="">Select visit...</option>
-            {visits.map((v: any) => <option key={v.id} value={v.id}>{v.name}</option>)}
-          </select>
+        <div className="card space-y-3">
+          <div>
+            <label className="label">Visit</label>
+            <select className="input max-w-md" value={visitId} onChange={(e) => setVisitId(e.target.value)}>
+              <option value="">Select visit...</option>
+              {visits.map((v: any) => <option key={v.id} value={v.id}>{v.name}</option>)}
+            </select>
+          </div>
+          {visitId && (
+            <div>
+              <input
+                className="input max-w-md"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by sewadaar name or item number (e.g. WC-01)..."
+              />
+            </div>
+          )}
         </div>
 
         {issues.length === 0 ? (
           <div className="card text-sm text-gray-500">No active issued assets for selected visit.</div>
         ) : (
           <div className="space-y-3">
-            {issues.map((issue: any) => {
+            {issues
+              .filter((issue: any) => {
+                if (!search) return true
+                const q = search.toLowerCase()
+                const nameMatch = (issue.inchargeName || '').toLowerCase().includes(q)
+                const itemMatch = (issue.items || []).some((it: any) =>
+                  (it.itemNumber || '').toLowerCase().includes(q) ||
+                  (it.itemType || '').toLowerCase().includes(q)
+                )
+                return nameMatch || itemMatch
+              })
+              .map((issue: any) => {
               const assetItems = (issue.items || []).filter((x: any) => x.assetId && !x.isReturned)
               if (assetItems.length === 0) return null
               return (
