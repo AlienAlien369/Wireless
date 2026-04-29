@@ -1,13 +1,17 @@
 using System.Text;
+using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.Helpers;
+using RSSBWireless.API.Middleware;
 using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,9 +65,9 @@ builder.Services.AddCors(opt =>
 builder.Services.AddHttpClient<SmsHelper>();
 builder.Services.AddScoped<SmsHelper>();
 builder.Services.AddScoped<EmailHelper>();
-builder.Services.AddScoped<IssueService>();
-builder.Services.AddScoped<ReportService>();
-builder.Services.AddScoped<AccessScopeService>();
+builder.Services.AddScoped<IIssueService, IssueService>();
+builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IAccessScopeService, AccessScopeService>();
 builder.Services.AddSingleton<ProductConfigService>();
 builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddSingleton<CloudinaryHelper>();
@@ -72,6 +76,33 @@ builder.Services.AddSingleton<QrCodeHelper>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// ─── Response Compression ─────────────────────────────────────────────────────
+builder.Services.AddResponseCompression(opt => opt.EnableForHttps = true);
+
+// ─── Health Checks ────────────────────────────────────────────────────────────
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection")!);
+
+// ─── Rate Limiting ────────────────────────────────────────────────────────────
+builder.Services.AddRateLimiter(opt =>
+{
+    opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(ctx =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            ctx.User?.Identity?.Name ?? ctx.Connection.RemoteIpAddress?.ToString() ?? "anon",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 300,
+                Window = TimeSpan.FromMinutes(1),
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 10
+            }));
+    opt.OnRejected = async (ctx, token) =>
+    {
+        ctx.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+        await ctx.HttpContext.Response.WriteAsync("Rate limit exceeded. Try again later.", token);
+    };
+});
 
 // ─── Swagger with JWT ─────────────────────────────────────────────────────────
 builder.Services.AddSwaggerGen(c =>
@@ -460,9 +491,27 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseResponseCompression();
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseCors("AllowFrontend");
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    ResponseWriter = async (ctx, report) =>
+    {
+        ctx.Response.ContentType = "application/json";
+        var result = System.Text.Json.JsonSerializer.Serialize(new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(e => new { name = e.Key, status = e.Value.Status.ToString() })
+        });
+        await ctx.Response.WriteAsync(result);
+    }
+});
 
 app.Run();

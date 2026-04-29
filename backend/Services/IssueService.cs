@@ -5,8 +5,9 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
 using RSSBWireless.API.Helpers;
+using RSSBWireless.API.Services.Interfaces;
 
-public class IssueService
+public class IssueService : IIssueService
 {
     private readonly AppDbContext _db;
     private readonly SmsHelper _sms;
@@ -25,7 +26,7 @@ public class IssueService
         _logger = logger;
     }
 
-    public async Task<IssueResponseDto> CreateIssueAsync(IssueCreateDto dto, string issuedBy, int? centerId, int? departmentId)
+    public async Task<IssueResponseDto> CreateIssueAsync(IssueCreateDto dto, string issuedBy, int? centerId, int? departmentId, CancellationToken cancellationToken = default)
     {
         // Handle collector
         Collector? collector = null;
@@ -38,7 +39,7 @@ public class IssueService
                 PhoneNumber = dto.Collector.PhoneNumber
             };
             _db.Collectors.Add(collector);
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(cancellationToken);
         }
 
         var issue = new Issue
@@ -56,7 +57,7 @@ public class IssueService
         };
 
         _db.Issues.Add(issue);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(cancellationToken);
 
         // Add line items and mark sets as Issued
         foreach (var item in dto.Items)
@@ -66,31 +67,31 @@ public class IssueService
             if (item.ItemType == "WirelessSet" && item.WirelessSetId.HasValue)
             {
                 ii.WirelessSetId = item.WirelessSetId;
-                var ws = await _db.WirelessSets.FindAsync(item.WirelessSetId);
-                if (ws != null) ws.Status = "Issued";
+                var ws = await _db.WirelessSets.FindAsync(new object?[] { item.WirelessSetId }, cancellationToken);
+                if (ws != null) ws.Status = AssetStatus.Issued;
             }
             else if (item.ItemType == "Charger" && item.ChargerId.HasValue)
             {
                 ii.ChargerId = item.ChargerId;
-                var ch = await _db.Chargers.FindAsync(item.ChargerId);
-                if (ch != null) ch.Status = "Issued";
+                var ch = await _db.Chargers.FindAsync(new object?[] { item.ChargerId }, cancellationToken);
+                if (ch != null) ch.Status = AssetStatus.Issued;
             }
             else if (item.ItemType == "Kit" && item.KitId.HasValue)
             {
                 ii.KitId = item.KitId;
-                var kit = await _db.Kits.FindAsync(item.KitId);
-                if (kit != null) kit.Status = "Issued";
+                var kit = await _db.Kits.FindAsync(new object?[] { item.KitId }, cancellationToken);
+                if (kit != null) kit.Status = AssetStatus.Issued;
             }
             else if (item.AssetId.HasValue)
             {
                 ii.AssetId = item.AssetId;
-                var a = await _db.Assets.FindAsync(item.AssetId);
-                if (a != null) a.Status = "Issued";
+                var a = await _db.Assets.FindAsync(new object?[] { item.AssetId }, cancellationToken);
+                if (a != null) a.Status = AssetStatus.Issued;
             }
 
             _db.IssueItems.Add(ii);
         }
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(cancellationToken);
 
         // Send SMS if requested
         if (dto.SendSms)
@@ -98,7 +99,7 @@ public class IssueService
             await SendIssueSmsAsync(issue, dto);
         }
 
-        return await GetIssueByIdAsync(issue.Id, centerId, departmentId, false);
+        return await GetIssueByIdAsync(issue.Id, centerId, departmentId, false, cancellationToken);
     }
 
 private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
@@ -145,7 +146,7 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
         };
         
         _db.SmsLogs.Add(log);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(cancellationToken: default);
 
         if (!success)
         {
@@ -167,13 +168,14 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             ErrorMessage = ex.Message
         };
         _db.SmsLogs.Add(errorLog);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(cancellationToken: default);
     }
 }
     // ... rest of your existing methods remain unchanged ...
-    public async Task<IssueResponseDto> GetIssueByIdAsync(int id, int? centerId = null, int? departmentId = null, bool strictDepartment = false)
+    public async Task<IssueResponseDto> GetIssueByIdAsync(int id, int? centerId = null, int? departmentId = null, bool strictDepartment = false, CancellationToken cancellationToken = default)
     {
         var issue = await _db.Issues
+            .AsNoTracking()
             .Include(i => i.Visit)
             .Include(i => i.Incharge)
             .Include(i => i.Collector)
@@ -186,15 +188,17 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             .FirstOrDefaultAsync(i =>
                 i.Id == id &&
                 (centerId == null || i.CenterId == centerId) &&
-                (!strictDepartment || departmentId == null || i.DepartmentId == departmentId || i.DepartmentId == null))
+                (!strictDepartment || departmentId == null || i.DepartmentId == departmentId || i.DepartmentId == null),
+                cancellationToken)
             ?? throw new KeyNotFoundException("Issue not found");
 
         return MapToDto(issue);
     }
 
-    public async Task<List<IssueResponseDto>> GetIssuesByVisitAsync(int visitId, int? centerId = null, int? departmentId = null, bool strictDepartment = false)
+    public async Task<List<IssueResponseDto>> GetIssuesByVisitAsync(int visitId, int? centerId = null, int? departmentId = null, bool strictDepartment = false, CancellationToken cancellationToken = default)
     {
         var issues = await _db.Issues
+            .AsNoTracking()
             .Include(i => i.Visit).Include(i => i.Incharge).Include(i => i.Collector)
             .Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
@@ -207,18 +211,18 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
                 (centerId == null || i.CenterId == centerId) &&
                 (!strictDepartment || departmentId == null || i.DepartmentId == departmentId || i.DepartmentId == null))
             .OrderByDescending(i => i.IssuedAt)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return issues.Select(MapToDto).ToList();
     }
 
-    public async Task ReturnIssueAsync(int issueId, List<int> returnedItemIds, bool sendSms = false)
+    public async Task ReturnIssueAsync(int issueId, List<int> returnedItemIds, bool sendSms = false, CancellationToken cancellationToken = default)
     {
         var issue = await _db.Issues
             .Include(i => i.Items)
             .Include(i => i.Incharge)
             .Include(i => i.Visit)
-            .FirstOrDefaultAsync(i => i.Id == issueId)
+            .FirstOrDefaultAsync(i => i.Id == issueId, cancellationToken)
             ?? throw new KeyNotFoundException("Issue not found");
 
         foreach (var itemId in returnedItemIds)
@@ -230,31 +234,31 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
 
             if (item.WirelessSetId.HasValue)
             {
-                var ws = await _db.WirelessSets.FindAsync(item.WirelessSetId);
-                if (ws != null) ws.Status = "Available";
+                var ws = await _db.WirelessSets.FindAsync(new object?[] { item.WirelessSetId }, cancellationToken);
+                if (ws != null) ws.Status = AssetStatus.Available;
             }
             if (item.ChargerId.HasValue)
             {
-                var ch = await _db.Chargers.FindAsync(item.ChargerId);
-                if (ch != null) ch.Status = "Available";
+                var ch = await _db.Chargers.FindAsync(new object?[] { item.ChargerId }, cancellationToken);
+                if (ch != null) ch.Status = AssetStatus.Available;
             }
             if (item.KitId.HasValue)
             {
-                var kit = await _db.Kits.FindAsync(item.KitId);
-                if (kit != null) kit.Status = "Available";
+                var kit = await _db.Kits.FindAsync(new object?[] { item.KitId }, cancellationToken);
+                if (kit != null) kit.Status = AssetStatus.Available;
             }
             if (item.AssetId.HasValue)
             {
-                var a = await _db.Assets.FindAsync(item.AssetId);
-                if (a != null) a.Status = "Available";
+                var a = await _db.Assets.FindAsync(new object?[] { item.AssetId }, cancellationToken);
+                if (a != null) a.Status = AssetStatus.Available;
             }
         }
 
         var allReturned = issue.Items.All(i => i.IsReturned);
-        issue.Status = allReturned ? "Returned" : "Partial";
+        issue.Status = allReturned ? IssueStatus.Returned : IssueStatus.Partial;
         if (allReturned) issue.ReturnedAt = DateTime.UtcNow;
 
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(cancellationToken);
 
         if (sendSms && issue.Incharge != null && !string.IsNullOrWhiteSpace(issue.Incharge.MobileNumber))
         {
@@ -268,7 +272,7 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
                 Status = success ? "Sent" : "Failed",
                 ErrorMessage = err
             });
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(cancellationToken);
         }
     }
 

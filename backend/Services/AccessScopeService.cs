@@ -3,6 +3,7 @@ namespace RSSBWireless.API.Services;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using RSSBWireless.API.Data;
+using RSSBWireless.API.Services.Interfaces;
 
 public class AccessScope
 {
@@ -18,7 +19,7 @@ public class AccessScope
     public bool IsAdmin { get; set; }
 }
 
-public class AccessScopeService
+public class AccessScopeService : IAccessScopeService
 {
     private readonly AppDbContext _db;
     private readonly ProductConfigService _config;
@@ -29,16 +30,16 @@ public class AccessScopeService
         _config = config;
     }
 
-    public async Task<AccessScope?> GetScopeAsync(ClaimsPrincipal user)
+    public async Task<AccessScope?> GetScopeAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
     {
         var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrWhiteSpace(userId)) return null;
 
-        var appUser = await _db.Users.FirstOrDefaultAsync(x => x.Id == userId);
+        var appUser = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
         if (appUser == null) return null;
 
         var roleName = (appUser.Role ?? string.Empty).Trim();
-        var appRole = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == roleName && x.IsActive);
+        var appRole = await _db.AppRoles.AsNoTracking().FirstOrDefaultAsync(x => x.Name == roleName && x.IsActive, cancellationToken);
         var isSuperAdmin = string.Equals(appUser.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
                            string.Equals(roleName, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase);
         var audience = appRole?.Audience ?? (isSuperAdmin || string.Equals(roleName, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(roleName, "Center Head", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Sewadaar");
@@ -60,9 +61,9 @@ public class AccessScopeService
         };
     }
 
-    public async Task<AccessScope> RequireAdminUiAsync(ClaimsPrincipal user)
+    public async Task<AccessScope> RequireAdminUiAsync(ClaimsPrincipal user, CancellationToken cancellationToken = default)
     {
-        var scope = await GetScopeAsync(user) ?? throw new UnauthorizedAccessException("Unauthorized");
+        var scope = await GetScopeAsync(user, cancellationToken) ?? throw new UnauthorizedAccessException("Unauthorized");
         if (!string.Equals(scope.Audience, "Admin", StringComparison.OrdinalIgnoreCase))
             throw new UnauthorizedAccessException("Admin audience required");
         return scope;

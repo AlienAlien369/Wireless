@@ -8,19 +8,21 @@ using iText.Layout.Element;
 using iText.Kernel.Colors;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
+using RSSBWireless.API.Models;
+using RSSBWireless.API.Services.Interfaces;
 
-public class ReportService
+public class ReportService : IReportService
 {
     private readonly AppDbContext _db;
     public ReportService(AppDbContext db) => _db = db;
 
-    public async Task<List<VisitWiseDashboardDto>> GetVisitWiseDashboardAsync()
+    public async Task<List<VisitWiseDashboardDto>> GetVisitWiseDashboardAsync(CancellationToken cancellationToken = default)
     {
         // Load all assets with their types once – avoids N+1 and WirelessSets/Chargers/Kits tables.
         var allAssets = await _db.Assets
             .AsNoTracking()
             .Include(a => a.AssetType)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         // Build a fast lookup: AssetId → Asset (with AssetType pre-loaded).
         var assetById = allAssets.ToDictionary(a => a.Id);
@@ -30,15 +32,15 @@ public class ReportService
             allAssets.Count(a =>
                 a.AssetType.Code == typeCode &&
                 (brand == null || a.Brand == brand) &&
-                a.Status != "Broken");
+                a.Status != AssetStatus.Broken);
 
-        var totalKenwoodSets = TotalByTypeAndBrand("wireless-set", "Kenwood");
-        var totalVertelSets  = TotalByTypeAndBrand("wireless-set", "Vertel");
-        var totalAsperaSets  = TotalByTypeAndBrand("wireless-set", "Aspera");
-        var totalKenwoodChargers = TotalByTypeAndBrand("charger", "Kenwood");
-        var totalVertelChargers  = TotalByTypeAndBrand("charger", "Vertel");
-        var totalAsperaChargers  = TotalByTypeAndBrand("charger", "Aspera");
-        var totalKits = TotalByTypeAndBrand("kit", null);
+        var totalKenwoodSets = TotalByTypeAndBrand(AssetTypeCodes.WirelessSet, "Kenwood");
+        var totalVertelSets  = TotalByTypeAndBrand(AssetTypeCodes.WirelessSet, "Vertel");
+        var totalAsperaSets  = TotalByTypeAndBrand(AssetTypeCodes.WirelessSet, "Aspera");
+        var totalKenwoodChargers = TotalByTypeAndBrand(AssetTypeCodes.Charger, "Kenwood");
+        var totalVertelChargers  = TotalByTypeAndBrand(AssetTypeCodes.Charger, "Vertel");
+        var totalAsperaChargers  = TotalByTypeAndBrand(AssetTypeCodes.Charger, "Aspera");
+        var totalKits = TotalByTypeAndBrand(AssetTypeCodes.Kit, null);
 
         // Load visits with only IssueItem IDs + AssetId (no deep navigation needed).
         var visits = await _db.Visits
@@ -46,7 +48,7 @@ public class ReportService
             .Include(v => v.Issues)
                 .ThenInclude(i => i.Items)
             .OrderByDescending(v => v.VisitDate)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         var result = new List<VisitWiseDashboardDto>();
         foreach (var visit in visits)
@@ -63,13 +65,13 @@ public class ReportService
                     a.AssetType.Code == typeCode &&
                     (brand == null || a.Brand == brand));
 
-            var kenwoodSetsIssued    = CountIssued("wireless-set", "Kenwood");
-            var vertelSetsIssued     = CountIssued("wireless-set", "Vertel");
-            var asperaSetsIssued     = CountIssued("wireless-set", "Aspera");
-            var kenwoodChargersIssued = CountIssued("charger", "Kenwood");
-            var vertelChargersIssued  = CountIssued("charger", "Vertel");
-            var asperaChargersIssued  = CountIssued("charger", "Aspera");
-            var kitsIssued           = CountIssued("kit", null);
+            var kenwoodSetsIssued    = CountIssued(AssetTypeCodes.WirelessSet, "Kenwood");
+            var vertelSetsIssued     = CountIssued(AssetTypeCodes.WirelessSet, "Vertel");
+            var asperaSetsIssued     = CountIssued(AssetTypeCodes.WirelessSet, "Aspera");
+            var kenwoodChargersIssued = CountIssued(AssetTypeCodes.Charger, "Kenwood");
+            var vertelChargersIssued  = CountIssued(AssetTypeCodes.Charger, "Vertel");
+            var asperaChargersIssued  = CountIssued(AssetTypeCodes.Charger, "Aspera");
+            var kitsIssued           = CountIssued(AssetTypeCodes.Kit, null);
 
             result.Add(new VisitWiseDashboardDto
             {
@@ -96,16 +98,18 @@ public class ReportService
         return result;
     }
 
-    public async Task<byte[]> GenerateVisitExcelReportAsync(int visitId)
+    public async Task<byte[]> GenerateVisitExcelReportAsync(int visitId, CancellationToken cancellationToken = default)
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        var visit = await _db.Visits.FindAsync(visitId) ?? throw new KeyNotFoundException();
+        var visit = await _db.Visits.AsNoTracking().FirstOrDefaultAsync(v => v.Id == visitId, cancellationToken)
+            ?? throw new KeyNotFoundException();
         var issues = await _db.Issues
+            .AsNoTracking()
             .Include(i => i.Incharge).Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
             .Include(i => i.Items).ThenInclude(ii => ii.Charger)
             .Include(i => i.Items).ThenInclude(ii => ii.Kit)
             .Where(i => i.VisitId == visitId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         using var package = new ExcelPackage();
         var ws = package.Workbook.Worksheets.Add("Issuance Report");
@@ -146,10 +150,10 @@ public class ReportService
         return package.GetAsByteArray();
     }
 
-    public async Task<byte[]> GenerateInventoryExcelReportAsync()
+    public async Task<byte[]> GenerateInventoryExcelReportAsync(CancellationToken cancellationToken = default)
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        var sets = await _db.WirelessSets.OrderBy(w => w.Brand).ThenBy(w => w.ItemNumber).ToListAsync();
+        var sets = await _db.WirelessSets.AsNoTracking().OrderBy(w => w.Brand).ThenBy(w => w.ItemNumber).ToListAsync(cancellationToken);
 
         using var package = new ExcelPackage();
         var ws = package.Workbook.Worksheets.Add("Inventory");
@@ -178,8 +182,8 @@ public class ReportService
             // Color code by status
             var color = sets[i].Status switch
             {
-                "Issued" => System.Drawing.Color.LightYellow,
-                "Broken" => System.Drawing.Color.LightCoral,
+                AssetStatus.Issued => System.Drawing.Color.LightYellow,
+                AssetStatus.Broken => System.Drawing.Color.LightCoral,
                 _ => System.Drawing.Color.LightGreen
             };
             ws.Cells[row, 1, row, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
@@ -190,11 +194,11 @@ public class ReportService
         return package.GetAsByteArray();
     }
 
-    public async Task<byte[]> GenerateBreakagePdfReportAsync(int? visitId = null)
+    public async Task<byte[]> GenerateBreakagePdfReportAsync(int? visitId = null, CancellationToken cancellationToken = default)
     {
-        var query = _db.Breakages.Include(b => b.Visit).AsQueryable();
+        var query = _db.Breakages.AsNoTracking().Include(b => b.Visit).AsQueryable();
         if (visitId.HasValue) query = query.Where(b => b.VisitId == visitId);
-        var breakages = await query.OrderByDescending(b => b.ReportedAt).ToListAsync();
+        var breakages = await query.OrderByDescending(b => b.ReportedAt).ToListAsync(cancellationToken);
 
         using var ms = new MemoryStream();
         var writer = new PdfWriter(ms);
