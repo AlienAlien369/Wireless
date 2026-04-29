@@ -25,12 +25,23 @@ export default function AssetsPage() {
   const [editingAssetId, setEditingAssetId] = useState<number | null>(null)
 
   const load = async (cId: number, dId?: number | null) => {
-    const [t, a] = await Promise.all([
+    const [tAll, aAll] = await Promise.all([
       assetsApi.getTypes(cId, dId ?? undefined),
-      assetsApi.getAssets(cId, undefined, undefined, dId ?? undefined),
+      assetsApi.getAssets(cId),
     ])
-    setTypes(t.data || [])
-    setAssets(a.data || [])
+    const allTypes: AssetType[] = tAll.data || []
+    const allAssets: Asset[] = aAll.data || []
+
+    if (dId && allTypes.length > 0) {
+      // filter assets to only those whose type is in the dept-filtered types list
+      const typeIds = new Set(allTypes.map(t => t.id))
+      setTypes(allTypes)
+      setAssets(allAssets.filter(a => typeIds.has(a.assetTypeId)))
+    } else {
+      // no dept selected or dept has no configured types — show everything for center
+      setTypes(allTypes)
+      setAssets(allAssets)
+    }
   }
 
   useEffect(() => {
