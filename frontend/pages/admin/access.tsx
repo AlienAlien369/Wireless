@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
-import { menuApi, tenantsApi, rolesApi, productConfigApi } from '../../services/api'
+import { assetsApi, menuApi, tenantsApi, rolesApi, productConfigApi } from '../../services/api'
 import { Plus, Save, RefreshCw, Pencil, Trash2 } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
@@ -16,30 +16,38 @@ type MenuPage = {
   sortOrder: number
   isActive: boolean
 }
+type AssetType = { id: number; centerId: number; code: string; name: string; trackingMode: string; isActive: boolean }
 
 export default function AccessControlPage() {
+  const currentUser = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user') || 'null') : null
+  const isSuperAdmin = currentUser?.username === 'admin' || currentUser?.role === 'SUPER_ADMIN'
   const [centers, setCenters] = useState<Center[]>([])
   const [departments, setDepartments] = useState<Department[]>([])
   const [pages, setPages] = useState<MenuPage[]>([])
   const [roles, setRoles] = useState<{ id: number; name: string; audience: string; isActive: boolean }[]>([])
+  const [assetTypes, setAssetTypes] = useState<AssetType[]>([])
 
   const [centerId, setCenterId] = useState<number | null>(null)
   const [departmentId, setDepartmentId] = useState<number | null>(null) // null => all departments
   const [role, setRole] = useState<string>('Admin')
   const [selectedPageIds, setSelectedPageIds] = useState<number[]>([])
+  const [selectedAssetTypeIds, setSelectedAssetTypeIds] = useState<number[]>([])
   const [saving, setSaving] = useState(false)
   const [configSaving, setConfigSaving] = useState(false)
   const [productConfig, setProductConfig] = useState<any>({
+    branding: { appName: 'AssetHub', defaultCenterName: 'Bhati Center' },
+    sms: { issueEnabled: true, receiveEnabled: true },
     featureFlags: { unifiedAssetsEnabled: true, legacyWirelessEnabled: false, qrAssetFlowEnabled: true },
     centerHeadRoles: [],
     roleDefaults: [],
+    assetVisibilityRules: [],
     dashboardWidgets: [],
   })
 
   const [newCenterName, setNewCenterName] = useState('')
   const [newDeptName, setNewDeptName] = useState('')
   const [newRoleName, setNewRoleName] = useState('')
-  const [newRoleAudience, setNewRoleAudience] = useState<'Admin' | 'Incharge'>('Admin')
+  const [newRoleAudience, setNewRoleAudience] = useState<'Admin' | 'Sewadaar'>('Admin')
 
   const loadCenters = async () => {
     const res = await tenantsApi.getCenters()
@@ -62,7 +70,8 @@ export default function AccessControlPage() {
 
   const loadRoles = async () => {
     const res = await rolesApi.getAll()
-    const list = (res.data || []).filter((r: any) => r.isActive)
+    const allowedRoles = new Set(['Center Head', 'Admin', 'Sewadaar'])
+    const list = (res.data || []).filter((r: any) => r.isActive && allowedRoles.has(r.name))
     setRoles(list)
     if (!role && list.length) setRole(list[0].name)
   }
@@ -70,6 +79,11 @@ export default function AccessControlPage() {
   const loadAssignment = async (cId: number, dId: number | null, r: string) => {
     const res = await menuApi.getAssignment(cId, dId, r)
     setSelectedPageIds(res.data || [])
+  }
+
+  const loadAssetTypes = async (cId: number, dId: number | null) => {
+    const res = await assetsApi.getTypes(cId, dId ?? undefined)
+    setAssetTypes((res.data || []).filter((x: any) => x.isActive))
   }
 
   useEffect(() => {
@@ -80,6 +94,7 @@ export default function AccessControlPage() {
   useEffect(() => {
     if (!centerId) { setDepartments([]); setDepartmentId(null); return }
     loadDepartments(centerId).catch(() => toast.error('Failed to load departments'))
+    loadAssetTypes(centerId, null).catch(() => setAssetTypes([]))
     setDepartmentId(null)
   }, [centerId])
 
@@ -87,6 +102,16 @@ export default function AccessControlPage() {
     if (!centerId) { setSelectedPageIds([]); return }
     loadAssignment(centerId, departmentId, role).catch(() => setSelectedPageIds([]))
   }, [centerId, departmentId, role])
+
+  useEffect(() => {
+    if (!centerId) { setSelectedAssetTypeIds([]); return }
+    const rules = productConfig.assetVisibilityRules || []
+    const ids = rules
+      .filter((x: any) => x.centerId === centerId && x.role === role && (x.departmentId ?? null) === departmentId)
+      .map((x: any) => x.assetTypeId)
+    setSelectedAssetTypeIds(ids)
+    loadAssetTypes(centerId, departmentId).catch(() => setAssetTypes([]))
+  }, [centerId, departmentId, role, productConfig])
 
   const visiblePages = useMemo(() => {
     const selectedRole = roles.find(r => r.name === role)
@@ -98,6 +123,10 @@ export default function AccessControlPage() {
 
   const togglePage = (id: number) => {
     setSelectedPageIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
+  }
+
+  const toggleAssetType = (id: number) => {
+    setSelectedAssetTypeIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
   }
 
   const save = async () => {
@@ -201,7 +230,7 @@ export default function AccessControlPage() {
     const name = newRoleName.trim()
     if (!name) return
     try {
-      await rolesApi.create(name, newRoleAudience)
+      await rolesApi.create(name, newRoleAudience as any)
       toast.success('Role created')
       setNewRoleName('')
       await loadRoles()
@@ -253,8 +282,15 @@ export default function AccessControlPage() {
   const saveConfig = async () => {
     setConfigSaving(true)
     try {
-      const next = { ...productConfig, centerHeadRoles: Array.from(new Set(productConfig.centerHeadRoles || [])) }
+      const otherRules = (productConfig.assetVisibilityRules || []).filter((x: any) => !(x.centerId === centerId && x.role === role && (x.departmentId ?? null) === departmentId))
+      const currentRules = selectedAssetTypeIds.map((assetTypeId) => ({ centerId, departmentId, role, assetTypeId }))
+      const next = {
+        ...productConfig,
+        centerHeadRoles: Array.from(new Set(productConfig.centerHeadRoles || [])),
+        assetVisibilityRules: [...otherRules, ...currentRules]
+      }
       await productConfigApi.update(next)
+      setProductConfig(next)
       toast.success('Product configuration saved')
     } catch {
       toast.error('Failed to save product configuration')
@@ -334,7 +370,7 @@ export default function AccessControlPage() {
                 <input className="input" placeholder="New role name" value={newRoleName} onChange={(e) => setNewRoleName(e.target.value)} />
                 <select className="input" value={newRoleAudience} onChange={(e) => setNewRoleAudience(e.target.value as any)}>
                   <option value="Admin">Admin UI</option>
-                  <option value="Incharge">Incharge UI</option>
+                  <option value="Sewadaar">Sewadaar UI</option>
                 </select>
               </div>
               <button onClick={createRole} className="btn-primary flex items-center gap-2 mt-2 w-full justify-center">
@@ -396,8 +432,50 @@ export default function AccessControlPage() {
         </div>
 
         <div className="card space-y-4">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <div className="font-semibold text-gray-800">Asset Visibility Rules</div>
+              <div className="text-sm text-gray-500">Choose which asset types the selected role can see for this center/department scope.</div>
+            </div>
+            <div className="text-sm text-gray-500">Selected asset types: {selectedAssetTypeIds.length}</div>
+          </div>
+          {!centerId ? (
+            <div className="text-sm text-gray-500">Select a center to manage asset visibility.</div>
+          ) : assetTypes.length === 0 ? (
+            <div className="text-sm text-gray-500">No asset types available for this scope.</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {assetTypes.map((t) => (
+                <label key={t.id} className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedAssetTypeIds.includes(t.id)}
+                    onChange={() => toggleAssetType(t.id)}
+                    className="mt-1"
+                  />
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-gray-800">{t.name}</div>
+                    <div className="text-xs text-gray-500 truncate">{t.code} · {t.trackingMode}</div>
+                  </div>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="card space-y-4">
           <div className="font-semibold text-gray-800">Product Configuration</div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={!!productConfig.sms?.issueEnabled}
+                onChange={(e) => setProductConfig((p: any) => ({ ...p, sms: { ...p.sms, issueEnabled: e.target.checked } }))} />
+              SMS on Issue Assets
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={!!productConfig.sms?.receiveEnabled}
+                onChange={(e) => setProductConfig((p: any) => ({ ...p, sms: { ...p.sms, receiveEnabled: e.target.checked } }))} />
+              SMS on Receive Assets
+            </label>
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" checked={!!productConfig.featureFlags?.unifiedAssetsEnabled}
                 onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, unifiedAssetsEnabled: e.target.checked } }))} />
@@ -413,6 +491,16 @@ export default function AccessControlPage() {
                 onChange={(e) => setProductConfig((p: any) => ({ ...p, featureFlags: { ...p.featureFlags, qrAssetFlowEnabled: e.target.checked } }))} />
               QR Asset Flow
             </label>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label className="label">App Name</label>
+              <input className="input" value={productConfig.branding?.appName || ''} onChange={(e) => setProductConfig((p: any) => ({ ...p, branding: { ...p.branding, appName: e.target.value } }))} />
+            </div>
+            <div>
+              <label className="label">Default Center Name</label>
+              <input className="input" value={productConfig.branding?.defaultCenterName || ''} onChange={(e) => setProductConfig((p: any) => ({ ...p, branding: { ...p.branding, defaultCenterName: e.target.value } }))} />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -453,9 +541,10 @@ export default function AccessControlPage() {
             </div>
           </div>
 
-          <button onClick={saveConfig} disabled={configSaving} className="btn-primary w-full md:w-auto">
+          <button onClick={saveConfig} disabled={configSaving || !isSuperAdmin} className="btn-primary w-full md:w-auto">
             {configSaving ? 'Saving config...' : 'Save Product Config'}
           </button>
+          {!isSuperAdmin && <div className="text-xs text-amber-700">Only SUPER_ADMIN can change product configuration.</div>}
         </div>
       </div>
     </AdminLayout>

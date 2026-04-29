@@ -67,6 +67,7 @@ export default function ReceiveAssetsPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-semibold text-gray-800">{issue.inchargeName}</div>
+                      <div className="text-xs text-gray-500">Sewadaar</div>
                       <div className="text-xs text-gray-500">{issue.visitName}</div>
                     </div>
                     <button className="btn-primary" onClick={() => receive(issue)}>Receive Selected</button>

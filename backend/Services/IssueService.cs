@@ -212,9 +212,13 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
         return issues.Select(MapToDto).ToList();
     }
 
-    public async Task ReturnIssueAsync(int issueId, List<int> returnedItemIds)
+    public async Task ReturnIssueAsync(int issueId, List<int> returnedItemIds, bool sendSms = false)
     {
-        var issue = await _db.Issues.Include(i => i.Items).FirstOrDefaultAsync(i => i.Id == issueId)
+        var issue = await _db.Issues
+            .Include(i => i.Items)
+            .Include(i => i.Incharge)
+            .Include(i => i.Visit)
+            .FirstOrDefaultAsync(i => i.Id == issueId)
             ?? throw new KeyNotFoundException("Issue not found");
 
         foreach (var itemId in returnedItemIds)
@@ -251,6 +255,21 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
         if (allReturned) issue.ReturnedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync();
+
+        if (sendSms && issue.Incharge != null && !string.IsNullOrWhiteSpace(issue.Incharge.MobileNumber))
+        {
+            var msg = $"AssetHub: Assets received for visit {issue.Visit?.Name}. Status: {issue.Status}.";
+            var (success, err) = await _sms.SendSmsAsync(issue.Incharge.MobileNumber, msg);
+            _db.SmsLogs.Add(new SmsLog
+            {
+                IssueId = issue.Id,
+                MobileNumber = issue.Incharge.MobileNumber,
+                Message = msg,
+                Status = success ? "Sent" : "Failed",
+                ErrorMessage = err
+            });
+            await _db.SaveChangesAsync();
+        }
     }
 
     private static IssueResponseDto MapToDto(Issue i) => new()
@@ -286,7 +305,8 @@ private async Task SendIssueSmsAsync(Issue issue, IssueCreateDto dto)
             ItemNumber = ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber ?? ii.Asset?.ItemNumber ?? ii.Asset?.AssetType?.Name,
             Brand = ii.WirelessSet?.Brand ?? ii.Charger?.Brand ?? ii.Asset?.Brand,
             IsReturned = ii.IsReturned,
-            ReturnedAt = ii.ReturnedAt
+            ReturnedAt = ii.ReturnedAt,
+            ReturnRemarks = ii.ReturnRemarks
         }).ToList(),
         PhotoUrls = i.Photos.Select(p => p.ImageUrl).ToList(),
         SmsLogs = i.SmsLogs.Select(s => new SmsLogDto

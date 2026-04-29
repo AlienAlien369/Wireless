@@ -17,7 +17,7 @@ public class VisitsController : ControllerBase
     public VisitsController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int? centerId, [FromQuery] int? departmentId)
     {
         var scope = await _scope.RequireAdminUiAsync(User);
         var q = _db.Visits.AsQueryable();
@@ -25,8 +25,9 @@ public class VisitsController : ControllerBase
         {
             if (scope.CenterId == null) return Forbid();
             q = q.Where(v => v.CenterId == scope.CenterId || v.CenterId == null);
-            if (!scope.IsCenterHead && scope.DepartmentId != null) q = q.Where(v => v.DepartmentId == scope.DepartmentId || v.DepartmentId == null);
         }
+        if (centerId != null) q = q.Where(v => v.CenterId == centerId);
+        if (departmentId != null) q = q.Where(v => v.DepartmentId == departmentId);
 
         var visits = await q.OrderByDescending(v => v.VisitDate)
             .OrderByDescending(v => v.CreatedAt)
@@ -44,7 +45,6 @@ public class VisitsController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || v.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && v.DepartmentId != scope.DepartmentId) return Forbid();
         }
         return Ok(new VisitDto(v.Id, v.Name, v.Location, v.VisitDate, v.Remarks, v.IsActive, v.CreatedAt));
     }
@@ -58,7 +58,7 @@ public class VisitsController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             visit.CenterId = scope.CenterId;
-            visit.DepartmentId = scope.IsCenterHead ? null : scope.DepartmentId;
+            visit.DepartmentId = scope.DepartmentId;
         }
         _db.Visits.Add(visit);
         await _db.SaveChangesAsync();
@@ -75,7 +75,6 @@ public class VisitsController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || visit.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && visit.DepartmentId != scope.DepartmentId) return Forbid();
         }
         visit.Name = dto.Name; visit.Location = dto.Location;
         visit.VisitDate = dto.VisitDate; visit.Remarks = dto.Remarks; visit.IsActive = dto.IsActive;
@@ -92,7 +91,6 @@ public class VisitsController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || visit.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && visit.DepartmentId != scope.DepartmentId) return Forbid();
         }
         _db.Visits.Remove(visit);
         await _db.SaveChangesAsync();

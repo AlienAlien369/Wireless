@@ -37,7 +37,7 @@ public class RolesController : ControllerBase
         var name = (dto.Name ?? "").Trim();
         var audience = (dto.Audience ?? "").Trim();
         if (string.IsNullOrWhiteSpace(name)) return BadRequest(new { message = "Role name is required" });
-        if (audience != "Admin" && audience != "Incharge") return BadRequest(new { message = "Audience must be Admin or Incharge" });
+        if (audience != "Admin" && audience != "Sewadaar") return BadRequest(new { message = "Audience must be Admin or Sewadaar" });
 
         if (await _db.AppRoles.AnyAsync(x => x.Name == name))
             return BadRequest(new { message = "Role already exists" });
@@ -59,7 +59,7 @@ public class RolesController : ControllerBase
         var name = (dto.Name ?? "").Trim();
         var audience = (dto.Audience ?? "").Trim();
         if (string.IsNullOrWhiteSpace(name)) return BadRequest(new { message = "Role name is required" });
-        if (audience != "Admin" && audience != "Incharge") return BadRequest(new { message = "Audience must be Admin or Incharge" });
+        if (audience != "Admin" && audience != "Sewadaar") return BadRequest(new { message = "Audience must be Admin or Sewadaar" });
         if (await _db.AppRoles.AnyAsync(x => x.Id != id && x.Name == name))
             return BadRequest(new { message = "Role already exists" });
 
@@ -77,8 +77,9 @@ public class RolesController : ControllerBase
         if (!scope.IsGlobalAdmin) return Forbid();
         var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Id == id);
         if (role == null) return NotFound();
-        if (string.Equals(role.Name, "Admin", StringComparison.OrdinalIgnoreCase))
-            return BadRequest(new { message = "Admin role cannot be deleted" });
+        if (string.Equals(role.Name, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(role.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+            return BadRequest(new { message = "System role cannot be deleted" });
 
         var hasUsage = await _db.Users.AnyAsync(x => x.Role == role.Name)
             || await _db.MenuPagePermissions.AnyAsync(x => x.Role == role.Name);

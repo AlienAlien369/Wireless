@@ -31,7 +31,7 @@ public class MenuController : ControllerBase
 
         var normalizedRole = (user.Role ?? "").Trim();
         var role = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == normalizedRole && x.IsActive);
-        var audience = role?.Audience ?? (string.Equals(normalizedRole, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Incharge");
+        var audience = role?.Audience ?? (string.Equals(normalizedRole, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) || string.Equals(normalizedRole, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(normalizedRole, "Center Head", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Sewadaar");
 
         var menuPageIds = await _db.MenuPagePermissions
             .Where(p =>

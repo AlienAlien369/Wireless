@@ -28,7 +28,8 @@ public class ProductConfigController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] ProductConfigSnapshot dto)
     {
-        await _scope.RequireAdminUiAsync(User);
+        var scope = await _scope.RequireAdminUiAsync(User);
+        if (!scope.IsSuperAdmin) return Forbid();
         var next = _config.Update(dto);
         return Ok(next);
     }

@@ -5,12 +5,16 @@ import { assetsApi, tenantsApi } from '../../services/api'
 import { Plus, Save, Wrench, Pencil, Trash2 } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
+type Department = { id: number; centerId: number; name: string; isActive: boolean }
 type AssetType = { id: number; centerId: number; code: string; name: string; trackingMode: string; isActive: boolean }
 type Asset = { id: number; assetTypeId: number; assetTypeCode: string; assetTypeName: string; itemNumber: string | null; brand: string | null; status: string; remarks: string | null }
 
 export default function AssetsPage() {
   const [centers, setCenters] = useState<Center[]>([])
+  const [departments, setDepartments] = useState<Department[]>([])
   const [centerId, setCenterId] = useState<number | null>(null)
+  const [departmentId, setDepartmentId] = useState<number | null>(null)
+  const [user, setUser] = useState<any>(null)
 
   const [types, setTypes] = useState<AssetType[]>([])
   const [assets, setAssets] = useState<Asset[]>([])
@@ -20,10 +24,10 @@ export default function AssetsPage() {
   const [editingTypeId, setEditingTypeId] = useState<number | null>(null)
   const [editingAssetId, setEditingAssetId] = useState<number | null>(null)
 
-  const load = async (cId: number) => {
+  const load = async (cId: number, dId?: number | null) => {
     const [t, a] = await Promise.all([
-      assetsApi.getTypes(cId),
-      assetsApi.getAssets(cId, undefined, undefined),
+      assetsApi.getTypes(cId, dId ?? undefined),
+      assetsApi.getAssets(cId, undefined, undefined, dId ?? undefined),
     ])
     setTypes(t.data || [])
     setAssets(a.data || [])
@@ -34,6 +38,7 @@ export default function AssetsPage() {
       const list = (res.data || []).filter((x: any) => x.isActive)
       setCenters(list)
       const stored = JSON.parse(localStorage.getItem('user') || 'null')
+      setUser(stored)
       const preferred = stored?.centerId
       const next = preferred || (list[0]?.id ?? null)
       setCenterId(next)
@@ -42,8 +47,11 @@ export default function AssetsPage() {
 
   useEffect(() => {
     if (!centerId) return
-    load(centerId).catch(() => toast.error('Failed to load assets'))
-  }, [centerId])
+    tenantsApi.getDepartments(centerId).then((res) => {
+      setDepartments((res.data || []).filter((x: any) => x.isActive))
+    }).catch(() => setDepartments([]))
+    load(centerId, departmentId).catch(() => toast.error('Failed to load assets'))
+  }, [centerId, departmentId])
 
   useEffect(() => {
     if (types.length && !newAsset.assetTypeId) setNewAsset((p) => ({ ...p, assetTypeId: types[0].id }))
@@ -60,7 +68,7 @@ export default function AssetsPage() {
       await assetsApi.createType({ centerId, code, name, trackingMode: newType.trackingMode })
       toast.success('Asset type created')
       setNewType({ code: '', name: '', trackingMode: 'Individual' })
-      await load(centerId)
+      await load(centerId, departmentId)
     } catch (e: any) {
       toast.error(e.response?.data?.message || 'Failed to create asset type')
     }
@@ -79,7 +87,7 @@ export default function AssetsPage() {
       })
       toast.success('Asset created')
       setNewAsset((p) => ({ ...p, itemNumber: '', brand: '', remarks: '' }))
-      await load(centerId)
+      await load(centerId, departmentId)
     } catch (e: any) {
       toast.error(e.response?.data?.message || 'Failed to create asset')
     }
@@ -105,7 +113,7 @@ export default function AssetsPage() {
       })
       toast.success('Type updated')
       setEditingTypeId(null)
-      if (centerId) await load(centerId)
+      if (centerId) await load(centerId, departmentId)
     } catch (e: any) {
       toast.error(e.response?.data?.message || 'Failed to update type')
     }
@@ -116,7 +124,7 @@ export default function AssetsPage() {
     try {
       await assetsApi.deleteType(t.id)
       toast.success('Type deleted')
-      if (centerId) await load(centerId)
+      if (centerId) await load(centerId, departmentId)
     } catch (e: any) {
       toast.error(e.response?.data?.message || 'Failed to delete type')
     }
@@ -132,7 +140,7 @@ export default function AssetsPage() {
       })
       toast.success('Asset updated')
       setEditingAssetId(null)
-      if (centerId) await load(centerId)
+      if (centerId) await load(centerId, departmentId)
     } catch (e: any) {
       toast.error(e.response?.data?.message || 'Failed to update asset')
     }
@@ -143,7 +151,7 @@ export default function AssetsPage() {
     try {
       await assetsApi.deleteAsset(a.id)
       toast.success('Asset deleted')
-      if (centerId) await load(centerId)
+      if (centerId) await load(centerId, departmentId)
     } catch (e: any) {
       toast.error(e.response?.data?.message || 'Failed to delete asset')
     }
@@ -159,9 +167,15 @@ export default function AssetsPage() {
               <div className="text-sm text-gray-500">Create asset types (Wheelchair, Stretcher, etc.) and add items.</div>
             </div>
             <div className="w-full sm:w-64">
-              <select className="input" value={centerId ?? ''} onChange={(e) => setCenterId(e.target.value ? Number(e.target.value) : null)}>
+              <select className="input" value={centerId ?? ''} onChange={(e) => { setCenterId(e.target.value ? Number(e.target.value) : null); setDepartmentId(null) }} disabled={!!user && !user.role?.includes('SUPER') && user.role !== 'Center Head'}>
                 <option value="">Select center...</option>
                 {centers.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </div>
+            <div className="w-full sm:w-64">
+              <select className="input" value={departmentId ?? ''} onChange={(e) => setDepartmentId(e.target.value ? Number(e.target.value) : null)}>
+                <option value="">All departments</option>
+                {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
               </select>
             </div>
           </div>

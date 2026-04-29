@@ -8,7 +8,8 @@ using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/incharges")]
+[Route("api/sewadaars")]
 [Authorize]
 public class InchargesController : ControllerBase
 {
@@ -25,7 +26,7 @@ public class InchargesController : ControllerBase
         {
             if (scope.CenterId == null) return Forbid();
             q = q.Where(i => i.CenterId == scope.CenterId || i.CenterId == null);
-            if (!scope.IsCenterHead && scope.DepartmentId != null) q = q.Where(i => i.DepartmentId == scope.DepartmentId || i.DepartmentId == null);
+            if (!scope.IsCenterHead) q = q.Where(i => i.DepartmentId == scope.DepartmentId || i.DepartmentId == null);
         }
 
         var list = await q.OrderBy(i => i.Name)
@@ -43,7 +44,7 @@ public class InchargesController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || i.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && i.DepartmentId != scope.DepartmentId) return Forbid();
+            if (!scope.IsCenterHead && i.DepartmentId != scope.DepartmentId) return Forbid();
         }
         return Ok(new InchargeDto(i.Id, i.Name, i.BadgeNumber, i.MobileNumber, i.GroupName, i.IsActive));
     }
@@ -57,7 +58,7 @@ public class InchargesController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || i.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && i.DepartmentId != scope.DepartmentId) return Forbid();
+            if (!scope.IsCenterHead && i.DepartmentId != scope.DepartmentId) return Forbid();
         }
         return Ok(new InchargeDto(i.Id, i.Name, i.BadgeNumber, i.MobileNumber, i.GroupName, i.IsActive));
     }
@@ -94,7 +95,7 @@ public class InchargesController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || i.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && i.DepartmentId != scope.DepartmentId) return Forbid();
+            if (!scope.IsCenterHead && i.DepartmentId != scope.DepartmentId) return Forbid();
         }
         i.Name = dto.Name; i.BadgeNumber = dto.BadgeNumber;
         i.MobileNumber = dto.MobileNumber; i.GroupName = dto.GroupName; i.IsActive = dto.IsActive;
@@ -111,7 +112,7 @@ public class InchargesController : ControllerBase
         if (!scope.IsGlobalAdmin)
         {
             if (scope.CenterId == null || i.CenterId != scope.CenterId) return Forbid();
-            if (!scope.IsCenterHead && scope.DepartmentId != null && i.DepartmentId != scope.DepartmentId) return Forbid();
+            if (!scope.IsCenterHead && i.DepartmentId != scope.DepartmentId) return Forbid();
         }
         _db.Incharges.Remove(i);
         await _db.SaveChangesAsync();

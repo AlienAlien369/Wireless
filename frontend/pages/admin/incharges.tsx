@@ -5,10 +5,10 @@ import AdminLayout from '../../components/admin/AdminLayout'
 import { inchargesApi } from '../../services/api'
 import { Plus, Pencil, Trash2, User, Phone, Hash, Users, Search, X } from 'lucide-react'
 
-interface Incharge { id: number; name: string; badgeNumber: string; mobileNumber: string; groupName?: string; isActive: boolean }
+interface Sewadaar { id: number; name: string; badgeNumber: string; mobileNumber: string; groupName?: string; isActive: boolean }
 
 export default function InchargesPage() {
-  const [incharges, setIncharges] = useState<Incharge[]>([])
+  const [incharges, setIncharges] = useState<Sewadaar[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Incharge | null>(null)
   const [search, setSearch] = useState('')
@@ -22,7 +22,7 @@ export default function InchargesPage() {
     i.badgeNumber.toLowerCase().includes(search.toLowerCase())
   )
 
-  const openEdit = (i: Incharge) => {
+  const openEdit = (i: Sewadaar) => {
     setEditing(i)
     setValue('name', i.name); setValue('badgeNumber', i.badgeNumber)
     setValue('mobileNumber', i.mobileNumber); setValue('groupName', i.groupName || '')
@@ -33,7 +33,7 @@ export default function InchargesPage() {
     try {
       if (editing) await inchargesApi.update(editing.id, { ...data, isActive: true })
       else await inchargesApi.create(data)
-      toast.success(editing ? 'Updated' : 'Incharge added')
+      toast.success(editing ? 'Updated' : 'Sewadaar added')
       setShowForm(false); setEditing(null); reset(); load()
     } catch (e: any) { toast.error(e.response?.data?.message || 'Failed') }
   }
@@ -41,13 +41,13 @@ export default function InchargesPage() {
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase()
 
   return (
-    <AdminLayout title="Incharges">
+    <AdminLayout title="Sewadaars">
       <div className="space-y-4">
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="card">
             <div className="text-3xl font-bold text-primary">{incharges.length}</div>
-            <div className="text-sm text-gray-600">Total Incharges</div>
+            <div className="text-sm text-gray-600">Total Sewadaars</div>
           </div>
           <div className="card">
             <div className="text-3xl font-bold text-green-600">{incharges.filter(i => i.isActive).length}</div>
@@ -55,7 +55,7 @@ export default function InchargesPage() {
           </div>
           <div className="card col-span-2 md:col-span-2">
             <div className="text-3xl font-bold text-purple-600">{incharges.filter(i => i.groupName).length}</div>
-            <div className="text-sm text-gray-600">Grouped Incharges</div>
+            <div className="text-sm text-gray-600">Grouped Sewadaars</div>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export default function InchargesPage() {
           </div>
           <button onClick={() => { setEditing(null); reset(); setShowForm(true) }}
             className="btn-primary flex items-center gap-2">
-            <Plus size={16} /> Add Incharge
+            <Plus size={16} /> Add Sewadaar
           </button>
         </div>
 
@@ -81,7 +81,7 @@ export default function InchargesPage() {
         {showForm && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
             <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
-              <h2 className="text-lg font-semibold mb-4">{editing ? 'Edit' : 'New'} Incharge</h2>
+              <h2 className="text-lg font-semibold mb-4">{editing ? 'Edit' : 'New'} Sewadaar</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                 <div>
                   <label className="label">Full Name *</label>
@@ -114,7 +114,7 @@ export default function InchargesPage() {
           {filtered.length === 0 ? (
             <div className="card text-center py-12">
               <User size={40} className="mx-auto text-gray-300 mb-3" />
-              <p className="text-gray-500">No incharges found</p>
+              <p className="text-gray-500">No sewadaars found</p>
             </div>
           ) : (
             filtered.map((i) => (
@@ -210,7 +210,7 @@ export default function InchargesPage() {
                   </tr>
                 ))}
                 {filtered.length === 0 && (
-                  <tr><td colSpan={7} className="text-center py-10 text-gray-400">No incharges found.</td></tr>
+                  <tr><td colSpan={7} className="text-center py-10 text-gray-400">No sewadaars found.</td></tr>
                 )}
               </tbody>
             </table>

@@ -9,6 +9,7 @@ import {
 import { Shield } from 'lucide-react'
 import { Boxes, UserCog } from 'lucide-react'
 import { menuApi } from '../../services/api'
+import { APP_NAME, DEFAULT_CENTER_NAME, PRODUCT_TAGLINE } from '../../config/app'
 
 interface Props {
   children: React.ReactNode
@@ -25,7 +26,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
     const stored = localStorage.getItem('user')
     if (!stored) { router.push('/login'); return }
     const u = JSON.parse(stored)
-    const canUseAdminUi = u.audience === 'Admin' || u.role === 'Admin'
+    const canUseAdminUi = u.audience === 'Admin' || u.role === 'SUPER_ADMIN' || u.role === 'Admin' || u.role === 'Center Head'
     if (!canUseAdminUi) { router.push('/incharge'); return }
     setUser(u)
 
@@ -79,8 +80,8 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
             <Wifi size={22} className="text-white" />
           </div>
           <div>
-            <div className="text-white font-bold text-sm leading-tight">RSSB Wireless</div>
-            <div className="text-gray-400 text-xs">Management System</div>
+            <div className="text-white font-bold text-sm leading-tight">{APP_NAME}</div>
+            <div className="text-gray-400 text-xs">{PRODUCT_TAGLINE}</div>
           </div>
         </div>
 
@@ -129,7 +130,7 @@ export default function AdminLayout({ children, title = 'Dashboard' }: Props) {
           <h1 className="text-lg font-semibold text-gray-800">{title}</h1>
           <div className="ml-auto">
             <span className="text-sm text-gray-500">
-              {(user?.centerName || 'Bhatti Center')} · Wireless Management
+              {(user?.centerName || DEFAULT_CENTER_NAME)} · {APP_NAME}
             </span>
           </div>
         </header>

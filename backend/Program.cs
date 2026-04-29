@@ -98,11 +98,18 @@ using (var scope = app.Services.CreateScope())
     var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
     // Seed default center/department for multi-tenancy.
+    var productConfig = scope.ServiceProvider.GetRequiredService<ProductConfigService>().GetSnapshot();
+    var defaultCenterName = string.IsNullOrWhiteSpace(productConfig.Branding.DefaultCenterName) ? "Bhati Center" : productConfig.Branding.DefaultCenterName;
     var center = await db.Centers.OrderBy(x => x.Id).FirstOrDefaultAsync();
     if (center == null)
     {
-        center = new Center { Name = "Bhatti Center" };
+        center = new Center { Name = defaultCenterName };
         db.Centers.Add(center);
+        await db.SaveChangesAsync();
+    }
+    else if (string.Equals(center.Name, "Bhatti Center", StringComparison.OrdinalIgnoreCase))
+    {
+        center.Name = defaultCenterName;
         await db.SaveChangesAsync();
     }
 
@@ -136,25 +143,62 @@ using (var scope = app.Services.CreateScope())
     if (legacyVisits.Count > 0 || legacyIncharges.Count > 0 || legacyIssues.Count > 0)
         await db.SaveChangesAsync();
 
-    // Seed roles (UI-managed).
-    if (!await db.AppRoles.AnyAsync())
+    // Seed roles (UI-managed): SUPER_ADMIN, Center Head, Admin, Sewadaar
+    // Handle legacy "Incharge" safely before inserting required roles to avoid unique-key collisions.
+    var sewadaarRole = await db.AppRoles.FirstOrDefaultAsync(x => x.Name == "Sewadaar");
+    var legacyRole = await db.AppRoles.FirstOrDefaultAsync(x => x.Name == "Incharge");
+    if (legacyRole != null && sewadaarRole == null)
     {
-        db.AppRoles.AddRange(
-            new AppRole { Name = "Admin", Audience = "Admin" },
-            new AppRole { Name = "Incharge", Audience = "Incharge" }
-        );
-        await db.SaveChangesAsync();
+        legacyRole.Name = "Sewadaar";
+        legacyRole.Audience = "Sewadaar";
+        legacyRole.IsActive = true;
     }
+    else if (legacyRole != null && sewadaarRole != null)
+    {
+        // Merge by dropping the duplicate legacy role when Sewadaar already exists.
+        db.AppRoles.Remove(legacyRole);
+    }
+    await db.SaveChangesAsync();
+
+    var requiredRoles = new[]
+    {
+        new AppRole { Name = "SUPER_ADMIN", Audience = "Admin", IsActive = true },
+        new AppRole { Name = "Center Head", Audience = "Admin", IsActive = true },
+        new AppRole { Name = "Admin", Audience = "Admin", IsActive = true },
+        new AppRole { Name = "Sewadaar", Audience = "Sewadaar", IsActive = true }
+    };
+    foreach (var req in requiredRoles)
+    {
+        var existingRole = await db.AppRoles.FirstOrDefaultAsync(x => x.Name == req.Name);
+        if (existingRole == null)
+        {
+            db.AppRoles.Add(req);
+        }
+        else
+        {
+            existingRole.Audience = req.Audience;
+            existingRole.IsActive = true;
+        }
+    }
+    await db.SaveChangesAsync();
+
+    var inchargeUsers = await db.Users
+        .Where(x => x.Role == "Incharge" || x.Role == "incharge")
+        .ToListAsync();
+    foreach (var u in inchargeUsers) u.Role = "Sewadaar";
+    var adminUserFix = await userMgr.FindByNameAsync("admin");
+    if (adminUserFix != null) adminUserFix.Role = "SUPER_ADMIN";
+    if (inchargeUsers.Count > 0 || adminUserFix != null) await db.SaveChangesAsync();
 
     // Seed/ensure menu pages exist (used for dynamic nav + access assignment UI).
     var requiredPages = new List<MenuPage>
     {
         new() { Code = "admin.dashboard", Label = "Dashboard", Path = "/admin", Icon = "LayoutDashboard", Audience = "Admin", SortOrder = 10 },
         new() { Code = "admin.visits", Label = "Visits", Path = "/admin/visits", Icon = "MapPin", Audience = "Admin", SortOrder = 20 },
-        new() { Code = "admin.inventory", Label = "Inventory", Path = "/admin/inventory", Icon = "Package", Audience = "Admin", SortOrder = 30 },
-        new() { Code = "admin.incharges", Label = "Incharges", Path = "/admin/incharges", Icon = "Users", Audience = "Admin", SortOrder = 40 },
+        new() { Code = "admin.incharges", Label = "Sewadaars", Path = "/admin/incharges", Icon = "Users", Audience = "Admin", SortOrder = 40 },
         new() { Code = "admin.issueAssets", Label = "Issue Assets", Path = "/admin/issue-assets", Icon = "ArrowDownToLine", Audience = "Admin", SortOrder = 50 },
         new() { Code = "admin.receiveAssets", Label = "Receive Assets", Path = "/admin/receive-assets", Icon = "ArrowUpFromLine", Audience = "Admin", SortOrder = 70 },
+        new() { Code = "admin.breakage", Label = "Breakages", Path = "/admin/breakage", Icon = "AlertTriangle", Audience = "Admin", SortOrder = 90 },
         new() { Code = "admin.reports", Label = "Reports", Path = "/admin/reports", Icon = "FileBarChart", Audience = "Admin", SortOrder = 100 },
         new() { Code = "admin.assets", Label = "Assets", Path = "/admin/assets", Icon = "Boxes", Audience = "Admin", SortOrder = 105 },
         new() { Code = "admin.users", Label = "Users", Path = "/admin/users", Icon = "UserCog", Audience = "Admin", SortOrder = 106 },
@@ -178,20 +222,23 @@ using (var scope = app.Services.CreateScope())
     }
     await db.SaveChangesAsync();
 
-    var legacyCodes = new[] { "admin.issue", "admin.bulkIssue", "admin.receive", "admin.bulkReceive", "admin.breakage" };
+    var legacyCodes = new[] { "admin.issue", "admin.bulkIssue", "admin.receive", "admin.bulkReceive", "admin.inventory" };
     var legacyPages = await db.MenuPages.Where(x => legacyCodes.Contains(x.Code)).ToListAsync();
     foreach (var lp in legacyPages) lp.IsActive = false;
     await db.SaveChangesAsync();
 
     // Default: Admin gets all admin pages for this center (all departments).
-    if (!await db.MenuPagePermissions.AnyAsync())
+    var adminPages = await db.MenuPages.Where(x => x.Audience == "Admin" && x.IsActive).ToListAsync();
+    var seedRoles = new[] { "SUPER_ADMIN", "Center Head", "Admin" };
+    foreach (var r in seedRoles)
     {
-        var pages = await db.MenuPages.Where(x => x.Audience == "Admin" && x.IsActive).ToListAsync();
-        db.MenuPagePermissions.AddRange(pages.Select(p => new MenuPagePermission
+        var hasAny = await db.MenuPagePermissions.AnyAsync(x => x.CenterId == center.Id && x.DepartmentId == null && x.Role == r);
+        if (hasAny) continue;
+        db.MenuPagePermissions.AddRange(adminPages.Select(p => new MenuPagePermission
         {
             CenterId = center.Id,
             DepartmentId = null,
-            Role = "Admin",
+            Role = r,
             MenuPageId = p.Id
         }));
         await db.SaveChangesAsync();
@@ -204,6 +251,87 @@ using (var scope = app.Services.CreateScope())
         await db.SaveChangesAsync();
     }
 
+    // Backfill legacy wireless + kits into unified assets.
+    var wirelessAssetType = await db.AssetTypes.FirstOrDefaultAsync(x => x.CenterId == center.Id && x.Code == "wireless-set");
+    if (wirelessAssetType == null)
+    {
+        wirelessAssetType = new AssetType
+        {
+            CenterId = center.Id,
+            Code = "wireless-set",
+            Name = "Wireless Set",
+            TrackingMode = "Individual"
+        };
+        db.AssetTypes.Add(wirelessAssetType);
+        await db.SaveChangesAsync();
+    }
+
+    var kitAssetType = await db.AssetTypes.FirstOrDefaultAsync(x => x.CenterId == center.Id && x.Code == "kit");
+    if (kitAssetType == null)
+    {
+        kitAssetType = new AssetType
+        {
+            CenterId = center.Id,
+            Code = "kit",
+            Name = "Kit",
+            TrackingMode = "Individual"
+        };
+        db.AssetTypes.Add(kitAssetType);
+        await db.SaveChangesAsync();
+    }
+
+    var existingWirelessNumbers = await db.Assets
+        .Where(x => x.CenterId == center.Id && x.AssetTypeId == wirelessAssetType.Id && x.ItemNumber != null)
+        .Select(x => x.ItemNumber!)
+        .ToListAsync();
+    var existingWirelessSet = new HashSet<string>(existingWirelessNumbers, StringComparer.OrdinalIgnoreCase);
+    var legacyWirelessSets = await db.WirelessSets.ToListAsync();
+    var migratedWireless = 0;
+    foreach (var ws in legacyWirelessSets)
+    {
+        if (string.IsNullOrWhiteSpace(ws.ItemNumber) || existingWirelessSet.Contains(ws.ItemNumber)) continue;
+        db.Assets.Add(new Asset
+        {
+            CenterId = center.Id,
+            AssetTypeId = wirelessAssetType.Id,
+            ItemNumber = ws.ItemNumber,
+            Brand = ws.Brand,
+            Status = ws.Status,
+            Remarks = ws.Remarks,
+            CreatedAt = ws.CreatedAt
+        });
+        existingWirelessSet.Add(ws.ItemNumber);
+        migratedWireless++;
+    }
+
+    var existingKitNumbers = await db.Assets
+        .Where(x => x.CenterId == center.Id && x.AssetTypeId == kitAssetType.Id && x.ItemNumber != null)
+        .Select(x => x.ItemNumber!)
+        .ToListAsync();
+    var existingKitSet = new HashSet<string>(existingKitNumbers, StringComparer.OrdinalIgnoreCase);
+    var legacyKits = await db.Kits.ToListAsync();
+    var migratedKits = 0;
+    foreach (var k in legacyKits)
+    {
+        if (string.IsNullOrWhiteSpace(k.ItemNumber) || existingKitSet.Contains(k.ItemNumber)) continue;
+        db.Assets.Add(new Asset
+        {
+            CenterId = center.Id,
+            AssetTypeId = kitAssetType.Id,
+            ItemNumber = k.ItemNumber,
+            Brand = "Kenwood",
+            Status = k.Status,
+            Remarks = k.Remarks,
+            CreatedAt = k.CreatedAt
+        });
+        existingKitSet.Add(k.ItemNumber);
+        migratedKits++;
+    }
+    if (migratedWireless > 0 || migratedKits > 0)
+    {
+        await db.SaveChangesAsync();
+    }
+
     // Seed default admin user.
     var adminUser = await userMgr.FindByNameAsync("admin");
     if (adminUser == null)
@@ -213,7 +341,7 @@ using (var scope = app.Services.CreateScope())
             UserName = "admin",
             Email = "admin@rssb.local",
             FullName = "System Admin",
-            Role = "Admin",
+            Role = "SUPER_ADMIN",
             CenterId = center.Id,
             DepartmentId = dept.Id
         };

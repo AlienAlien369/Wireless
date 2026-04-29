@@ -78,6 +78,8 @@ public class UsersController : ControllerBase
         var role = (dto.Role ?? "").Trim();
         var roleExists = await _db.AppRoles.AnyAsync(x => x.Name == role && x.IsActive);
         if (!roleExists) return BadRequest(new { message = "Invalid role" });
+        if (string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) && !scope.IsSuperAdmin)
+            return Forbid();
 
         if (dto.CenterId != null && !await _db.Centers.AnyAsync(x => x.Id == dto.CenterId))
             return BadRequest(new { message = "Invalid centerId" });
@@ -136,6 +138,8 @@ public class UsersController : ControllerBase
         var role = (dto.Role ?? "").Trim();
         var roleExists = await _db.AppRoles.AnyAsync(x => x.Name == role && x.IsActive);
         if (!roleExists) return BadRequest(new { message = "Invalid role" });
+        if (string.Equals(role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) && !scope.IsSuperAdmin)
+            return Forbid();
 
         if (dto.CenterId != null && !await _db.Centers.AnyAsync(x => x.Id == dto.CenterId))
             return BadRequest(new { message = "Invalid centerId" });

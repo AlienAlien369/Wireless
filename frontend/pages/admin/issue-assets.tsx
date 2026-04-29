@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import SearchDropdown from '../../components/SearchDropdown'
-import { assetsApi, inchargesApi, issuesApi, productConfigApi, tenantsApi, visitsApi } from '../../services/api'
+import { assetsApi, issuesApi, productConfigApi, sewadaarsApi, tenantsApi, visitsApi } from '../../services/api'
 import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
 import { Plus, X } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type Visit = any
-type Incharge = any
+type Sewadaar = any
 type AssetType = { id: number; centerId: number; code: string; name: string; trackingMode: string; isActive: boolean }
 type Asset = { id: number; assetTypeId: number; assetTypeCode: string; assetTypeName: string; itemNumber: string | null; brand: string | null; status: string; remarks: string | null }
 
@@ -17,7 +17,7 @@ export default function IssueAssetsPage() {
   const [centerId, setCenterId] = useState<number | null>(null)
   const [visits, setVisits] = useState<Visit[]>([])
   const [visitId, setVisitId] = useState<string>('')
-  const [incharges, setIncharges] = useState<Incharge[]>([])
+  const [incharges, setIncharges] = useState<Sewadaar[]>([])
   const [inchargeId, setInchargeId] = useState<string>('')
 
   const [types, setTypes] = useState<AssetType[]>([])
@@ -36,7 +36,7 @@ export default function IssueAssetsPage() {
     Promise.all([
       tenantsApi.getCenters(),
       visitsApi.getAll(),
-      inchargesApi.getAll(),
+      sewadaarsApi.getAll(),
       productConfigApi.get(),
     ]).then(([c, v, i]) => {
       const cs = (c.data || []).filter((x: any) => x.isActive)
@@ -106,7 +106,7 @@ export default function IssueAssetsPage() {
     const parsedVisitId = Number(visitId)
     const parsedInchargeId = Number(inchargeId)
     if (!Number.isFinite(parsedVisitId) || parsedVisitId <= 0 || !Number.isFinite(parsedInchargeId) || parsedInchargeId <= 0) {
-      toast.error('Select visit and incharge')
+      toast.error('Select visit and sewadaar')
       return
     }
     if (!currentType) { toast.error('Select asset type'); return }
@@ -172,14 +172,14 @@ export default function IssueAssetsPage() {
             </div>
 
             <div>
-              <label className="label">Incharge *</label>
+              <label className="label">Sewadaar *</label>
               <SearchDropdown
                 items={incharges}
                 value={inchargeId}
                 onChange={(val) => setInchargeId(String(val))}
                 getLabel={(i) => `${i.name} (${i.badgeNumber})`}
                 getValue={(i) => i.id}
-                placeholder="Search incharge by name or badge..."
+                placeholder="Search sewadaar by name or badge..."
                 className="input"
               />
             </div>

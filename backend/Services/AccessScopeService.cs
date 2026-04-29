@@ -7,12 +7,15 @@ using RSSBWireless.API.Data;
 public class AccessScope
 {
     public string UserId { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
-    public string Audience { get; set; } = "Incharge";
+    public string Audience { get; set; } = "Sewadaar";
     public int? CenterId { get; set; }
     public int? DepartmentId { get; set; }
+    public bool IsSuperAdmin { get; set; }
     public bool IsGlobalAdmin { get; set; }
     public bool IsCenterHead { get; set; }
+    public bool IsAdmin { get; set; }
 }
 
 public class AccessScopeService
@@ -36,18 +39,24 @@ public class AccessScopeService
 
         var roleName = (appUser.Role ?? string.Empty).Trim();
         var appRole = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == roleName && x.IsActive);
-        var audience = appRole?.Audience ?? (string.Equals(roleName, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Incharge");
+        var isSuperAdmin = string.Equals(appUser.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
+                           string.Equals(roleName, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase);
+        var audience = appRole?.Audience ?? (isSuperAdmin || string.Equals(roleName, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(roleName, "Center Head", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Sewadaar");
         var isCenterHead = _config.GetSnapshot().CenterHeadRoles.Any(x => string.Equals(x, roleName, StringComparison.OrdinalIgnoreCase));
+        var isAdmin = string.Equals(roleName, "Admin", StringComparison.OrdinalIgnoreCase);
 
         return new AccessScope
         {
             UserId = appUser.Id,
+            Username = appUser.UserName ?? string.Empty,
             Role = roleName,
             Audience = audience,
             CenterId = appUser.CenterId,
             DepartmentId = appUser.DepartmentId,
-            IsGlobalAdmin = string.Equals(roleName, "Admin", StringComparison.OrdinalIgnoreCase),
+            IsSuperAdmin = isSuperAdmin,
+            IsGlobalAdmin = isSuperAdmin,
             IsCenterHead = isCenterHead,
+            IsAdmin = isAdmin,
         };
     }
 

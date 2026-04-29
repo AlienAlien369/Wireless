@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import AdminLayout from '../../components/admin/AdminLayout'
-import { reportsApi, productConfigApi } from '../../services/api'
+import { reportsApi, productConfigApi, tenantsApi } from '../../services/api'
 import { Radio, Users, AlertTriangle, CheckCircle, Clock, MapPin, Calendar, Activity, TrendingUp, Send } from 'lucide-react'
+import { APP_NAME, DEFAULT_CENTER_NAME } from '../../config/app'
 
 interface Stats {
   totalWirelessSets: number
@@ -73,16 +74,34 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null)
   const [visitStats, setVisitStats] = useState<VisitStat[]>([])
   const [widgetConfig, setWidgetConfig] = useState<Record<string, boolean>>({})
+  const [centers, setCenters] = useState<any[]>([])
+  const [departments, setDepartments] = useState<any[]>([])
+  const [centerId, setCenterId] = useState<number | null>(null)
+  const [departmentId, setDepartmentId] = useState<number | null>(null)
+  const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
-    reportsApi.getDashboard().then(r => setStats(r.data)).catch(console.error)
-    reportsApi.getVisitWiseDashboard().then(r => setVisitStats(r.data)).catch(console.error)
+    const stored = JSON.parse(localStorage.getItem('user') || 'null')
+    setUser(stored)
+    setCenterId(stored?.centerId ?? null)
+    setDepartmentId(stored?.role === 'Admin' ? stored?.departmentId ?? null : null)
+    tenantsApi.getCenters().then(r => setCenters((r.data || []).filter((x: any) => x.isActive))).catch(() => {})
     productConfigApi.get().then((r) => {
       const map: Record<string, boolean> = {}
       ;(r.data?.dashboardWidgets || []).forEach((w: any) => { map[w.key] = !!w.enabled })
       setWidgetConfig(map)
     }).catch(() => {})
   }, [])
+
+  useEffect(() => {
+    if (!centerId) return
+    tenantsApi.getDepartments(centerId).then(r => setDepartments((r.data || []).filter((x: any) => x.isActive))).catch(() => setDepartments([]))
+  }, [centerId])
+
+  useEffect(() => {
+    reportsApi.getDashboard({ centerId: centerId ?? undefined, departmentId: departmentId ?? undefined }).then(r => setStats(r.data)).catch(console.error)
+    reportsApi.getVisitWiseDashboard({ centerId: centerId ?? undefined, departmentId: departmentId ?? undefined }).then(r => setVisitStats(r.data)).catch(console.error)
+  }, [centerId, departmentId])
 
   const isWidgetEnabled = (key: string) => widgetConfig[key] !== false
 
@@ -97,10 +116,22 @@ export default function AdminDashboard() {
   return (
     <AdminLayout title="Dashboard">
       <div className="space-y-6">
+        <div className="card">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <select className="input" value={centerId ?? ''} onChange={(e) => { setCenterId(e.target.value ? Number(e.target.value) : null); setDepartmentId(null) }} disabled={!!user && !user.role?.includes('SUPER') && user.role !== 'Center Head'}>
+              <option value="">All centers</option>
+              {centers.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            </select>
+            <select className="input" value={departmentId ?? ''} onChange={(e) => setDepartmentId(e.target.value ? Number(e.target.value) : null)} disabled={!centerId}>
+              <option value="">All departments</option>
+              {departments.map((d: any) => <option key={d.id} value={d.id}>{d.name}</option>)}
+            </select>
+          </div>
+        </div>
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-primary to-primary-light rounded-xl p-6 text-white">
-          <h2 className="text-xl font-bold mb-1">RSSB Bhatti Center</h2>
-          <p className="text-blue-100 text-sm">Wireless Equipment Management · Visit Season Dashboard</p>
+          <h2 className="text-xl font-bold mb-1">{DEFAULT_CENTER_NAME}</h2>
+          <p className="text-blue-100 text-sm">{APP_NAME} - Visit Season Dashboard</p>
         </div>
 
         {/* Stats Grid */}
@@ -115,7 +146,7 @@ export default function AdminDashboard() {
 
         {isWidgetEnabled('operations.summary') && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Incharges" value={stats.totalIncharges} icon={Users} color="bg-purple-500" />
+          <StatCard label="Sewadaars" value={stats.totalIncharges} icon={Users} color="bg-purple-500" />
           <StatCard label="Active Visits" value={stats.activeVisits} icon={MapPin} color="bg-indigo-500" />
           <StatCard label="Today Issues" value={stats.todayIssues} icon={Calendar} color="bg-teal-500" />
           <StatCard label="Total Breakages" value={stats.totalBreakages} icon={Activity} color="bg-orange-500" />

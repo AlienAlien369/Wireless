@@ -38,7 +38,7 @@ export const authApi = {
 
 // ─── Visits ──────────────────────────────────────────────────────────────────
 export const visitsApi = {
-  getAll: () => api.get('/visits'),
+  getAll: (params?: { centerId?: number; departmentId?: number }) => api.get('/visits', { params }),
   getById: (id: number) => api.get(`/visits/${id}`),
   create: (data: any) => api.post('/visits', data),
   update: (id: number, data: any) => api.put(`/visits/${id}`, data),
@@ -46,14 +46,15 @@ export const visitsApi = {
 }
 
 // ─── Incharges ───────────────────────────────────────────────────────────────
-export const inchargesApi = {
-  getAll: () => api.get('/incharges'),
-  getById: (id: number) => api.get(`/incharges/${id}`),
-  getByBadge: (badge: string) => api.get(`/incharges/badge/${badge}`),
-  create: (data: any) => api.post('/incharges', data),
-  update: (id: number, data: any) => api.put(`/incharges/${id}`, data),
-  delete: (id: number) => api.delete(`/incharges/${id}`),
+export const sewadaarsApi = {
+  getAll: () => api.get('/sewadaars'),
+  getById: (id: number) => api.get(`/sewadaars/${id}`),
+  getByBadge: (badge: string) => api.get(`/sewadaars/badge/${badge}`),
+  create: (data: any) => api.post('/sewadaars', data),
+  update: (id: number, data: any) => api.put(`/sewadaars/${id}`, data),
+  delete: (id: number) => api.delete(`/sewadaars/${id}`),
 }
+export const inchargesApi = sewadaarsApi
 
 // ─── Inventory ───────────────────────────────────────────────────────────────
 export const inventoryApi = {
@@ -99,8 +100,8 @@ export const breakagesApi = {
 
 // ─── Reports ─────────────────────────────────────────────────────────────────
 export const reportsApi = {
-  getDashboard: () => api.get('/reports/dashboard'),
-  getVisitWiseDashboard: () => api.get('/reports/visit-wise'),
+  getDashboard: (params?: { centerId?: number; departmentId?: number }) => api.get('/reports/dashboard', { params }),
+  getVisitWiseDashboard: (params?: { centerId?: number; departmentId?: number }) => api.get('/reports/visit-wise', { params }),
   visitExcel: (visitId: number) =>
     api.get(`/reports/visit/${visitId}/excel`, { responseType: 'blob' }),
   inventoryExcel: () =>
@@ -133,8 +134,8 @@ export const menuApi = {
 
 export const rolesApi = {
   getAll: () => api.get('/roles'),
-  create: (name: string, audience: 'Admin' | 'Incharge') => api.post('/roles', { name, audience }),
-  update: (id: number, data: { name: string; audience: 'Admin' | 'Incharge'; isActive: boolean }) => api.put(`/roles/${id}`, data),
+  create: (name: string, audience: 'Admin' | 'Sewadaar') => api.post('/roles', { name, audience }),
+  update: (id: number, data: { name: string; audience: 'Admin' | 'Sewadaar'; isActive: boolean }) => api.put(`/roles/${id}`, data),
   delete: (id: number) => api.delete(`/roles/${id}`),
 }
 
@@ -147,12 +148,12 @@ export const usersApi = {
 }
 
 export const assetsApi = {
-  getTypes: (centerId?: number) => api.get('/assets/types', { params: { centerId } }),
+  getTypes: (centerId?: number, departmentId?: number) => api.get('/assets/types', { params: { centerId, departmentId } }),
   createType: (data: any) => api.post('/assets/types', data),
   updateType: (id: number, data: any) => api.put(`/assets/types/${id}`, data),
   deleteType: (id: number) => api.delete(`/assets/types/${id}`),
-  getAssets: (centerId: number, assetTypeId?: number, status?: string) =>
-    api.get('/assets', { params: { centerId, assetTypeId, status } }),
+  getAssets: (centerId: number, assetTypeId?: number, status?: string, departmentId?: number) =>
+    api.get('/assets', { params: { centerId, assetTypeId, status, departmentId } }),
   createAsset: (data: any) => api.post('/assets', data),
   updateAsset: (id: number, data: any) => api.put(`/assets/${id}`, data),
   deleteAsset: (id: number) => api.delete(`/assets/${id}`),

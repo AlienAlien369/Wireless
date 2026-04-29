@@ -172,6 +172,7 @@ public class IssueItemResponseDto
     public string? Brand { get; set; }
     public bool IsReturned { get; set; }
     public DateTime? ReturnedAt { get; set; }
+    public string? ReturnRemarks { get; set; }
 }
 
 public record CollectorDto(int Id, string Name, string BadgeNumber, string PhoneNumber);

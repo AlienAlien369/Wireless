@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { Wifi, Lock, User } from 'lucide-react'
 import { authApi } from '../services/api'
 import Link from 'next/link'
+import { APP_NAME, DEFAULT_CENTER_NAME, PRODUCT_TAGLINE } from '../config/app'
 
 interface LoginForm {
   username: string
@@ -24,7 +25,7 @@ export default function LoginPage() {
       localStorage.setItem('token', u.token)
       localStorage.setItem('user', JSON.stringify(u))
       toast.success(`Welcome, ${u.fullName}!`)
-      if (u.audience === 'Admin' || u.role === 'Admin') router.push('/admin')
+      if (u.audience === 'Admin' || u.role === 'SUPER_ADMIN' || u.role === 'Admin' || u.role === 'Center Head') router.push('/admin')
       else router.push('/incharge')
     } catch {
       toast.error('Invalid credentials. Please try again.')
@@ -41,8 +42,8 @@ export default function LoginPage() {
           <div className="w-20 h-20 bg-white/10 backdrop-blur rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Wifi size={40} className="text-accent" />
           </div>
-          <h1 className="text-3xl font-bold text-white">RSSB Wireless</h1>
-          <p className="text-blue-200 mt-1">Bhatti Center — Management System</p>
+          <h1 className="text-3xl font-bold text-white">{APP_NAME}</h1>
+          <p className="text-blue-200 mt-1">{DEFAULT_CENTER_NAME} - {PRODUCT_TAGLINE}</p>
         </div>
 
         {/* Card */}
@@ -90,7 +91,7 @@ export default function LoginPage() {
           </form>
 
           <p className="text-center text-gray-500 text-xs mt-6">
-            RSSB Bhatti Center · Spiritual Visit Equipment Management
+            {APP_NAME} - {DEFAULT_CENTER_NAME}
           </p>
         </div>
       </div>

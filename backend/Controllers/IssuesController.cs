@@ -89,6 +89,8 @@ public class IssuesController : ControllerBase
     public async Task<IActionResult> Return(int id, [FromBody] List<int> itemIds)
     {
         var scope = await _scope.RequireAdminUiAsync(User);
+        var canSendSmsByRole = _config.IsSmsEnabledForRole(scope.Role);
+        var cfg = _config.GetSnapshot();
         var issue = await _db.Issues.FirstOrDefaultAsync(i => i.Id == id);
         if (issue == null) return NotFound();
         if (!scope.IsGlobalAdmin)
@@ -98,7 +100,7 @@ public class IssuesController : ControllerBase
         }
         try
         {
-            await _svc.ReturnIssueAsync(id, itemIds);
+            await _svc.ReturnIssueAsync(id, itemIds, cfg.Sms.ReceiveEnabled && canSendSmsByRole);
             return NoContent();
         }
         catch (KeyNotFoundException) { return NotFound(); }

@@ -43,7 +43,7 @@ public class AuthController : ControllerBase
             return Unauthorized(new { message = "Account is inactive" });
 
         var appRole = await _db.AppRoles.FirstOrDefaultAsync(x => x.Name == user.Role && x.IsActive);
-        var audience = appRole?.Audience ?? (string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Incharge");
+        var audience = appRole?.Audience ?? (string.Equals(user.Role, "SUPER_ADMIN", StringComparison.OrdinalIgnoreCase) || string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(user.Role, "Center Head", StringComparison.OrdinalIgnoreCase) ? "Admin" : "Sewadaar");
 
         return Ok(new AuthResponseDto(
             _jwt.GenerateToken(user),

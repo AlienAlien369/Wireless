@@ -17,15 +17,21 @@ public class AssetsController : ControllerBase
     private readonly AppDbContext _db;
     private readonly AccessScopeService _scope;
     private readonly QrCodeHelper _qr;
-    public AssetsController(AppDbContext db, AccessScopeService scope, QrCodeHelper qr) { _db = db; _scope = scope; _qr = qr; }
+    private readonly ProductConfigService _config;
+    public AssetsController(AppDbContext db, AccessScopeService scope, QrCodeHelper qr, ProductConfigService config) { _db = db; _scope = scope; _qr = qr; _config = config; }
 
     [HttpGet("types")]
-    public async Task<IActionResult> GetTypes([FromQuery] int? centerId)
+    public async Task<IActionResult> GetTypes([FromQuery] int? centerId, [FromQuery] int? departmentId)
     {
         var scope = await _scope.RequireAdminUiAsync(User);
         var q = _db.AssetTypes.Include(x => x.Center).AsQueryable();
-        if (centerId != null) q = q.Where(x => x.CenterId == centerId);
-        if (!scope.IsGlobalAdmin && scope.CenterId != null) q = q.Where(x => x.CenterId == scope.CenterId);
+        var effectiveCenterId = centerId;
+        if (!scope.IsGlobalAdmin) effectiveCenterId = scope.CenterId;
+        if (effectiveCenterId != null) q = q.Where(x => x.CenterId == effectiveCenterId);
+        if (departmentId != null && !scope.IsGlobalAdmin && !scope.IsCenterHead) _scope.EnsureDepartmentAccess(scope, departmentId);
+
+        var allowedAssetTypeIds = await GetAllowedAssetTypeIdsAsync(scope, effectiveCenterId, departmentId);
+        if (allowedAssetTypeIds != null) q = q.Where(x => allowedAssetTypeIds.Contains(x.Id));
 
         var list = await q.OrderBy(x => x.Name)
             .Select(x => new AssetTypeDto(x.Id, x.CenterId, x.Code, x.Name, x.TrackingMode, x.IsActive))
@@ -97,15 +103,18 @@ public class AssetsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAssets([FromQuery] int centerId, [FromQuery] int? assetTypeId, [FromQuery] string? status)
+    public async Task<IActionResult> GetAssets([FromQuery] int centerId, [FromQuery] int? assetTypeId, [FromQuery] string? status, [FromQuery] int? departmentId)
     {
         var scope = await _scope.RequireAdminUiAsync(User);
         _scope.EnsureCenterAccess(scope, centerId);
+        if (departmentId != null && !scope.IsGlobalAdmin && !scope.IsCenterHead) _scope.EnsureDepartmentAccess(scope, departmentId);
         var q = _db.Assets
             .Include(x => x.AssetType)
             .Where(x => x.CenterId == centerId)
             .AsQueryable();
 
+        var allowedAssetTypeIds = await GetAllowedAssetTypeIdsAsync(scope, centerId, departmentId);
+        if (allowedAssetTypeIds != null) q = q.Where(x => allowedAssetTypeIds.Contains(x.AssetTypeId));
         if (assetTypeId != null) q = q.Where(x => x.AssetTypeId == assetTypeId);
         if (!string.IsNullOrWhiteSpace(status)) q = q.Where(x => x.Status == status);
 
@@ -240,6 +249,46 @@ public class AssetsController : ControllerBase
         var qrValue = $"AST-{a.CenterId}-{a.AssetTypeId}-{a.Id}";
         if (string.IsNullOrWhiteSpace(a.Remarks)) return $"QR:{qrValue}";
         return a.Remarks.Contains("QR:", StringComparison.OrdinalIgnoreCase) ? a.Remarks : $"{a.Remarks} | QR:{qrValue}";
+    }
+
+    private Task<List<int>?> GetAllowedAssetTypeIdsAsync(AccessScope scope, int? centerId, int? departmentId)
+    {
+        if (centerId == null) return Task.FromResult<List<int>?>(null);
+        var rules = _config.GetSnapshot().AssetVisibilityRules ?? new List<AssetVisibilityRuleConfig>();
+
+        if (scope.IsGlobalAdmin)
+        {
+            if (departmentId == null) return Task.FromResult<List<int>?>(null);
+            var deptTypes = rules
+                .Where(x => x.CenterId == centerId && x.DepartmentId == departmentId)
+                .Select(x => x.AssetTypeId)
+                .Distinct()
+                .ToList();
+            return Task.FromResult<List<int>?>(deptTypes);
+        }
+
+        if (scope.IsCenterHead)
+        {
+            if (departmentId == null) return Task.FromResult<List<int>?>(null);
+            var deptTypes = rules
+                .Where(x => x.CenterId == centerId && x.DepartmentId == departmentId)
+                .Select(x => x.AssetTypeId)
+                .Distinct()
+                .ToList();
+            return Task.FromResult<List<int>?>(deptTypes);
+        }
+
+        var scopedDepartmentId = scope.DepartmentId;
+        var role = scope.Role ?? string.Empty;
+        var allowed = rules
+            .Where(x =>
+                x.CenterId == centerId &&
+                x.Role.Equals(role, StringComparison.OrdinalIgnoreCase) &&
+                (x.DepartmentId == null || x.DepartmentId == scopedDepartmentId))
+            .Select(x => x.AssetTypeId)
+            .Distinct()
+            .ToList();
+        return Task.FromResult<List<int>?>(allowed);
     }
 }
 
