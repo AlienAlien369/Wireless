@@ -4,6 +4,11 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
 
+// Public API instance — no auth header (for QR scan pages)
+const publicApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+})
+
 // Attach JWT token to every request
 api.interceptors.request.use((config) => {
   if (typeof window !== 'undefined') {
@@ -73,6 +78,7 @@ export const inventoryApi = {
   getKits: () => api.get('/inventory/kits'),
   createKit: (data: any) => api.post('/inventory/kits', data),
   deleteKit: (id: number) => api.delete(`/inventory/kits/${id}`),
+  getSetByNumberPublic: (number: string) => publicApi.get(`/inventory/wireless-sets/by-number/${number}`),
 }
 
 // ─── Issues ──────────────────────────────────────────────────────────────────
@@ -159,6 +165,7 @@ export const assetsApi = {
   deleteAsset: (id: number) => api.delete(`/assets/${id}`),
   getQr: (id: number) => api.get(`/assets/${id}/qr`),
   scanQr: (qrValue: string) => api.get(`/assets/scan/${encodeURIComponent(qrValue)}`),
+  scanQrPublic: (qrValue: string) => publicApi.get(`/assets/scan/${encodeURIComponent(qrValue)}`),
 }
 
 export const productConfigApi = {

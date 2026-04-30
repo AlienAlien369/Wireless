@@ -1,21 +1,33 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { inventoryApi } from '../../services/api'
-import { Radio, User, Hash, Phone, MapPin, CheckCircle, AlertCircle } from 'lucide-react'
+import { inventoryApi, assetsApi } from '../../services/api'
+import { Radio, User, Hash, Phone, MapPin, CheckCircle, AlertCircle, Package } from 'lucide-react'
 
 export default function SetLookupPage() {
   const router = useRouter()
   const { number } = router.query
   const [data, setData] = useState<any>(null)
+  const [assetData, setAssetData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
   useEffect(() => {
     if (!number) return
-    inventoryApi.getSetByNumber(number as string)
-      .then(r => setData(r.data))
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
+    const num = number as string
+
+    if (num.toUpperCase().startsWith('AST-')) {
+      // Asset QR — public endpoint, no auth required
+      assetsApi.scanQrPublic(num)
+        .then(r => setAssetData(r.data))
+        .catch(() => setError(true))
+        .finally(() => setLoading(false))
+    } else {
+      // Legacy wireless set QR — public endpoint, no auth required
+      inventoryApi.getSetByNumberPublic(num)
+        .then(r => setData(r.data))
+        .catch(() => setError(true))
+        .finally(() => setLoading(false))
+    }
   }, [number])
 
   if (loading) return (
@@ -28,11 +40,75 @@ export default function SetLookupPage() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="text-center">
         <AlertCircle size={48} className="text-red-400 mx-auto mb-4" />
-        <h1 className="text-xl font-bold text-gray-700">Set Not Found</h1>
-        <p className="text-gray-500 mt-1">The wireless set {number} was not found in the system.</p>
+        <h1 className="text-xl font-bold text-gray-700">Not Found</h1>
+        <p className="text-gray-500 mt-1">The item <span className="font-mono">{number}</span> was not found in the system.</p>
       </div>
     </div>
   )
+
+  // ── Asset QR result ────────────────────────────────────────────────────────
+  if (assetData) {
+    const a = assetData
+    const statusColor =
+      a.status === 'Available' ? 'bg-green-50 border-green-100' :
+      a.status === 'Issued'    ? 'bg-yellow-50 border-yellow-100' :
+                                 'bg-red-50 border-red-100'
+    const badgeClass =
+      a.status === 'Available' ? 'badge-available' :
+      a.status === 'Issued'    ? 'badge-issued' :
+                                 'badge-broken'
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-light flex items-center justify-center p-4">
+        <div className="w-full max-w-sm">
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
+              <Package size={32} className="text-accent" />
+            </div>
+            <h1 className="text-2xl font-bold text-white">RSSB Wireless</h1>
+            <p className="text-blue-200 text-sm">Asset Tracker</p>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className={`px-5 py-3 border-b ${statusColor}`}>
+              <div className="flex items-center gap-2">
+                <span className={badgeClass}>{a.status}</span>
+                <span className="text-sm font-medium text-gray-600">{a.assetTypeName}</span>
+                {a.itemNumber && <span className="ml-auto text-xs text-gray-400">#{a.itemNumber}</span>}
+              </div>
+            </div>
+
+            <div className="p-5 space-y-4">
+              {a.status === 'Available' && (
+                <div className="text-center py-4">
+                  <CheckCircle size={36} className="text-green-400 mx-auto mb-2" />
+                  <p className="text-gray-600">This asset is currently <strong>available</strong> and not allocated.</p>
+                </div>
+              )}
+              {a.status === 'Issued' && (
+                <div className="text-center py-4">
+                  <Package size={36} className="text-orange-400 mx-auto mb-2" />
+                  <p className="text-gray-600">This asset is currently <strong>issued / allocated</strong>.</p>
+                </div>
+              )}
+              {a.status === 'Broken' && (
+                <div className="text-center py-4">
+                  <AlertCircle size={36} className="text-red-400 mx-auto mb-2" />
+                  <p className="text-gray-600">This asset is marked as <strong>broken / out of service</strong>.</p>
+                </div>
+              )}
+              {a.brand && (
+                <div className="text-sm text-gray-500 text-center">Brand: {a.brand}</div>
+              )}
+            </div>
+
+            <div className="px-5 py-3 bg-gray-50 border-t text-center">
+              <p className="text-xs text-gray-400">RSSB · Asset Equipment System</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-light flex items-center justify-center p-4">

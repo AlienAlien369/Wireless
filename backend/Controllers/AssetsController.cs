@@ -229,18 +229,16 @@ public class AssetsController : ControllerBase
         });
     }
 
+    [AllowAnonymous]
     [HttpGet("scan/{qrValue}")]
     public async Task<IActionResult> FindByQr(string qrValue, CancellationToken cancellationToken = default)
     {
-        var scope = await _scope.RequireAdminUiAsync(User, cancellationToken);
         var parts = (qrValue ?? "").Split('-', StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length != 4 || !string.Equals(parts[0], "AST", StringComparison.OrdinalIgnoreCase))
             return BadRequest(new { message = "Invalid QR value" });
 
         if (!int.TryParse(parts[1], out var centerId) || !int.TryParse(parts[3], out var assetId))
             return BadRequest(new { message = "Invalid QR value" });
-
-        _scope.EnsureCenterAccess(scope, centerId);
 
         var asset = await _db.Assets.AsNoTracking().Include(x => x.AssetType)
             .FirstOrDefaultAsync(x => x.Id == assetId && x.CenterId == centerId, cancellationToken);

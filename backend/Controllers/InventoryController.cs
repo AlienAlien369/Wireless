@@ -45,11 +45,11 @@ public class InventoryController : ControllerBase
         return Ok(new WirelessSetDto(w.Id, w.ItemNumber, w.Brand, w.Status, w.Remarks, w.QrCodeUrl, w.CreatedAt));
     }
 
+    [AllowAnonymous]
     [HttpGet("wireless-sets/by-number/{number}")]
     public async Task<IActionResult> GetSetByNumber(string number, CancellationToken cancellationToken = default)
     {
         if (!_config.GetSnapshot().FeatureFlags.LegacyWirelessEnabled) return NotFound();
-        await _scope.RequireAdminUiAsync(User, cancellationToken);
         var w = await _db.WirelessSets.AsNoTracking().FirstOrDefaultAsync(x => x.ItemNumber == number, cancellationToken);
         if (w == null) return NotFound();
 
