@@ -3,6 +3,7 @@ namespace RSSBWireless.API.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -10,9 +11,9 @@ using RSSBWireless.API.Services;
 public class ProductConfigController : ControllerBase
 {
     private readonly ProductConfigService _config;
-    private readonly AccessScopeService _scope;
+    private readonly IAccessScopeService _scope;
 
-    public ProductConfigController(ProductConfigService config, AccessScopeService scope)
+    public ProductConfigController(ProductConfigService config, IAccessScopeService scope)
     {
         _config = config;
         _scope = scope;

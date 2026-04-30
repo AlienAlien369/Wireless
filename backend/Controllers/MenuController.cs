@@ -8,6 +8,7 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
 using System;
 
 [ApiController]
@@ -16,8 +17,8 @@ using System;
 public class MenuController : ControllerBase
 {
     private readonly AppDbContext _db;
-    private readonly AccessScopeService _scope;
-    public MenuController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
+    private readonly IAccessScopeService _scope;
+    public MenuController(AppDbContext db, IAccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet("my")]
     public async Task<IActionResult> GetMyMenu()

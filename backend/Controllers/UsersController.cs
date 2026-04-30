@@ -8,6 +8,7 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
 using System;
 
 [ApiController]
@@ -17,10 +18,10 @@ public class UsersController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly AccessScopeService _scope;
+    private readonly IAccessScopeService _scope;
     private readonly ProductConfigService _config;
 
-    public UsersController(AppDbContext db, UserManager<ApplicationUser> userManager, AccessScopeService scope, ProductConfigService config)
+    public UsersController(AppDbContext db, UserManager<ApplicationUser> userManager, IAccessScopeService scope, ProductConfigService config)
     {
         _db = db;
         _userManager = userManager;

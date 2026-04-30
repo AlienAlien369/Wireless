@@ -7,6 +7,7 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
 using System;
 
 [ApiController]
@@ -15,8 +16,8 @@ using System;
 public class RolesController : ControllerBase
 {
     private readonly AppDbContext _db;
-    private readonly AccessScopeService _scope;
-    public RolesController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
+    private readonly IAccessScopeService _scope;
+    public RolesController(AppDbContext db, IAccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

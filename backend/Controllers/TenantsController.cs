@@ -7,6 +7,7 @@ using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
 using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,8 +15,8 @@ using RSSBWireless.API.Services;
 public class TenantsController : ControllerBase
 {
     private readonly AppDbContext _db;
-    private readonly AccessScopeService _scope;
-    public TenantsController(AppDbContext db, AccessScopeService scope) { _db = db; _scope = scope; }
+    private readonly IAccessScopeService _scope;
+    public TenantsController(AppDbContext db, IAccessScopeService scope) { _db = db; _scope = scope; }
 
     [HttpGet("centers")]
     public async Task<IActionResult> GetCenters()
