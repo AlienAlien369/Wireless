@@ -17,7 +17,13 @@ export default function SetLookupPage() {
     const num = number as string
 
     if (num.toUpperCase().startsWith('AST-')) {
-      // Asset QR — public endpoint, no auth required
+      // If the user is already logged in, send them straight to the issue page
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+      if (token) {
+        router.replace(`/admin/issue-assets?qr=${encodeURIComponent(num)}`)
+        return
+      }
+      // Not logged in — show public status page
       assetsApi.scanQrPublic(num)
         .then(r => setAssetData(r.data))
         .catch(() => setError(true))

@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import SearchDropdown from '../../components/SearchDropdown'
 import { assetsApi, issuesApi, productConfigApi, sewadaarsApi, tenantsApi, visitsApi } from '../../services/api'
 import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
-import { X } from 'lucide-react'
+import { QrCode, X } from 'lucide-react'
 
 type Center = { id: number; name: string; isActive: boolean }
 type Visit = any
@@ -13,6 +14,7 @@ type AssetType = { id: number; centerId: number; code: string; name: string; tra
 type Asset = { id: number; assetTypeId: number; assetTypeCode: string; assetTypeName: string; itemNumber: string | null; brand: string | null; status: string; remarks: string | null }
 
 export default function IssueAssetsPage() {
+  const router = useRouter()
   const [centers, setCenters] = useState<Center[]>([])
   const [centerId, setCenterId] = useState<number | null>(null)
   const [visits, setVisits] = useState<Visit[]>([])
@@ -32,6 +34,10 @@ export default function IssueAssetsPage() {
   const [sendSms, setSendSms] = useState(true)
   const [qrInput, setQrInput] = useState('')
   const [assetSearch, setAssetSearch] = useState('')
+  const [qrPresetLabel, setQrPresetLabel] = useState<string | null>(null)
+
+  // Holds the asset id to auto-select once the assets list loads
+  const presetAssetIdRef = useRef<number | null>(null)
 
   useEffect(() => {
     Promise.all([
@@ -62,6 +68,24 @@ export default function IssueAssetsPage() {
       setSendSms(roleDefault ? !!roleDefault.smsEnabled : true)
     }).catch(() => toast.error('Failed to load data'))
   }, [])
+  
+  // ── QR pre-fill: when ?qr= is in the URL, auto-select center/type/asset ──────
+  useEffect(() => {
+    const qr = router.query.qr as string | undefined
+    if (!qr) return
+    assetsApi.scanQr(qr).then((res) => {
+      const a = res.data
+      if (a.status !== 'Available') {
+        toast.error(`Asset is ${a.status.toLowerCase()} and cannot be issued`)
+        return
+      }
+      presetAssetIdRef.current = a.id
+      setQrPresetLabel(`${a.assetTypeName}${a.itemNumber ? ' #' + a.itemNumber : ''}${a.brand ? ' · ' + a.brand : ''}`)
+      setCenterId(a.centerId)
+      setTypeId(a.assetTypeId)
+    }).catch(() => toast.error('Could not resolve scanned QR asset'))
+  }, [router.query.qr])
+
   const addByQr = async () => {
     const raw = qrInput.trim()
     if (!raw) return
@@ -91,8 +115,15 @@ export default function IssueAssetsPage() {
   useEffect(() => {
     if (!centerId || !typeId) { setAssets([]); setSelected([]); return }
     assetsApi.getAssets(centerId, typeId, 'Available').then((res) => {
-      setAssets(res.data || [])
-      setSelected([])
+      const list: Asset[] = res.data || []
+      setAssets(list)
+      if (presetAssetIdRef.current !== null) {
+        const found = list.find(x => x.id === presetAssetIdRef.current)
+        setSelected(found ? [found] : [])
+        presetAssetIdRef.current = null
+      } else {
+        setSelected([])
+      }
     }).catch(() => setAssets([]))
   }, [centerId, typeId])
 
@@ -153,6 +184,16 @@ export default function IssueAssetsPage() {
     <AdminLayout title="Issue Assets">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
+          {qrPresetLabel && (
+            <div className="flex items-center gap-3 bg-primary/5 border border-primary/20 rounded-xl px-4 py-3">
+              <QrCode size={18} className="text-primary shrink-0" />
+              <div className="min-w-0">
+                <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Pre-filled from QR scan</div>
+                <div className="font-semibold text-gray-800 truncate">{qrPresetLabel}</div>
+              </div>
+              <button className="ml-auto text-gray-400 hover:text-gray-600 shrink-0" onClick={() => { setQrPresetLabel(null); setSelected([]) }}><X size={16} /></button>
+            </div>
+          )}
           <div className="card space-y-4">
             <h3 className="font-semibold text-gray-700 border-b pb-2">Issue Details</h3>
 
