@@ -197,7 +197,7 @@ export default function AssetsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               <input className="input" placeholder="code (e.g. wheelchair)" value={newType.code} onChange={(e) => setNewType(p => ({ ...p, code: e.target.value }))} />
               <input className="input" placeholder="name (Wheelchair)" value={newType.name} onChange={(e) => setNewType(p => ({ ...p, name: e.target.value }))} />
-              <select className="input" value={newType.trackingMode} onChange={(e) => setNewType(p => ({ ...p, trackingMode: e.target.value }))}>
+              <select className="input" value={newType.trackingMode} onChange={(e) => setNewType(p => ({ ...p, trackingMode: e.target.value as "Individual" | "Group" }))}>
                 <option value="Individual">Individual</option>
                 <option value="Group">Group</option>
               </select>
@@ -217,7 +217,7 @@ export default function AssetsPage() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                         <input className="input" value={t.code} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, code: e.target.value } : x))} />
                         <input className="input" value={t.name} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, name: e.target.value } : x))} />
-                        <select className="input" value={t.trackingMode} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, trackingMode: e.target.value } : x))}>
+                        <select className="input" value={t.trackingMode} onChange={(e) => setTypes(prev => prev.map(x => x.id === t.id ? { ...x, trackingMode: e.target.value as "Individual" | "Group" } : x))}>
                           <option value="Individual">Individual</option>
                           <option value="Group">Group</option>
                         </select>
