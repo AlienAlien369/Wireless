@@ -5,8 +5,22 @@ import { assetsApi } from '../../services/api'
 import { QrCode, Search } from 'lucide-react'
 import type { Asset } from '../../types'
 
+/**
+ * AssetScanPage  —  /admin/asset-scan
+ *
+ * Admin utility page for quickly checking an asset's allocation status.
+ * Accepts a QR value via keyboard input or a hardware barcode scanner
+ * (which emulates keyboard input + Enter).
+ *
+ * Calls the authenticated scanQr endpoint and displays:
+ *   - Asset type, item number, brand
+ *   - Colour-coded status badge: Available / Issued / Broken
+ *   - A plain-language message explaining the current state
+ */
+
 type ScannedAsset = Asset & { qrValue?: string }
 
+// Tailwind classes for each status badge
 const STATUS_STYLES: Record<string, string> = {
   Available: 'bg-green-100 text-green-800 border-green-300',
   Issued: 'bg-orange-100 text-orange-800 border-orange-300',

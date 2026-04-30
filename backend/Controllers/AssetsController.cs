@@ -229,6 +229,13 @@ public class AssetsController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Public endpoint — no authentication required.
+    /// Resolves an asset QR value (format: AST-{centerId}-{typeId}-{assetId})
+    /// and returns the asset's current status and details.
+    /// Used by the public /set/[number] landing page so anyone can scan and
+    /// see whether the asset is Available, Issued, or Broken.
+    /// </summary>
     [AllowAnonymous]
     [HttpGet("scan/{qrValue}")]
     public async Task<IActionResult> FindByQr(string qrValue, CancellationToken cancellationToken = default)

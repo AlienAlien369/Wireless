@@ -13,6 +13,20 @@ type Sewadaar = any
 type AssetType = { id: number; centerId: number; code: string; name: string; trackingMode: string; isActive: boolean }
 type Asset = { id: number; assetTypeId: number; assetTypeCode: string; assetTypeName: string; itemNumber: string | null; brand: string | null; status: string; remarks: string | null }
 
+/**
+ * IssueAssetsPage
+ *
+ * Allows admins to issue assets to a sewadaar for a specific visit.
+ *
+ * QR scan flow (new):
+ *   When the page is opened with ?qr=<AST-value> (redirected from /set/[number]
+ *   for logged-in users), it resolves the asset via scanQr(), then:
+ *     - Sets the center to the asset's centerId
+ *     - Sets the asset type to the asset's typeId
+ *     - Pre-selects the scanned asset in the available items list
+ *     - Shows a dismissable "Pre-filled from QR scan" banner
+ *   The user only needs to pick a sewadaar and optionally add remarks.
+ */
 export default function IssueAssetsPage() {
   const router = useRouter()
   const [centers, setCenters] = useState<Center[]>([])
@@ -40,6 +54,8 @@ export default function IssueAssetsPage() {
   const presetAssetIdRef = useRef<number | null>(null)
 
   useEffect(() => {
+    // Load centers, visits, sewadaars and SMS config on mount.
+    // Defaults: user's preferred center, latest active visit.
     Promise.all([
       tenantsApi.getCenters(),
       visitsApi.getAll(),
@@ -87,6 +103,7 @@ export default function IssueAssetsPage() {
   }, [router.query.qr])
 
   const addByQr = async () => {
+    // Manual QR input on the issue page: scan or paste a QR value to add an asset.
     const raw = qrInput.trim()
     if (!raw) return
     try {
@@ -113,6 +130,9 @@ export default function IssueAssetsPage() {
   }, [centerId])
 
   useEffect(() => {
+    // Reload available assets whenever center or type changes.
+    // If a preset asset id is pending (set by the QR effect), auto-select it
+    // once the list loads, then clear the ref so normal navigation resets cleanly.
     if (!centerId || !typeId) { setAssets([]); setSelected([]); return }
     assetsApi.getAssets(centerId, typeId, 'Available').then((res) => {
       const list: Asset[] = res.data || []

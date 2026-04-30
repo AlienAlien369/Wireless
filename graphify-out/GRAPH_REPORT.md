@@ -1,7 +1,7 @@
 # Graph Report - D:\Lakshya grover\TRY NEW THINGS\LG  Git projects\Wireless  (2026-04-30)
 
 ## Corpus Check
-- 88 files · ~76,842 words
+- 88 files · ~77,524 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary

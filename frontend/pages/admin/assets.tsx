@@ -24,6 +24,7 @@ export default function AssetsPage() {
   const [editingAssetId, setEditingAssetId] = useState<number | null>(null)
   const [qrModal, setQrModal] = useState<QrModal>(null)
 
+  /** Fetches the QR code image for an asset and opens the modal. */
   const showQr = async (a: Asset) => {
     try {
       const res = await assetsApi.getQr(a.id)
@@ -38,6 +39,7 @@ export default function AssetsPage() {
     }
   }
 
+  /** Triggers a PNG download of the currently displayed QR code. */
   const downloadQr = () => {
     if (!qrModal) return
     const link = document.createElement('a')

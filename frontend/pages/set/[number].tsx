@@ -3,6 +3,21 @@ import { useEffect, useState } from 'react'
 import { inventoryApi, assetsApi } from '../../services/api'
 import { Radio, User, Hash, Phone, MapPin, CheckCircle, AlertCircle, Package } from 'lucide-react'
 
+/**
+ * SetLookupPage  —  public QR landing page
+ *
+ * Handles two QR code formats:
+ *   1. AST-{centerId}-{typeId}-{assetId}  →  Generic asset QR
+ *   2. Legacy wireless-set item numbers   →  Wireless set QR
+ *
+ * Smart routing for asset QRs (AST-*):
+ *   - Logged-in user:  redirects to /admin/issue-assets?qr=<value>
+ *     so the issue form is pre-filled and the asset can be issued immediately.
+ *   - Guest / not logged in:  shows the public read-only status card.
+ *
+ * Both QR lookup endpoints are [AllowAnonymous] on the backend so this page
+ * works without authentication.
+ */
 export default function SetLookupPage() {
   const router = useRouter()
   const { number } = router.query

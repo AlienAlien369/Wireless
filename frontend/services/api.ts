@@ -4,7 +4,8 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
 
-// Public API instance — no auth header (for QR scan pages)
+// Public API instance — no JWT attached.
+// Used by the /set/[number] QR landing page which must work without login.
 const publicApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
@@ -78,6 +79,7 @@ export const inventoryApi = {
   getKits: () => api.get('/inventory/kits'),
   createKit: (data: any) => api.post('/inventory/kits', data),
   deleteKit: (id: number) => api.delete(`/inventory/kits/${id}`),
+  // Unauthenticated lookup — used by the public /set/[number] landing page.
   getSetByNumberPublic: (number: string) => publicApi.get(`/inventory/wireless-sets/by-number/${number}`),
 }
 
@@ -164,7 +166,9 @@ export const assetsApi = {
   updateAsset: (id: number, data: any) => api.put(`/assets/${id}`, data),
   deleteAsset: (id: number) => api.delete(`/assets/${id}`),
   getQr: (id: number) => api.get(`/assets/${id}/qr`),
+  // Authenticated scan — used by the manual QR input on issue-assets page.
   scanQr: (qrValue: string) => api.get(`/assets/scan/${encodeURIComponent(qrValue)}`),
+  // Unauthenticated scan — used by the public /set/[number] landing page.
   scanQrPublic: (qrValue: string) => publicApi.get(`/assets/scan/${encodeURIComponent(qrValue)}`),
 }
 

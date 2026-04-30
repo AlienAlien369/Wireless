@@ -45,6 +45,12 @@ public class InventoryController : ControllerBase
         return Ok(new WirelessSetDto(w.Id, w.ItemNumber, w.Brand, w.Status, w.Remarks, w.QrCodeUrl, w.CreatedAt));
     }
 
+    /// <summary>
+    /// Public endpoint — no authentication required.
+    /// Looks up a wireless set by its item number and returns its current
+    /// status and issue details.
+    /// Used by the public /set/[number] landing page for legacy wireless-set QRs.
+    /// </summary>
     [AllowAnonymous]
     [HttpGet("wireless-sets/by-number/{number}")]
     public async Task<IActionResult> GetSetByNumber(string number, CancellationToken cancellationToken = default)
