@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { assetsApi } from '../../services/api'
-import { QrCode, Search } from 'lucide-react'
+import { Hash, MapPin, Phone, QrCode, Search, User } from 'lucide-react'
 import type { Asset } from '../../types'
 
 /**
@@ -15,10 +15,18 @@ import type { Asset } from '../../types'
  * Calls the authenticated scanQr endpoint and displays:
  *   - Asset type, item number, brand
  *   - Colour-coded status badge: Available / Issued / Broken
- *   - A plain-language message explaining the current state
+ *   - When Issued: incharge name, badge, mobile and visit name
+ *   - A plain-language message for Available / Broken states
  */
 
-type ScannedAsset = Asset & { qrValue?: string }
+// The scanQr endpoint returns the full enriched object including issue details
+type ScannedAsset = Asset & {
+  qrValue?: string
+  issuedTo?: string | null
+  badgeNumber?: string | null
+  mobileNumber?: string | null
+  visitName?: string | null
+}
 
 // Tailwind classes for each status badge
 const STATUS_STYLES: Record<string, string> = {
@@ -125,11 +133,45 @@ export default function AssetScanPage() {
                 ✅ This asset is <strong>available</strong> and not currently allocated to anyone.
               </div>
             )}
+
+            {/* When issued, show the incharge details */}
             {result.status === 'Issued' && (
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 text-sm text-orange-800">
-                📦 This asset is currently <strong>issued</strong> / allocated.
-              </div>
+              result.issuedTo ? (
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 space-y-3">
+                  <div className="text-xs font-semibold text-orange-700 uppercase tracking-wide">Currently Issued To</div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
+                      <User size={16} className="text-orange-600" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-800">{result.issuedTo}</div>
+                      <div className="text-xs text-gray-500">Sewadaar / Incharge</div>
+                    </div>
+                  </div>
+                  {result.badgeNumber && (
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <Hash size={13} className="text-gray-400" /> Badge: {result.badgeNumber}
+                    </div>
+                  )}
+                  {result.mobileNumber && (
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <Phone size={13} className="text-gray-400" />
+                      <a href={`tel:${result.mobileNumber}`} className="underline underline-offset-2">{result.mobileNumber}</a>
+                    </div>
+                  )}
+                  {result.visitName && (
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <MapPin size={13} className="text-gray-400" /> {result.visitName}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 text-sm text-orange-800">
+                  📦 This asset is currently <strong>issued</strong> / allocated.
+                </div>
+              )
             )}
+
             {result.status === 'Broken' && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-800">
                 🔧 This asset is marked as <strong>broken</strong>.

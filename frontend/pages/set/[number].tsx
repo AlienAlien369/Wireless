@@ -25,6 +25,7 @@ export default function SetLookupPage() {
   const [assetData, setAssetData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [redirecting, setRedirecting] = useState(false) // true when sending logged-in user to issue page
   const defaultContactNumber = '8800191819'
 
   useEffect(() => {
@@ -32,25 +33,33 @@ export default function SetLookupPage() {
     const num = number as string
 
     if (num.toUpperCase().startsWith('AST-')) {
-      // If the user is already logged in, send them straight to the issue page
+      // Logged-in users go straight to the issue-assets page with the asset pre-filled.
       const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
       if (token) {
+        setRedirecting(true)
         router.replace(`/admin/issue-assets?qr=${encodeURIComponent(num)}`)
         return
       }
-      // Not logged in — show public status page
+      // Guest / not logged in — show the public read-only status card.
       assetsApi.scanQrPublic(num)
         .then(r => setAssetData(r.data))
         .catch(() => setError(true))
         .finally(() => setLoading(false))
     } else {
-      // Legacy wireless set QR — public endpoint, no auth required
+      // Legacy wireless-set QR — look up by item number (public endpoint).
       inventoryApi.getSetByNumberPublic(num)
         .then(r => setData(r.data))
         .catch(() => setError(true))
         .finally(() => setLoading(false))
     }
   }, [number])
+
+  if (redirecting) return (
+    <div className="min-h-screen bg-gradient-to-br from-primary-dark to-primary flex items-center justify-center gap-4">
+      <div className="animate-spin rounded-full h-10 w-10 border-4 border-white border-t-transparent" />
+      <span className="text-white font-medium text-lg">Opening issue page…</span>
+    </div>
+  )
 
   if (loading) return (
     <div className="min-h-screen bg-gradient-to-br from-primary-dark to-primary flex items-center justify-center">
