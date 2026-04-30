@@ -1,349 +1,389 @@
-# Graph Report - D:\Lakshya grover\TRY NEW THINGS\LG  Git projects\Wireless  (2026-04-30)
+# Graph Report - .  (2026-04-30)
 
 ## Corpus Check
-- 76 files · ~71,320 words
+- 92 files · ~50,000 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 385 nodes · 552 edges · 48 communities detected
-- Extraction: 67% EXTRACTED · 33% INFERRED · 0% AMBIGUOUS · INFERRED: 180 edges (avg confidence: 0.8)
+- 421 nodes · 580 edges · 55 communities detected
+- Extraction: 68% EXTRACTED · 32% INFERRED · 0% AMBIGUOUS · INFERRED: 184 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Community 0|Community 0]]
-- [[_COMMUNITY_Community 1|Community 1]]
-- [[_COMMUNITY_Community 2|Community 2]]
-- [[_COMMUNITY_Community 3|Community 3]]
-- [[_COMMUNITY_Community 4|Community 4]]
-- [[_COMMUNITY_Community 5|Community 5]]
-- [[_COMMUNITY_Community 6|Community 6]]
-- [[_COMMUNITY_Community 7|Community 7]]
-- [[_COMMUNITY_Community 8|Community 8]]
-- [[_COMMUNITY_Community 9|Community 9]]
-- [[_COMMUNITY_Community 10|Community 10]]
-- [[_COMMUNITY_Community 11|Community 11]]
-- [[_COMMUNITY_Community 12|Community 12]]
-- [[_COMMUNITY_Community 13|Community 13]]
-- [[_COMMUNITY_Community 14|Community 14]]
-- [[_COMMUNITY_Community 15|Community 15]]
-- [[_COMMUNITY_Community 16|Community 16]]
-- [[_COMMUNITY_Community 17|Community 17]]
-- [[_COMMUNITY_Community 18|Community 18]]
-- [[_COMMUNITY_Community 19|Community 19]]
-- [[_COMMUNITY_Community 20|Community 20]]
-- [[_COMMUNITY_Community 21|Community 21]]
-- [[_COMMUNITY_Community 22|Community 22]]
-- [[_COMMUNITY_Community 23|Community 23]]
-- [[_COMMUNITY_Community 24|Community 24]]
-- [[_COMMUNITY_Community 25|Community 25]]
-- [[_COMMUNITY_Community 26|Community 26]]
-- [[_COMMUNITY_Community 27|Community 27]]
-- [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Community 29|Community 29]]
-- [[_COMMUNITY_Community 30|Community 30]]
-- [[_COMMUNITY_Community 31|Community 31]]
-- [[_COMMUNITY_Community 32|Community 32]]
-- [[_COMMUNITY_Community 33|Community 33]]
-- [[_COMMUNITY_Community 34|Community 34]]
-- [[_COMMUNITY_Community 35|Community 35]]
-- [[_COMMUNITY_Community 36|Community 36]]
-- [[_COMMUNITY_Community 37|Community 37]]
-- [[_COMMUNITY_Community 38|Community 38]]
-- [[_COMMUNITY_Community 39|Community 39]]
-- [[_COMMUNITY_Community 40|Community 40]]
-- [[_COMMUNITY_Community 41|Community 41]]
-- [[_COMMUNITY_Community 42|Community 42]]
-- [[_COMMUNITY_Community 43|Community 43]]
-- [[_COMMUNITY_Community 44|Community 44]]
-- [[_COMMUNITY_Community 45|Community 45]]
-- [[_COMMUNITY_Community 46|Community 46]]
-- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Asset Management Core|Asset Management Core]]
+- [[_COMMUNITY_Authentication & JWT|Authentication & JWT]]
+- [[_COMMUNITY_React Query Hooks|React Query Hooks]]
+- [[_COMMUNITY_TypeScript Types|TypeScript Types]]
+- [[_COMMUNITY_Issue Service|Issue Service]]
+- [[_COMMUNITY_Report Service|Report Service]]
+- [[_COMMUNITY_Dashboard Components|Dashboard Components]]
+- [[_COMMUNITY_Tenant & Menu System|Tenant & Menu System]]
+- [[_COMMUNITY_Middleware Pipeline|Middleware Pipeline]]
+- [[_COMMUNITY_EF Core Data Layer|EF Core Data Layer]]
+- [[_COMMUNITY_Service Interfaces|Service Interfaces]]
+- [[_COMMUNITY_Constants & Enums|Constants & Enums]]
+- [[_COMMUNITY_Frontend API Client|Frontend API Client]]
+- [[_COMMUNITY_Error Handling|Error Handling]]
+- [[_COMMUNITY_Rate Limiting|Rate Limiting]]
+- [[_COMMUNITY_Health Checks|Health Checks]]
+- [[_COMMUNITY_Visit Management|Visit Management]]
+- [[_COMMUNITY_Sewadaar Management|Sewadaar Management]]
+- [[_COMMUNITY_Breakage Tracking|Breakage Tracking]]
+- [[_COMMUNITY_Product Config|Product Config]]
+- [[_COMMUNITY_Admin Layout|Admin Layout]]
+- [[_COMMUNITY_Issue Assets Page|Issue Assets Page]]
+- [[_COMMUNITY_Receive Assets Page|Receive Assets Page]]
+- [[_COMMUNITY_Assets Page|Assets Page]]
+- [[_COMMUNITY_Access Scope Service|Access Scope Service]]
+- [[_COMMUNITY_Photo & QR Code|Photo & QR Code]]
+- [[_COMMUNITY_SMS Notifications|SMS Notifications]]
+- [[_COMMUNITY_User Management|User Management]]
+- [[_COMMUNITY_Role Management|Role Management]]
+- [[_COMMUNITY_ExcelPDF Reports|Excel/PDF Reports]]
+- [[_COMMUNITY_Response Compression|Response Compression]]
+- [[_COMMUNITY_Inventory Legacy API|Inventory Legacy API]]
+- [[_COMMUNITY_Collectors|Collectors]]
+- [[_COMMUNITY_Search Dropdown|Search Dropdown]]
+- [[_COMMUNITY_Identity Models|Identity Models]]
+- [[_COMMUNITY_Domain Models|Domain Models]]
+- [[_COMMUNITY_Asset Type Setup|Asset Type Setup]]
+- [[_COMMUNITY_Frontend Formatters|Frontend Formatters]]
+- [[_COMMUNITY_Migration Scripts|Migration Scripts]]
+- [[_COMMUNITY_Error Boundary|Error Boundary]]
+- [[_COMMUNITY_CenterDept Filters|Center/Dept Filters]]
+- [[_COMMUNITY_Docker Config|Docker Config]]
+- [[_COMMUNITY_Next.js Config|Next.js Config]]
+- [[_COMMUNITY_Tailwind Styles|Tailwind Styles]]
+- [[_COMMUNITY_App Entry Points|App Entry Points]]
+- [[_COMMUNITY_Password Reset|Password Reset]]
+- [[_COMMUNITY_QR Scan Flow|QR Scan Flow]]
+- [[_COMMUNITY_LoginAuth Pages|Login/Auth Pages]]
+- [[_COMMUNITY_Incharge Portal|Incharge Portal]]
+- [[_COMMUNITY_Breakage Controller|Breakage Controller]]
+- [[_COMMUNITY_Visits Controller|Visits Controller]]
+- [[_COMMUNITY_Issues Controller|Issues Controller]]
+- [[_COMMUNITY_Menu Controller|Menu Controller]]
+- [[_COMMUNITY_Tenants Controller|Tenants Controller]]
+- [[_COMMUNITY_Roles Controller|Roles Controller]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `InventoryController` - 15 edges
 2. `AssetsController` - 14 edges
-3. `RSSB Wireless Management System` - 13 edges
-4. `TenantsController` - 10 edges
-5. `Backend (ASP.NET Core 8 Web API)` - 10 edges
-6. `load()` - 9 edges
-7. `InchargesController` - 8 edges
-8. `IssuesController` - 8 edges
-9. `ReportsController` - 8 edges
-10. `onDelete()` - 8 edges
+3. `TenantsController` - 10 edges
+4. `load()` - 9 edges
+5. `InchargesController` - 8 edges
+6. `IssuesController` - 8 edges
+7. `ReportsController` - 8 edges
+8. `IssueService` - 8 edges
+9. `onDelete()` - 8 edges
+10. `toastError()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `RSSB Wireless Management System` --rationale_for--> `Graphify Knowledge Graph Rules`  [EXTRACTED]
-  README.md → CLAUDE.md
-
-## Hyperedges (group relationships)
-- **Backend Data Layer: ASP.NET Core + EF Core + PostgreSQL + Npgsql** — readme_backend, readme_entity_framework, readme_postgresql, filelist_npgsql [INFERRED 0.90]
-- **Report Generation Stack: Reports Module + EPPlus + iText7** — readme_reports_module, readme_epplus, readme_itext7 [EXTRACTED 1.00]
-- **Wireless Brand Inventory: Kenwood + Vertel + Aspera in Inventory Module** — readme_inventory_module, readme_kenwood, readme_vertel, readme_aspera [EXTRACTED 1.00]
+- `createType()` --calls--> `toastError()`  [INFERRED]
+  frontend\pages\admin\assets.tsx → frontend\utils\errorHandler.ts
+- `createAsset()` --calls--> `toastError()`  [INFERRED]
+  frontend\pages\admin\assets.tsx → frontend\utils\errorHandler.ts
+- `updateType()` --calls--> `toastError()`  [INFERRED]
+  frontend\pages\admin\assets.tsx → frontend\utils\errorHandler.ts
+- `deleteType()` --calls--> `toastError()`  [INFERRED]
+  frontend\pages\admin\assets.tsx → frontend\utils\errorHandler.ts
+- `updateAssetDetails()` --calls--> `toastError()`  [INFERRED]
+  frontend\pages\admin\assets.tsx → frontend\utils\errorHandler.ts
 
 ## Communities
 
-### Community 0 - "Community 0"
+### Community 0 - "Asset Management Core"
 Cohesion: 0.06
-Nodes (11): loadPages(), AccessScope, AccessScopeService, BreakagesController, ControllerBase, InchargesController, InventoryController, MenuController (+3 more)
+Nodes (10): BreakagesController, ControllerBase, IIssueService, InchargesController, InventoryController, IssuesController, ProductConfigController, QrCodeHelper (+2 more)
 
-### Community 1 - "Community 1"
+### Community 1 - "Authentication & JWT"
 Cohesion: 0.05
-Nodes (26): InitialCreate, RSSBWireless.API.Migrations, AddTenancyAndMenu, RSSBWireless.API.Migrations, AddTenantScopeToOperationalEntities, RSSBWireless.API.Migrations, FixTenantScopeColumns, RSSBWireless.API.Migrations (+18 more)
+Nodes (20): InitialCreate, RSSBWireless.API.Migrations, AddTenancyAndMenu, RSSBWireless.API.Migrations, AddTenantScopeToOperationalEntities, RSSBWireless.API.Migrations, FixTenantScopeColumns, RSSBWireless.API.Migrations (+12 more)
 
-### Community 2 - "Community 2"
-Cohesion: 0.1
-Nodes (5): loadAssetTypes(), AssetsController, submit(), QrCodeHelper, TenantsController
+### Community 2 - "React Query Hooks"
+Cohesion: 0.08
+Nodes (8): loadAssignment(), loadPages(), save(), AssetsController, IAccessScopeService, MenuController, TenantsController, UsersController
 
-### Community 3 - "Community 3"
+### Community 3 - "TypeScript Types"
 Cohesion: 0.09
-Nodes (5): CloudinaryHelper, IssuesController, IssueService, receive(), SmsHelper
+Nodes (19): createCenter(), createDepartment(), createRole(), deleteCenter(), deleteDepartment(), deleteRole(), loadAssetTypes(), loadCenters() (+11 more)
 
-### Community 4 - "Community 4"
-Cohesion: 0.11
-Nodes (24): Graphify Knowledge Graph Rules, Admin Dashboard, Aspera Wireless Brand, Backend (ASP.NET Core 8 Web API), Breakage Module, Cloudinary (Photo Storage), Docker Compose Deployment, Entity Framework Core (ORM) (+16 more)
+### Community 4 - "Issue Service"
+Cohesion: 0.09
+Nodes (6): AuthController, EmailHelper, IIssueService, IssueService, JwtHelper, SmsHelper
 
-### Community 5 - "Community 5"
+### Community 5 - "Report Service"
 Cohesion: 0.13
-Nodes (6): download(), downloadBlob(), handleVisitSelect(), loadVisitDetails(), ReportsController, ReportService
+Nodes (6): IReportService, download(), downloadBlob(), handleVisitSelect(), loadVisitDetails(), ReportsController
 
-### Community 6 - "Community 6"
+### Community 6 - "Dashboard Components"
 Cohesion: 0.1
 Nodes (9): InitialCreate, RSSBWireless.API.Migrations, AddTenancyAndMenu, RSSBWireless.API.Migrations, AddTenantScopeToOperationalEntities, RSSBWireless.API.Migrations, FixTenantScopeColumns, RSSBWireless.API.Migrations (+1 more)
 
-### Community 7 - "Community 7"
-Cohesion: 0.17
-Nodes (10): createCenter(), createDepartment(), deleteCenter(), deleteDepartment(), loadAssignment(), loadCenters(), loadDepartments(), save() (+2 more)
+### Community 7 - "Tenant & Menu System"
+Cohesion: 0.29
+Nodes (10): createAsset(), createType(), deleteAsset(), deleteType(), load(), updateAssetDetails(), updateStatus(), updateType() (+2 more)
 
-### Community 8 - "Community 8"
-Cohesion: 0.18
-Nodes (3): AuthController, EmailHelper, JwtHelper
-
-### Community 9 - "Community 9"
+### Community 8 - "Middleware Pipeline"
 Cohesion: 0.17
 Nodes (11): Breakage, Charger, Collector, Incharge, Issue, IssueItem, Kit, Photo (+3 more)
 
-### Community 10 - "Community 10"
+### Community 9 - "EF Core Data Layer"
 Cohesion: 0.18
 Nodes (10): BreakageCreateDto, BreakageDto, CollectorCreateDto, DashboardStatsDto, IssueCreateDto, IssueItemDto, IssueItemResponseDto, IssueResponseDto (+2 more)
 
-### Community 11 - "Community 11"
-Cohesion: 0.36
-Nodes (8): createAsset(), createType(), deleteAsset(), deleteType(), load(), updateAssetDetails(), updateStatus(), updateType()
+### Community 10 - "Service Interfaces"
+Cohesion: 0.2
+Nodes (0): 
 
-### Community 12 - "Community 12"
+### Community 11 - "Constants & Enums"
+Cohesion: 0.29
+Nodes (3): AccessScope, AccessScopeService, IAccessScopeService
+
+### Community 12 - "Frontend API Client"
 Cohesion: 0.25
 Nodes (7): AssetVisibilityRuleConfig, BrandingConfig, DashboardWidgetConfig, FeatureFlagsConfig, ProductConfigSnapshot, RoleDefaultConfig, SmsConfig
 
-### Community 13 - "Community 13"
-Cohesion: 0.4
-Nodes (3): AppDbContextModelSnapshot, RSSBWireless.API.Migrations, ModelSnapshot
+### Community 13 - "Error Handling"
+Cohesion: 0.29
+Nodes (2): IReportService, ReportService
 
-### Community 14 - "Community 14"
+### Community 14 - "Rate Limiting"
+Cohesion: 0.33
+Nodes (1): ErrorBoundary
+
+### Community 15 - "Health Checks"
+Cohesion: 0.47
+Nodes (4): formatDate(), formatDateTime(), statusBadge(), statusColor()
+
+### Community 16 - "Visit Management"
+Cohesion: 0.4
+Nodes (1): CloudinaryHelper
+
+### Community 17 - "Sewadaar Management"
+Cohesion: 0.4
+Nodes (4): AssetStatus, AssetTypeCodes, IssueStatus, Roles
+
+### Community 18 - "Breakage Tracking"
 Cohesion: 0.4
 Nodes (4): Center, Department, MenuPage, MenuPagePermission
 
-### Community 15 - "Community 15"
+### Community 19 - "Product Config"
 Cohesion: 0.5
 Nodes (2): AppDbContext, IdentityDbContext
 
-### Community 16 - "Community 16"
+### Community 20 - "Admin Layout"
+Cohesion: 0.67
+Nodes (1): ExceptionHandlingMiddleware
+
+### Community 21 - "Issue Assets Page"
 Cohesion: 0.5
 Nodes (0): 
 
-### Community 17 - "Community 17"
+### Community 22 - "Receive Assets Page"
 Cohesion: 0.83
 Nodes (3): getActiveVisits(), getLatestActiveVisit(), getLatestVisit()
 
-### Community 18 - "Community 18"
+### Community 23 - "Assets Page"
+Cohesion: 0.67
+Nodes (1): RequestLoggingMiddleware
+
+### Community 24 - "Access Scope Service"
 Cohesion: 0.67
 Nodes (2): Asset, AssetType
 
-### Community 19 - "Community 19"
+### Community 25 - "Photo & QR Code"
 Cohesion: 0.67
 Nodes (2): AppRole, PasswordResetRequest
 
-### Community 20 - "Community 20"
+### Community 26 - "SMS Notifications"
 Cohesion: 0.67
 Nodes (2): IdentityUser, ApplicationUser
 
-### Community 21 - "Community 21"
+### Community 27 - "User Management"
 Cohesion: 0.67
 Nodes (0): 
 
-### Community 22 - "Community 22"
+### Community 28 - "Role Management"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 23 - "Community 23"
+### Community 29 - "Excel/PDF Reports"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 24 - "Community 24"
+### Community 30 - "Response Compression"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 25 - "Community 25"
+### Community 31 - "Inventory Legacy API"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 26 - "Community 26"
+### Community 32 - "Collectors"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 27 - "Community 27"
+### Community 33 - "Search Dropdown"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 28 - "Community 28"
+### Community 34 - "Identity Models"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 29 - "Community 29"
+### Community 35 - "Domain Models"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 30 - "Community 30"
+### Community 36 - "Asset Type Setup"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 31 - "Community 31"
+### Community 37 - "Frontend Formatters"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 32 - "Community 32"
+### Community 38 - "Migration Scripts"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 33 - "Community 33"
+### Community 39 - "Error Boundary"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 34 - "Community 34"
+### Community 40 - "Center/Dept Filters"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 35 - "Community 35"
+### Community 41 - "Docker Config"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 36 - "Community 36"
+### Community 42 - "Next.js Config"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 37 - "Community 37"
+### Community 43 - "Tailwind Styles"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 38 - "Community 38"
+### Community 44 - "App Entry Points"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 39 - "Community 39"
+### Community 45 - "Password Reset"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 40 - "Community 40"
+### Community 46 - "QR Scan Flow"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 41 - "Community 41"
+### Community 47 - "Login/Auth Pages"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 42 - "Community 42"
+### Community 48 - "Incharge Portal"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 43 - "Community 43"
+### Community 49 - "Breakage Controller"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 44 - "Community 44"
+### Community 50 - "Visits Controller"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 45 - "Community 45"
+### Community 51 - "Issues Controller"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 46 - "Community 46"
+### Community 52 - "Menu Controller"
 Cohesion: 1.0
 Nodes (0): 
 
-### Community 47 - "Community 47"
+### Community 53 - "Tenants Controller"
+Cohesion: 1.0
+Nodes (0): 
+
+### Community 54 - "Roles Controller"
 Cohesion: 1.0
 Nodes (0): 
 
 ## Knowledge Gaps
-- **57 isolated node(s):** `IssueCreateDto`, `IssueItemDto`, `CollectorCreateDto`, `IssueResponseDto`, `IssueItemResponseDto` (+52 more)
+- **50 isolated node(s):** `IssueCreateDto`, `IssueItemDto`, `CollectorCreateDto`, `IssueResponseDto`, `IssueItemResponseDto` (+45 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 22`** (2 nodes): `SearchDropdown.tsx`, `handleClickOutside()`
+- **Thin community `Role Management`** (2 nodes): `SearchDropdown.tsx`, `handleClickOutside()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 23`** (2 nodes): `logout()`, `AdminLayout.tsx`
+- **Thin community `Excel/PDF Reports`** (2 nodes): `logout()`, `AdminLayout.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 24`** (2 nodes): `useAuth.ts`, `useAuthState()`
+- **Thin community `Response Compression`** (2 nodes): `useAuth.ts`, `useAuthState()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 25`** (2 nodes): `index.tsx`, `Home()`
+- **Thin community `Inventory Legacy API`** (2 nodes): `index.tsx`, `Home()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 26`** (2 nodes): `login.tsx`, `LoginPage()`
+- **Thin community `Collectors`** (2 nodes): `login.tsx`, `LoginPage()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 27`** (2 nodes): `App()`, `_app.tsx`
+- **Thin community `Search Dropdown`** (2 nodes): `App()`, `_app.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 28`** (2 nodes): `LegacyBulkIssueRedirect()`, `bulk-issue.tsx`
+- **Thin community `Identity Models`** (2 nodes): `LegacyBulkIssueRedirect()`, `bulk-issue.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 29`** (2 nodes): `LegacyBulkReceiveRedirect()`, `bulk-receive.tsx`
+- **Thin community `Domain Models`** (2 nodes): `LegacyBulkReceiveRedirect()`, `bulk-receive.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 30`** (2 nodes): `incharge-history.tsx`, `getStatusColor()`
+- **Thin community `Asset Type Setup`** (2 nodes): `incharge-history.tsx`, `getStatusColor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 31`** (2 nodes): `issue.tsx`, `LegacyIssueRedirect()`
+- **Thin community `Frontend Formatters`** (2 nodes): `issue.tsx`, `LegacyIssueRedirect()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 32`** (2 nodes): `notifications.tsx`, `getStatusBadge()`
+- **Thin community `Migration Scripts`** (2 nodes): `notifications.tsx`, `getStatusBadge()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 33`** (2 nodes): `receive.tsx`, `LegacyReceiveRedirect()`
+- **Thin community `Error Boundary`** (2 nodes): `receive.tsx`, `LegacyReceiveRedirect()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 34`** (2 nodes): `scanner.tsx`, `LegacyScannerRedirect()`
+- **Thin community `Center/Dept Filters`** (2 nodes): `scanner.tsx`, `LegacyScannerRedirect()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 35`** (2 nodes): `index.tsx`, `InchargeDashboard()`
+- **Thin community `Docker Config`** (2 nodes): `index.tsx`, `InchargeDashboard()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 36`** (2 nodes): `cn()`, `cn.ts`
+- **Thin community `Next.js Config`** (2 nodes): `cn()`, `cn.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 37`** (1 nodes): `Program.cs`
+- **Thin community `Tailwind Styles`** (1 nodes): `Program.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 38`** (1 nodes): `RSSBWireless.API.AssemblyInfo.cs`
+- **Thin community `App Entry Points`** (1 nodes): `RSSBWireless.API.AssemblyInfo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 39`** (1 nodes): `RSSBWireless.API.GlobalUsings.g.cs`
+- **Thin community `Password Reset`** (1 nodes): `RSSBWireless.API.GlobalUsings.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 40`** (1 nodes): `RSSBWireless.API.MvcApplicationPartsAssemblyInfo.cs`
+- **Thin community `QR Scan Flow`** (1 nodes): `RSSBWireless.API.MvcApplicationPartsAssemblyInfo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 41`** (1 nodes): `next-env.d.ts`
+- **Thin community `Login/Auth Pages`** (1 nodes): `next-env.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 42`** (1 nodes): `next.config.js`
+- **Thin community `Incharge Portal`** (1 nodes): `next.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 43`** (1 nodes): `postcss.config.js`
+- **Thin community `Breakage Controller`** (1 nodes): `postcss.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 44`** (1 nodes): `tailwind.config.js`
+- **Thin community `Visits Controller`** (1 nodes): `tailwind.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 45`** (1 nodes): `app.ts`
+- **Thin community `Issues Controller`** (1 nodes): `app.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 46`** (1 nodes): `[number].tsx`
+- **Thin community `Menu Controller`** (1 nodes): `[number].tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 47`** (1 nodes): `api.ts`
+- **Thin community `Tenants Controller`** (1 nodes): `api.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Roles Controller`** (1 nodes): `index.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `onDelete()` connect `Community 1` to `Community 13`?**
-  _High betweenness centrality (0.069) - this node is a cross-community bridge._
-- **Why does `AuthController` connect `Community 8` to `Community 0`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
-- **Why does `ProductConfigService` connect `Community 1` to `Community 0`, `Community 12`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `onDelete()` connect `Authentication & JWT` to `TypeScript Types`?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+- **Why does `AuthController` connect `Issue Service` to `Asset Management Core`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `ReportsController` connect `Report Service` to `Asset Management Core`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+- **Are the 2 inferred relationships involving `load()` (e.g. with `.GetTypes()` and `.GetAssets()`) actually correct?**
+  _`load()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `IssueCreateDto`, `IssueItemDto`, `CollectorCreateDto` to the rest of the system?**
-  _57 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Community 0` be split into smaller, more focused modules?**
+  _50 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Asset Management Core` be split into smaller, more focused modules?**
   _Cohesion score 0.06 - nodes in this community are weakly interconnected._
-- **Should `Community 1` be split into smaller, more focused modules?**
+- **Should `Authentication & JWT` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
