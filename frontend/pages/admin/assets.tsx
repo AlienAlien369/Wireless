@@ -2,9 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
 import { assetsApi, tenantsApi } from '../../services/api'
-import { Plus, Save, Wrench, Pencil, Trash2 } from 'lucide-react'
+import { Plus, Save, Wrench, Pencil, Trash2, QrCode, X, Download } from 'lucide-react'
 import type { User, Center, Department, AssetType, Asset } from '../../types'
 import { toastError } from '../../utils/errorHandler'
+
+type QrModal = { assetId: number; assetLabel: string; qrImage: string; qrValue: string } | null
 
 export default function AssetsPage() {
   const [centers, setCenters] = useState<Center[]>([])
@@ -20,6 +22,29 @@ export default function AssetsPage() {
   const [newAsset, setNewAsset] = useState({ assetTypeId: 0, itemNumber: '', brand: '', remarks: '' })
   const [editingTypeId, setEditingTypeId] = useState<number | null>(null)
   const [editingAssetId, setEditingAssetId] = useState<number | null>(null)
+  const [qrModal, setQrModal] = useState<QrModal>(null)
+
+  const showQr = async (a: Asset) => {
+    try {
+      const res = await assetsApi.getQr(a.id)
+      setQrModal({
+        assetId: a.id,
+        assetLabel: `${a.assetTypeName}${a.itemNumber ? ' #' + a.itemNumber : ''}`,
+        qrImage: res.data.qrImage,
+        qrValue: res.data.qrValue,
+      })
+    } catch {
+      toast.error('Failed to load QR code')
+    }
+  }
+
+  const downloadQr = () => {
+    if (!qrModal) return
+    const link = document.createElement('a')
+    link.href = qrModal.qrImage
+    link.download = `asset-qr-${qrModal.qrValue}.png`
+    link.click()
+  }
 
   const load = async (cId: number, dId?: number | null) => {
     const [tAll, aAll] = await Promise.all([
@@ -276,6 +301,7 @@ export default function AssetsPage() {
                     <th className="py-2 pr-3">Item#</th>
                     <th className="py-2 pr-3">Brand</th>
                     <th className="py-2 pr-3">Status</th>
+                    <th className="py-2 pr-3">QR</th>
                     <th className="py-2 pr-3">Actions</th>
                   </tr>
                 </thead>
@@ -294,6 +320,11 @@ export default function AssetsPage() {
                         ) : (a.brand || '-')}
                       </td>
                       <td className="py-2 pr-3">{a.status}</td>
+                       <td className="py-2 pr-3">
+                        <button className="btn-secondary p-1" title="Show QR" onClick={() => showQr(a)}>
+                          <QrCode size={16} />
+                        </button>
+                      </td>
                       <td className="py-2 pr-3">
                         <div className="flex gap-2">
                           {editingAssetId === a.id ? (
@@ -318,7 +349,7 @@ export default function AssetsPage() {
                     </tr>
                   ))}
                   {visibleAssets.length === 0 && (
-                    <tr><td className="py-6 text-center text-gray-500" colSpan={5}>No assets yet.</td></tr>
+                    <tr><td className="py-6 text-center text-gray-500" colSpan={6}>No assets yet.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -326,6 +357,26 @@ export default function AssetsPage() {
           </div>
         </div>
       </div>
+
+      {/* QR Code Modal */}
+      {qrModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setQrModal(null)}>
+          <div className="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full flex flex-col items-center gap-4" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between w-full">
+              <div>
+                <div className="font-semibold text-gray-800">{qrModal.assetLabel}</div>
+                <div className="text-xs text-gray-500 font-mono">{qrModal.qrValue}</div>
+              </div>
+              <button className="text-gray-400 hover:text-gray-700" onClick={() => setQrModal(null)}><X size={20} /></button>
+            </div>
+            <img src={qrModal.qrImage} alt="Asset QR Code" className="w-56 h-56 border border-gray-200 rounded-lg" />
+            <div className="text-xs text-gray-500 text-center">Scan to check allocation status</div>
+            <button className="btn-primary flex items-center gap-2 w-full justify-center" onClick={downloadQr}>
+              <Download size={16} /> Download QR
+            </button>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   )
 }
