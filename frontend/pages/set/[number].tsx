@@ -10,6 +10,7 @@ export default function SetLookupPage() {
   const [assetData, setAssetData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const defaultContactNumber = '8800191819'
 
   useEffect(() => {
     if (!number) return
@@ -57,6 +58,7 @@ export default function SetLookupPage() {
       a.status === 'Available' ? 'badge-available' :
       a.status === 'Issued'    ? 'badge-issued' :
                                  'badge-broken'
+    const contactNumber = (a.mobileNumber || defaultContactNumber) as string
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-light flex items-center justify-center p-4">
         <div className="w-full max-w-sm">
@@ -78,22 +80,60 @@ export default function SetLookupPage() {
             </div>
 
             <div className="p-5 space-y-4">
-              {a.status === 'Available' && (
+              {a.status === 'Issued' && a.issuedTo ? (
+                <>
+                  <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Currently Issued To</h2>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <User size={18} className="text-primary" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-800">{a.issuedTo}</div>
+                        <div className="text-xs text-gray-400">Sewadar / Incharge</div>
+                      </div>
+                    </div>
+                    {a.badgeNumber && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Hash size={14} className="text-gray-400" /> Badge: {a.badgeNumber}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Phone size={14} className="text-gray-400" /> {contactNumber}
+                    </div>
+                    {a.visitName && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin size={14} className="text-gray-400" /> {a.visitName}
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : a.status === 'Available' ? (
                 <div className="text-center py-4">
                   <CheckCircle size={36} className="text-green-400 mx-auto mb-2" />
-                  <p className="text-gray-600">This asset is currently <strong>available</strong> and not allocated.</p>
+                  <p className="text-gray-600">This set is <strong>available</strong> for issue.</p>
+                  <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+                    <Phone size={14} className="text-gray-400" />
+                    <a href={`tel:${contactNumber}`} className="font-medium underline underline-offset-2">{contactNumber}</a>
+                  </div>
                 </div>
-              )}
-              {a.status === 'Issued' && (
-                <div className="text-center py-4">
-                  <Package size={36} className="text-orange-400 mx-auto mb-2" />
-                  <p className="text-gray-600">This asset is currently <strong>issued / allocated</strong>.</p>
-                </div>
-              )}
-              {a.status === 'Broken' && (
+              ) : a.status === 'Broken' ? (
                 <div className="text-center py-4">
                   <AlertCircle size={36} className="text-red-400 mx-auto mb-2" />
-                  <p className="text-gray-600">This asset is marked as <strong>broken / out of service</strong>.</p>
+                  <p className="text-gray-600">This set is marked as <strong>broken / out of service</strong>.</p>
+                  <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+                    <Phone size={14} className="text-gray-400" />
+                    <a href={`tel:${contactNumber}`} className="font-medium underline underline-offset-2">{contactNumber}</a>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-4">
+                  <Package size={36} className="text-orange-400 mx-auto mb-2" />
+                  <p className="text-gray-600">This set is currently <strong>issued / allocated</strong>.</p>
+                  <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+                    <Phone size={14} className="text-gray-400" />
+                    <a href={`tel:${contactNumber}`} className="font-medium underline underline-offset-2">{contactNumber}</a>
+                  </div>
                 </div>
               )}
               {a.brand && (
@@ -164,7 +204,11 @@ export default function SetLookupPage() {
             ) : data.status === 'Available' ? (
               <div className="text-center py-4">
                 <CheckCircle size={36} className="text-green-400 mx-auto mb-2" />
-                <p className="text-gray-600">This set is currently available and not issued.</p>
+                <p className="text-gray-600">This set is <strong>available</strong> for issue.</p>
+                <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
+                  <Phone size={14} className="text-gray-400" />
+                  <a href={`tel:${defaultContactNumber}`} className="font-medium underline underline-offset-2">{defaultContactNumber}</a>
+                </div>
               </div>
             ) : (
               <div className="text-center py-4">

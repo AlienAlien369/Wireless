@@ -244,7 +244,34 @@ public class AssetsController : ControllerBase
             .FirstOrDefaultAsync(x => x.Id == assetId && x.CenterId == centerId, cancellationToken);
         if (asset == null) return NotFound();
 
-        return Ok(new AssetDto(asset.Id, asset.CenterId, asset.AssetTypeId, asset.AssetType.Code, asset.AssetType.Name, asset.ItemNumber, asset.Brand, asset.Status, BuildRemarksWithQr(asset)));
+        var issue = await _db.IssueItems
+            .AsNoTracking()
+            .Include(ii => ii.Issue).ThenInclude(i => i.Incharge)
+            .Include(ii => ii.Issue).ThenInclude(i => i.Visit)
+            .Where(ii => ii.AssetId == asset.Id && !ii.IsReturned)
+            .OrderByDescending(ii => ii.Issue.IssuedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        var effectiveStatus = asset.Status;
+        if (!string.Equals(asset.Status, "Broken", StringComparison.OrdinalIgnoreCase))
+            effectiveStatus = issue == null ? "Available" : "Issued";
+
+        return Ok(new
+        {
+            id = asset.Id,
+            centerId = asset.CenterId,
+            assetTypeId = asset.AssetTypeId,
+            assetTypeCode = asset.AssetType.Code,
+            assetTypeName = asset.AssetType.Name,
+            itemNumber = asset.ItemNumber,
+            brand = asset.Brand,
+            status = effectiveStatus,
+            remarks = BuildRemarksWithQr(asset),
+            issuedTo = issue?.Issue?.Incharge?.Name,
+            badgeNumber = issue?.Issue?.Incharge?.BadgeNumber,
+            mobileNumber = issue?.Issue?.Incharge?.MobileNumber,
+            visitName = issue?.Issue?.Visit?.Name
+        });
     }
 
     private static string? BuildRemarksWithQr(Asset a)
