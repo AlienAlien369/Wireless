@@ -9,22 +9,22 @@
       "source_file": "backend\\Program.cs",
       "source_location": "L1",
       "id": "backend_program_cs",
-      "community": 43,
+      "community": 46,
       "norm_label": "program.cs"
     },
     {
       "label": "AssetsController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_assetscontroller_cs",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_assetscontroller_cs",
       "community": 2,
       "norm_label": "assetscontroller.cs"
     },
     {
       "label": "AssetsController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L13",
       "id": "assetscontroller_assetscontroller",
       "community": 2,
@@ -42,7 +42,7 @@
     {
       "label": ".GetTypes()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L24",
       "id": "assetscontroller_assetscontroller_gettypes",
       "community": 2,
@@ -51,7 +51,7 @@
     {
       "label": ".CreateType()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L46",
       "id": "assetscontroller_assetscontroller_createtype",
       "community": 2,
@@ -60,7 +60,7 @@
     {
       "label": ".UpdateType()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L68",
       "id": "assetscontroller_assetscontroller_updatetype",
       "community": 2,
@@ -69,7 +69,7 @@
     {
       "label": ".DeleteType()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L93",
       "id": "assetscontroller_assetscontroller_deletetype",
       "community": 2,
@@ -78,7 +78,7 @@
     {
       "label": ".GetAssets()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L109",
       "id": "assetscontroller_assetscontroller_getassets",
       "community": 2,
@@ -87,7 +87,7 @@
     {
       "label": ".CreateAsset()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L143",
       "id": "assetscontroller_assetscontroller_createasset",
       "community": 2,
@@ -96,16 +96,16 @@
     {
       "label": ".UpdateAsset()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L172",
       "id": "assetscontroller_assetscontroller_updateasset",
-      "community": 7,
+      "community": 6,
       "norm_label": ".updateasset()"
     },
     {
       "label": ".DeleteAsset()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L198",
       "id": "assetscontroller_assetscontroller_deleteasset",
       "community": 2,
@@ -114,16 +114,16 @@
     {
       "label": ".GetAssetQr()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L214",
       "id": "assetscontroller_assetscontroller_getassetqr",
-      "community": 2,
+      "community": 0,
       "norm_label": ".getassetqr()"
     },
     {
       "label": ".FindByQr()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L232",
       "id": "assetscontroller_assetscontroller_findbyqr",
       "community": 2,
@@ -132,8 +132,8 @@
     {
       "label": ".BuildRemarksWithQr()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
-      "source_location": "L252",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
+      "source_location": "L277",
       "id": "assetscontroller_assetscontroller_buildremarkswithqr",
       "community": 2,
       "norm_label": ".buildremarkswithqr()"
@@ -141,8 +141,8 @@
     {
       "label": ".GetAllowedAssetTypeIdsAsync()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
-      "source_location": "L259",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
+      "source_location": "L284",
       "id": "assetscontroller_assetscontroller_getallowedassettypeidsasync",
       "community": 2,
       "norm_label": ".getallowedassettypeidsasync()"
@@ -153,7 +153,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L1",
       "id": "backend_controllers_authcontroller_cs",
-      "community": 4,
+      "community": 8,
       "norm_label": "authcontroller.cs"
     },
     {
@@ -162,7 +162,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L13",
       "id": "authcontroller_authcontroller",
-      "community": 4,
+      "community": 8,
       "norm_label": "authcontroller"
     },
     {
@@ -171,7 +171,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L32",
       "id": "authcontroller_authcontroller_login",
-      "community": 4,
+      "community": 8,
       "norm_label": ".login()"
     },
     {
@@ -180,7 +180,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L61",
       "id": "authcontroller_authcontroller_register",
-      "community": 4,
+      "community": 8,
       "norm_label": ".register()"
     },
     {
@@ -189,7 +189,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L91",
       "id": "authcontroller_authcontroller_forgotpassword",
-      "community": 4,
+      "community": 8,
       "norm_label": ".forgotpassword()"
     },
     {
@@ -198,7 +198,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L146",
       "id": "authcontroller_authcontroller_resetpassword",
-      "community": 4,
+      "community": 8,
       "norm_label": ".resetpassword()"
     },
     {
@@ -207,7 +207,7 @@
       "source_file": "backend\\Controllers\\AuthController.cs",
       "source_location": "L180",
       "id": "authcontroller_authcontroller_computesha256",
-      "community": 4,
+      "community": 8,
       "norm_label": ".computesha256()"
     },
     {
@@ -330,16 +330,16 @@
     {
       "label": "InventoryController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_inventorycontroller_cs",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_inventorycontroller_cs",
       "community": 0,
       "norm_label": "inventorycontroller.cs"
     },
     {
       "label": "InventoryController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L12",
       "id": "inventorycontroller_inventorycontroller",
       "community": 0,
@@ -348,7 +348,7 @@
     {
       "label": ".GetSets()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L24",
       "id": "inventorycontroller_inventorycontroller_getsets",
       "community": 0,
@@ -357,7 +357,7 @@
     {
       "label": ".GetSet()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L38",
       "id": "inventorycontroller_inventorycontroller_getset",
       "community": 0,
@@ -366,7 +366,7 @@
     {
       "label": ".GetSetByNumber()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L48",
       "id": "inventorycontroller_inventorycontroller_getsetbynumber",
       "community": 0,
@@ -375,7 +375,7 @@
     {
       "label": ".CreateSet()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L77",
       "id": "inventorycontroller_inventorycontroller_createset",
       "community": 0,
@@ -384,7 +384,7 @@
     {
       "label": ".UpdateSet()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L96",
       "id": "inventorycontroller_inventorycontroller_updateset",
       "community": 0,
@@ -393,7 +393,7 @@
     {
       "label": ".DeleteSet()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L109",
       "id": "inventorycontroller_inventorycontroller_deleteset",
       "community": 0,
@@ -402,7 +402,7 @@
     {
       "label": ".GetChargers()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L122",
       "id": "inventorycontroller_inventorycontroller_getchargers",
       "community": 0,
@@ -411,7 +411,7 @@
     {
       "label": ".CreateCharger()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L133",
       "id": "inventorycontroller_inventorycontroller_createcharger",
       "community": 0,
@@ -420,7 +420,7 @@
     {
       "label": ".DeleteCharger()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L144",
       "id": "inventorycontroller_inventorycontroller_deletecharger",
       "community": 0,
@@ -429,7 +429,7 @@
     {
       "label": ".GetKits()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L157",
       "id": "inventorycontroller_inventorycontroller_getkits",
       "community": 0,
@@ -438,7 +438,7 @@
     {
       "label": ".CreateKit()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L166",
       "id": "inventorycontroller_inventorycontroller_createkit",
       "community": 0,
@@ -447,7 +447,7 @@
     {
       "label": ".DeleteKit()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L177",
       "id": "inventorycontroller_inventorycontroller_deletekit",
       "community": 0,
@@ -456,7 +456,7 @@
     {
       "label": ".GenerateAllQrCodes()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L189",
       "id": "inventorycontroller_inventorycontroller_generateallqrcodes",
       "community": 0,
@@ -531,50 +531,50 @@
       "source_file": "backend\\Controllers\\IssuesController.cs",
       "source_location": "L111",
       "id": "issuescontroller_issuescontroller_uploadphoto",
-      "community": 16,
+      "community": 17,
       "norm_label": ".uploadphoto()"
     },
     {
       "label": "MenuController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\MenuController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_menucontroller_cs",
-      "community": 2,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_menucontroller_cs",
+      "community": 3,
       "norm_label": "menucontroller.cs"
     },
     {
       "label": "MenuController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L13",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L14",
       "id": "menucontroller_menucontroller",
-      "community": 2,
+      "community": 3,
       "norm_label": "menucontroller"
     },
     {
       "label": ".GetMyMenu()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L22",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L23",
       "id": "menucontroller_menucontroller_getmymenu",
-      "community": 2,
+      "community": 3,
       "norm_label": ".getmymenu()"
     },
     {
       "label": ".GetPages()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L56",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L57",
       "id": "menucontroller_menucontroller_getpages",
-      "community": 2,
+      "community": 3,
       "norm_label": ".getpages()"
     },
     {
       "label": ".GetAssignment()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L67",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L68",
       "id": "menucontroller_menucontroller_getassignment",
       "community": 2,
       "norm_label": ".getassignment()"
@@ -582,8 +582,8 @@
     {
       "label": ".UpsertAssignment()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L95",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L96",
       "id": "menucontroller_menucontroller_upsertassignment",
       "community": 2,
       "norm_label": ".upsertassignment()"
@@ -591,17 +591,17 @@
     {
       "label": "ProductConfigController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_productconfigcontroller_cs",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_productconfigcontroller_cs",
       "community": 0,
       "norm_label": "productconfigcontroller.cs"
     },
     {
       "label": "ProductConfigController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L7",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L8",
       "id": "productconfigcontroller_productconfigcontroller",
       "community": 0,
       "norm_label": "productconfigcontroller"
@@ -609,8 +609,8 @@
     {
       "label": ".Get()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L21",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L22",
       "id": "productconfigcontroller_productconfigcontroller_get",
       "community": 0,
       "norm_label": ".get()"
@@ -618,8 +618,8 @@
     {
       "label": ".Update()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L28",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L29",
       "id": "productconfigcontroller_productconfigcontroller_update",
       "community": 0,
       "norm_label": ".update()"
@@ -630,7 +630,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L1",
       "id": "backend_controllers_reportscontroller_cs",
-      "community": 5,
+      "community": 4,
       "norm_label": "reportscontroller.cs"
     },
     {
@@ -639,7 +639,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L11",
       "id": "reportscontroller_reportscontroller",
-      "community": 5,
+      "community": 4,
       "norm_label": "reportscontroller"
     },
     {
@@ -648,7 +648,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L22",
       "id": "reportscontroller_reportscontroller_getdashboard",
-      "community": 5,
+      "community": 4,
       "norm_label": ".getdashboard()"
     },
     {
@@ -657,7 +657,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L62",
       "id": "reportscontroller_reportscontroller_getvisitwisedashboard",
-      "community": 5,
+      "community": 4,
       "norm_label": ".getvisitwisedashboard()"
     },
     {
@@ -666,7 +666,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L82",
       "id": "reportscontroller_reportscontroller_visitexcel",
-      "community": 5,
+      "community": 4,
       "norm_label": ".visitexcel()"
     },
     {
@@ -675,7 +675,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L89",
       "id": "reportscontroller_reportscontroller_inventoryexcel",
-      "community": 5,
+      "community": 4,
       "norm_label": ".inventoryexcel()"
     },
     {
@@ -684,7 +684,7 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L96",
       "id": "reportscontroller_reportscontroller_breakagespdf",
-      "community": 5,
+      "community": 4,
       "norm_label": ".breakagespdf()"
     },
     {
@@ -693,23 +693,23 @@
       "source_file": "backend\\Controllers\\ReportsController.cs",
       "source_location": "L103",
       "id": "reportscontroller_reportscontroller_getallowedassettypeids",
-      "community": 5,
+      "community": 4,
       "norm_label": ".getallowedassettypeids()"
     },
     {
       "label": "RolesController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\RolesController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_rolescontroller_cs",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_rolescontroller_cs",
       "community": 0,
       "norm_label": "rolescontroller.cs"
     },
     {
       "label": "RolesController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L12",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L13",
       "id": "rolescontroller_rolescontroller",
       "community": 0,
       "norm_label": "rolescontroller"
@@ -717,8 +717,8 @@
     {
       "label": ".GetAll()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L21",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L22",
       "id": "rolescontroller_rolescontroller_getall",
       "community": 0,
       "norm_label": ".getall()"
@@ -726,8 +726,8 @@
     {
       "label": ".Create()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L32",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L33",
       "id": "rolescontroller_rolescontroller_create",
       "community": 0,
       "norm_label": ".create()"
@@ -735,8 +735,8 @@
     {
       "label": ".Update()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L51",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L52",
       "id": "rolescontroller_rolescontroller_update",
       "community": 0,
       "norm_label": ".update()"
@@ -744,8 +744,8 @@
     {
       "label": ".Delete()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L73",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L74",
       "id": "rolescontroller_rolescontroller_delete",
       "community": 0,
       "norm_label": ".delete()"
@@ -753,17 +753,17 @@
     {
       "label": "TenantsController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_tenantscontroller_cs",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_tenantscontroller_cs",
       "community": 2,
       "norm_label": "tenantscontroller.cs"
     },
     {
       "label": "TenantsController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L11",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L12",
       "id": "tenantscontroller_tenantscontroller",
       "community": 2,
       "norm_label": "tenantscontroller"
@@ -771,8 +771,8 @@
     {
       "label": ".GetCenters()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L20",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L21",
       "id": "tenantscontroller_tenantscontroller_getcenters",
       "community": 3,
       "norm_label": ".getcenters()"
@@ -780,8 +780,8 @@
     {
       "label": ".CreateCenter()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L32",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L33",
       "id": "tenantscontroller_tenantscontroller_createcenter",
       "community": 2,
       "norm_label": ".createcenter()"
@@ -789,8 +789,8 @@
     {
       "label": ".UpdateCenter()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L50",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L51",
       "id": "tenantscontroller_tenantscontroller_updatecenter",
       "community": 2,
       "norm_label": ".updatecenter()"
@@ -798,8 +798,8 @@
     {
       "label": ".DeleteCenter()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L71",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L72",
       "id": "tenantscontroller_tenantscontroller_deletecenter",
       "community": 2,
       "norm_label": ".deletecenter()"
@@ -807,8 +807,8 @@
     {
       "label": ".GetDepartments()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L92",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L93",
       "id": "tenantscontroller_tenantscontroller_getdepartments",
       "community": 3,
       "norm_label": ".getdepartments()"
@@ -816,8 +816,8 @@
     {
       "label": ".CreateDepartment()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L106",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L107",
       "id": "tenantscontroller_tenantscontroller_createdepartment",
       "community": 2,
       "norm_label": ".createdepartment()"
@@ -825,8 +825,8 @@
     {
       "label": ".UpdateDepartment()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L127",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L128",
       "id": "tenantscontroller_tenantscontroller_updatedepartment",
       "community": 2,
       "norm_label": ".updatedepartment()"
@@ -834,8 +834,8 @@
     {
       "label": ".DeleteDepartment()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L148",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L149",
       "id": "tenantscontroller_tenantscontroller_deletedepartment",
       "community": 2,
       "norm_label": ".deletedepartment()"
@@ -843,17 +843,17 @@
     {
       "label": "UsersController.cs",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
       "source_location": "L1",
-      "id": "backend_controllers_userscontroller_cs",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_userscontroller_cs",
       "community": 2,
       "norm_label": "userscontroller.cs"
     },
     {
       "label": "UsersController",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L13",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L14",
       "id": "userscontroller_userscontroller",
       "community": 2,
       "norm_label": "userscontroller"
@@ -861,8 +861,8 @@
     {
       "label": ".GetAll()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L31",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L32",
       "id": "userscontroller_userscontroller_getall",
       "community": 2,
       "norm_label": ".getall()"
@@ -870,8 +870,8 @@
     {
       "label": ".Create()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L72",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L73",
       "id": "userscontroller_userscontroller_create",
       "community": 2,
       "norm_label": ".create()"
@@ -879,8 +879,8 @@
     {
       "label": ".Update()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L143",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L144",
       "id": "userscontroller_userscontroller_update",
       "community": 2,
       "norm_label": ".update()"
@@ -888,8 +888,8 @@
     {
       "label": ".Delete()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L184",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L185",
       "id": "userscontroller_userscontroller_delete",
       "community": 2,
       "norm_label": ".delete()"
@@ -897,8 +897,8 @@
     {
       "label": ".SetPassword()",
       "file_type": "code",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L201",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L202",
       "id": "userscontroller_userscontroller_setpassword",
       "community": 2,
       "norm_label": ".setpassword()"
@@ -963,7 +963,7 @@
       "source_file": "backend\\Controllers\\VisitsController.cs",
       "source_location": "L86",
       "id": "visitscontroller_visitscontroller_delete",
-      "community": 3,
+      "community": 1,
       "norm_label": ".delete()"
     },
     {
@@ -972,7 +972,7 @@
       "source_file": "backend\\Data\\AppDbContext.cs",
       "source_location": "L1",
       "id": "backend_data_appdbcontext_cs",
-      "community": 19,
+      "community": 21,
       "norm_label": "appdbcontext.cs"
     },
     {
@@ -981,7 +981,7 @@
       "source_file": "backend\\Data\\AppDbContext.cs",
       "source_location": "L7",
       "id": "appdbcontext_appdbcontext",
-      "community": 19,
+      "community": 21,
       "norm_label": "appdbcontext"
     },
     {
@@ -990,7 +990,7 @@
       "source_file": "",
       "source_location": "",
       "id": "identitydbcontext",
-      "community": 19,
+      "community": 21,
       "norm_label": "identitydbcontext"
     },
     {
@@ -999,7 +999,7 @@
       "source_file": "backend\\Data\\AppDbContext.cs",
       "source_location": "L33",
       "id": "appdbcontext_appdbcontext_onmodelcreating",
-      "community": 19,
+      "community": 21,
       "norm_label": ".onmodelcreating()"
     },
     {
@@ -1008,7 +1008,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L1",
       "id": "backend_dtos_alldtos_cs",
-      "community": 9,
+      "community": 10,
       "norm_label": "alldtos.cs"
     },
     {
@@ -1017,7 +1017,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L111",
       "id": "alldtos_issuecreatedto",
-      "community": 9,
+      "community": 10,
       "norm_label": "issuecreatedto"
     },
     {
@@ -1026,7 +1026,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L124",
       "id": "alldtos_issueitemdto",
-      "community": 9,
+      "community": 10,
       "norm_label": "issueitemdto"
     },
     {
@@ -1035,7 +1035,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L133",
       "id": "alldtos_collectorcreatedto",
-      "community": 9,
+      "community": 10,
       "norm_label": "collectorcreatedto"
     },
     {
@@ -1044,7 +1044,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L140",
       "id": "alldtos_issueresponsedto",
-      "community": 9,
+      "community": 10,
       "norm_label": "issueresponsedto"
     },
     {
@@ -1053,7 +1053,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L163",
       "id": "alldtos_issueitemresponsedto",
-      "community": 9,
+      "community": 10,
       "norm_label": "issueitemresponsedto"
     },
     {
@@ -1062,7 +1062,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L180",
       "id": "alldtos_smslogdto",
-      "community": 9,
+      "community": 10,
       "norm_label": "smslogdto"
     },
     {
@@ -1071,7 +1071,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L191",
       "id": "alldtos_breakagecreatedto",
-      "community": 9,
+      "community": 10,
       "norm_label": "breakagecreatedto"
     },
     {
@@ -1080,7 +1080,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L201",
       "id": "alldtos_breakagedto",
-      "community": 9,
+      "community": 10,
       "norm_label": "breakagedto"
     },
     {
@@ -1089,7 +1089,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L214",
       "id": "alldtos_dashboardstatsdto",
-      "community": 9,
+      "community": 10,
       "norm_label": "dashboardstatsdto"
     },
     {
@@ -1098,7 +1098,7 @@
       "source_file": "backend\\DTOs\\AllDTOs.cs",
       "source_location": "L226",
       "id": "alldtos_visitwisedashboarddto",
-      "community": 9,
+      "community": 10,
       "norm_label": "visitwisedashboarddto"
     },
     {
@@ -1107,7 +1107,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L1",
       "id": "backend_helpers_cloudinaryhelper_cs",
-      "community": 16,
+      "community": 17,
       "norm_label": "cloudinaryhelper.cs"
     },
     {
@@ -1116,7 +1116,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L5",
       "id": "cloudinaryhelper_cloudinaryhelper",
-      "community": 16,
+      "community": 17,
       "norm_label": "cloudinaryhelper"
     },
     {
@@ -1125,7 +1125,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L13",
       "id": "cloudinaryhelper_cloudinaryhelper_uploadimageasync",
-      "community": 16,
+      "community": 17,
       "norm_label": ".uploadimageasync()"
     },
     {
@@ -1134,7 +1134,7 @@
       "source_file": "backend\\Helpers\\CloudinaryHelper.cs",
       "source_location": "L24",
       "id": "cloudinaryhelper_cloudinaryhelper_deleteimageasync",
-      "community": 16,
+      "community": 17,
       "norm_label": ".deleteimageasync()"
     },
     {
@@ -1143,7 +1143,7 @@
       "source_file": "backend\\Helpers\\EmailHelper.cs",
       "source_location": "L1",
       "id": "backend_helpers_emailhelper_cs",
-      "community": 4,
+      "community": 8,
       "norm_label": "emailhelper.cs"
     },
     {
@@ -1152,7 +1152,7 @@
       "source_file": "backend\\Helpers\\EmailHelper.cs",
       "source_location": "L6",
       "id": "emailhelper_emailhelper",
-      "community": 4,
+      "community": 8,
       "norm_label": "emailhelper"
     },
     {
@@ -1161,7 +1161,7 @@
       "source_file": "backend\\Helpers\\EmailHelper.cs",
       "source_location": "L17",
       "id": "emailhelper_emailhelper_sendemailasync",
-      "community": 4,
+      "community": 8,
       "norm_label": ".sendemailasync()"
     },
     {
@@ -1170,7 +1170,7 @@
       "source_file": "backend\\Helpers\\JwtHelper.cs",
       "source_location": "L1",
       "id": "backend_helpers_jwthelper_cs",
-      "community": 4,
+      "community": 8,
       "norm_label": "jwthelper.cs"
     },
     {
@@ -1179,7 +1179,7 @@
       "source_file": "backend\\Helpers\\JwtHelper.cs",
       "source_location": "L8",
       "id": "jwthelper_jwthelper",
-      "community": 4,
+      "community": 8,
       "norm_label": "jwthelper"
     },
     {
@@ -1188,7 +1188,7 @@
       "source_file": "backend\\Helpers\\JwtHelper.cs",
       "source_location": "L13",
       "id": "jwthelper_jwthelper_generatetoken",
-      "community": 4,
+      "community": 8,
       "norm_label": ".generatetoken()"
     },
     {
@@ -1224,7 +1224,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L1",
       "id": "backend_helpers_smshelper_cs",
-      "community": 4,
+      "community": 7,
       "norm_label": "smshelper.cs"
     },
     {
@@ -1233,7 +1233,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L8",
       "id": "smshelper_smshelper",
-      "community": 4,
+      "community": 7,
       "norm_label": "smshelper"
     },
     {
@@ -1242,7 +1242,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L28",
       "id": "smshelper_smshelper_configurehttpclient",
-      "community": 4,
+      "community": 7,
       "norm_label": ".configurehttpclient()"
     },
     {
@@ -1251,7 +1251,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L53",
       "id": "smshelper_smshelper_sendsmsasync",
-      "community": 4,
+      "community": 7,
       "norm_label": ".sendsmsasync()"
     },
     {
@@ -1260,7 +1260,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L129",
       "id": "smshelper_smshelper_buildrequest",
-      "community": 4,
+      "community": 7,
       "norm_label": ".buildrequest()"
     },
     {
@@ -1269,7 +1269,7 @@
       "source_file": "backend\\Helpers\\SmsHelper.cs",
       "source_location": "L158",
       "id": "smshelper_smshelper_formatphonenumber",
-      "community": 4,
+      "community": 7,
       "norm_label": ".formatphonenumber()"
     },
     {
@@ -1278,7 +1278,7 @@
       "source_file": "backend\\Middleware\\ExceptionHandlingMiddleware.cs",
       "source_location": "L1",
       "id": "backend_middleware_exceptionhandlingmiddleware_cs",
-      "community": 20,
+      "community": 22,
       "norm_label": "exceptionhandlingmiddleware.cs"
     },
     {
@@ -1287,7 +1287,7 @@
       "source_file": "backend\\Middleware\\ExceptionHandlingMiddleware.cs",
       "source_location": "L6",
       "id": "exceptionhandlingmiddleware_exceptionhandlingmiddleware",
-      "community": 20,
+      "community": 22,
       "norm_label": "exceptionhandlingmiddleware"
     },
     {
@@ -1296,7 +1296,7 @@
       "source_file": "backend\\Middleware\\ExceptionHandlingMiddleware.cs",
       "source_location": "L8",
       "id": "exceptionhandlingmiddleware_exceptionhandlingmiddleware_invokeasync",
-      "community": 20,
+      "community": 22,
       "norm_label": ".invokeasync()"
     },
     {
@@ -1305,7 +1305,7 @@
       "source_file": "backend\\Middleware\\ExceptionHandlingMiddleware.cs",
       "source_location": "L20",
       "id": "exceptionhandlingmiddleware_exceptionhandlingmiddleware_handleexceptionasync",
-      "community": 20,
+      "community": 22,
       "norm_label": ".handleexceptionasync()"
     },
     {
@@ -1314,7 +1314,7 @@
       "source_file": "backend\\Middleware\\RequestLoggingMiddleware.cs",
       "source_location": "L1",
       "id": "backend_middleware_requestloggingmiddleware_cs",
-      "community": 23,
+      "community": 25,
       "norm_label": "requestloggingmiddleware.cs"
     },
     {
@@ -1323,7 +1323,7 @@
       "source_file": "backend\\Middleware\\RequestLoggingMiddleware.cs",
       "source_location": "L3",
       "id": "requestloggingmiddleware_requestloggingmiddleware",
-      "community": 23,
+      "community": 25,
       "norm_label": "requestloggingmiddleware"
     },
     {
@@ -1332,7 +1332,7 @@
       "source_file": "backend\\Middleware\\RequestLoggingMiddleware.cs",
       "source_location": "L5",
       "id": "requestloggingmiddleware_requestloggingmiddleware_invokeasync",
-      "community": 23,
+      "community": 25,
       "norm_label": ".invokeasync()"
     },
     {
@@ -1341,7 +1341,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260306153528_initialcreate_cs",
-      "community": 6,
+      "community": 5,
       "norm_label": "20260306153528_initialcreate.cs"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L7",
       "id": "20260306153528_initialcreate_rssbwireless_api_migrations",
-      "community": 6,
+      "community": 5,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1359,7 +1359,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L10",
       "id": "20260306153528_initialcreate_initialcreate",
-      "community": 6,
+      "community": 5,
       "norm_label": "initialcreate"
     },
     {
@@ -1368,7 +1368,7 @@
       "source_file": "",
       "source_location": "",
       "id": "migration",
-      "community": 6,
+      "community": 5,
       "norm_label": "migration"
     },
     {
@@ -1377,7 +1377,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L13",
       "id": "20260306153528_initialcreate_initialcreate_up",
-      "community": 6,
+      "community": 5,
       "norm_label": ".up()"
     },
     {
@@ -1386,7 +1386,7 @@
       "source_file": "backend\\Migrations\\20260306153528_InitialCreate.cs",
       "source_location": "L531",
       "id": "20260306153528_initialcreate_initialcreate_down",
-      "community": 6,
+      "community": 5,
       "norm_label": ".down()"
     },
     {
@@ -1431,7 +1431,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260415111620_addtenancyandmenu_cs",
-      "community": 6,
+      "community": 5,
       "norm_label": "20260415111620_addtenancyandmenu.cs"
     },
     {
@@ -1440,7 +1440,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L7",
       "id": "20260415111620_addtenancyandmenu_rssbwireless_api_migrations",
-      "community": 6,
+      "community": 5,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1449,7 +1449,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L10",
       "id": "20260415111620_addtenancyandmenu_addtenancyandmenu",
-      "community": 6,
+      "community": 5,
       "norm_label": "addtenancyandmenu"
     },
     {
@@ -1458,7 +1458,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L13",
       "id": "20260415111620_addtenancyandmenu_addtenancyandmenu_up",
-      "community": 6,
+      "community": 5,
       "norm_label": ".up()"
     },
     {
@@ -1467,7 +1467,7 @@
       "source_file": "backend\\Migrations\\20260415111620_AddTenancyAndMenu.cs",
       "source_location": "L184",
       "id": "20260415111620_addtenancyandmenu_addtenancyandmenu_down",
-      "community": 6,
+      "community": 5,
       "norm_label": ".down()"
     },
     {
@@ -1512,7 +1512,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260425122927_addtenantscopetooperationalentities_cs",
-      "community": 6,
+      "community": 5,
       "norm_label": "20260425122927_addtenantscopetooperationalentities.cs"
     },
     {
@@ -1521,7 +1521,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L5",
       "id": "20260425122927_addtenantscopetooperationalentities_rssbwireless_api_migrations",
-      "community": 6,
+      "community": 5,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L8",
       "id": "20260425122927_addtenantscopetooperationalentities_addtenantscopetooperationalentities",
-      "community": 6,
+      "community": 5,
       "norm_label": "addtenantscopetooperationalentities"
     },
     {
@@ -1539,7 +1539,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L11",
       "id": "20260425122927_addtenantscopetooperationalentities_addtenantscopetooperationalentities_up",
-      "community": 6,
+      "community": 5,
       "norm_label": ".up()"
     },
     {
@@ -1548,7 +1548,7 @@
       "source_file": "backend\\Migrations\\20260425122927_AddTenantScopeToOperationalEntities.cs",
       "source_location": "L17",
       "id": "20260425122927_addtenantscopetooperationalentities_addtenantscopetooperationalentities_down",
-      "community": 6,
+      "community": 5,
       "norm_label": ".down()"
     },
     {
@@ -1593,7 +1593,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L1",
       "id": "backend_migrations_20260425141549_fixtenantscopecolumns_cs",
-      "community": 6,
+      "community": 5,
       "norm_label": "20260425141549_fixtenantscopecolumns.cs"
     },
     {
@@ -1602,7 +1602,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L5",
       "id": "20260425141549_fixtenantscopecolumns_rssbwireless_api_migrations",
-      "community": 6,
+      "community": 5,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1611,7 +1611,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L8",
       "id": "20260425141549_fixtenantscopecolumns_fixtenantscopecolumns",
-      "community": 6,
+      "community": 5,
       "norm_label": "fixtenantscopecolumns"
     },
     {
@@ -1620,7 +1620,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L11",
       "id": "20260425141549_fixtenantscopecolumns_fixtenantscopecolumns_up",
-      "community": 6,
+      "community": 5,
       "norm_label": ".up()"
     },
     {
@@ -1629,7 +1629,7 @@
       "source_file": "backend\\Migrations\\20260425141549_FixTenantScopeColumns.cs",
       "source_location": "L123",
       "id": "20260425141549_fixtenantscopecolumns_fixtenantscopecolumns_down",
-      "community": 6,
+      "community": 5,
       "norm_label": ".down()"
     },
     {
@@ -1674,7 +1674,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L1",
       "id": "backend_migrations_appdbcontextmodelsnapshot_cs",
-      "community": 1,
+      "community": 18,
       "norm_label": "appdbcontextmodelsnapshot.cs"
     },
     {
@@ -1683,7 +1683,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L11",
       "id": "appdbcontextmodelsnapshot_rssbwireless_api_migrations",
-      "community": 1,
+      "community": 18,
       "norm_label": "rssbwireless.api.migrations"
     },
     {
@@ -1692,7 +1692,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L13",
       "id": "appdbcontextmodelsnapshot_appdbcontextmodelsnapshot",
-      "community": 1,
+      "community": 18,
       "norm_label": "appdbcontextmodelsnapshot"
     },
     {
@@ -1701,7 +1701,7 @@
       "source_file": "",
       "source_location": "",
       "id": "modelsnapshot",
-      "community": 1,
+      "community": 18,
       "norm_label": "modelsnapshot"
     },
     {
@@ -1710,7 +1710,7 @@
       "source_file": "backend\\Migrations\\AppDbContextModelSnapshot.cs",
       "source_location": "L16",
       "id": "appdbcontextmodelsnapshot_appdbcontextmodelsnapshot_buildmodel",
-      "community": 1,
+      "community": 18,
       "norm_label": ".buildmodel()"
     },
     {
@@ -1719,7 +1719,7 @@
       "source_file": "backend\\Models\\AssetModels.cs",
       "source_location": "L1",
       "id": "backend_models_assetmodels_cs",
-      "community": 24,
+      "community": 26,
       "norm_label": "assetmodels.cs"
     },
     {
@@ -1728,7 +1728,7 @@
       "source_file": "backend\\Models\\AssetModels.cs",
       "source_location": "L3",
       "id": "assetmodels_assettype",
-      "community": 24,
+      "community": 26,
       "norm_label": "assettype"
     },
     {
@@ -1737,7 +1737,7 @@
       "source_file": "backend\\Models\\AssetModels.cs",
       "source_location": "L18",
       "id": "assetmodels_asset",
-      "community": 24,
+      "community": 26,
       "norm_label": "asset"
     },
     {
@@ -1746,7 +1746,7 @@
       "source_file": "backend\\Models\\Constants.cs",
       "source_location": "L1",
       "id": "backend_models_constants_cs",
-      "community": 17,
+      "community": 19,
       "norm_label": "constants.cs"
     },
     {
@@ -1755,7 +1755,7 @@
       "source_file": "backend\\Models\\Constants.cs",
       "source_location": "L3",
       "id": "constants_assetstatus",
-      "community": 17,
+      "community": 19,
       "norm_label": "assetstatus"
     },
     {
@@ -1764,7 +1764,7 @@
       "source_file": "backend\\Models\\Constants.cs",
       "source_location": "L10",
       "id": "constants_issuestatus",
-      "community": 17,
+      "community": 19,
       "norm_label": "issuestatus"
     },
     {
@@ -1773,7 +1773,7 @@
       "source_file": "backend\\Models\\Constants.cs",
       "source_location": "L17",
       "id": "constants_assettypecodes",
-      "community": 17,
+      "community": 19,
       "norm_label": "assettypecodes"
     },
     {
@@ -1782,7 +1782,7 @@
       "source_file": "backend\\Models\\Constants.cs",
       "source_location": "L24",
       "id": "constants_roles",
-      "community": 17,
+      "community": 19,
       "norm_label": "roles"
     },
     {
@@ -1791,7 +1791,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L1",
       "id": "backend_models_domainmodels_cs",
-      "community": 8,
+      "community": 9,
       "norm_label": "domainmodels.cs"
     },
     {
@@ -1800,7 +1800,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L4",
       "id": "domainmodels_visit",
-      "community": 8,
+      "community": 9,
       "norm_label": "visit"
     },
     {
@@ -1809,7 +1809,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L23",
       "id": "domainmodels_incharge",
-      "community": 8,
+      "community": 9,
       "norm_label": "incharge"
     },
     {
@@ -1818,7 +1818,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L41",
       "id": "domainmodels_wirelessset",
-      "community": 8,
+      "community": 9,
       "norm_label": "wirelessset"
     },
     {
@@ -1827,7 +1827,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L56",
       "id": "domainmodels_charger",
-      "community": 8,
+      "community": 9,
       "norm_label": "charger"
     },
     {
@@ -1836,7 +1836,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L69",
       "id": "domainmodels_kit",
-      "community": 8,
+      "community": 9,
       "norm_label": "kit"
     },
     {
@@ -1845,7 +1845,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L81",
       "id": "domainmodels_issue",
-      "community": 8,
+      "community": 9,
       "norm_label": "issue"
     },
     {
@@ -1854,7 +1854,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L115",
       "id": "domainmodels_issueitem",
-      "community": 8,
+      "community": 9,
       "norm_label": "issueitem"
     },
     {
@@ -1863,7 +1863,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L141",
       "id": "domainmodels_breakage",
-      "community": 8,
+      "community": 9,
       "norm_label": "breakage"
     },
     {
@@ -1872,7 +1872,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L158",
       "id": "domainmodels_collector",
-      "community": 8,
+      "community": 9,
       "norm_label": "collector"
     },
     {
@@ -1881,7 +1881,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L170",
       "id": "domainmodels_photo",
-      "community": 8,
+      "community": 9,
       "norm_label": "photo"
     },
     {
@@ -1890,7 +1890,7 @@
       "source_file": "backend\\Models\\DomainModels.cs",
       "source_location": "L181",
       "id": "domainmodels_smslog",
-      "community": 8,
+      "community": 9,
       "norm_label": "smslog"
     },
     {
@@ -1899,7 +1899,7 @@
       "source_file": "backend\\Models\\SecurityModels.cs",
       "source_location": "L1",
       "id": "backend_models_securitymodels_cs",
-      "community": 25,
+      "community": 27,
       "norm_label": "securitymodels.cs"
     },
     {
@@ -1908,7 +1908,7 @@
       "source_file": "backend\\Models\\SecurityModels.cs",
       "source_location": "L3",
       "id": "securitymodels_approle",
-      "community": 25,
+      "community": 27,
       "norm_label": "approle"
     },
     {
@@ -1917,7 +1917,7 @@
       "source_file": "backend\\Models\\SecurityModels.cs",
       "source_location": "L12",
       "id": "securitymodels_passwordresetrequest",
-      "community": 25,
+      "community": 27,
       "norm_label": "passwordresetrequest"
     },
     {
@@ -1926,7 +1926,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L1",
       "id": "backend_models_tenantmodels_cs",
-      "community": 18,
+      "community": 20,
       "norm_label": "tenantmodels.cs"
     },
     {
@@ -1935,7 +1935,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L3",
       "id": "tenantmodels_center",
-      "community": 18,
+      "community": 20,
       "norm_label": "center"
     },
     {
@@ -1944,7 +1944,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L14",
       "id": "tenantmodels_department",
-      "community": 18,
+      "community": 20,
       "norm_label": "department"
     },
     {
@@ -1953,7 +1953,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L26",
       "id": "tenantmodels_menupage",
-      "community": 18,
+      "community": 20,
       "norm_label": "menupage"
     },
     {
@@ -1962,7 +1962,7 @@
       "source_file": "backend\\Models\\TenantModels.cs",
       "source_location": "L41",
       "id": "tenantmodels_menupagepermission",
-      "community": 18,
+      "community": 20,
       "norm_label": "menupagepermission"
     },
     {
@@ -1971,7 +1971,7 @@
       "source_file": "backend\\Models\\User.cs",
       "source_location": "L1",
       "id": "backend_models_user_cs",
-      "community": 26,
+      "community": 28,
       "norm_label": "user.cs"
     },
     {
@@ -1980,7 +1980,7 @@
       "source_file": "backend\\Models\\User.cs",
       "source_location": "L6",
       "id": "user_applicationuser",
-      "community": 26,
+      "community": 28,
       "norm_label": "applicationuser"
     },
     {
@@ -1989,16 +1989,16 @@
       "source_file": "",
       "source_location": "",
       "id": "identityuser",
-      "community": 26,
+      "community": 28,
       "norm_label": "identityuser"
     },
     {
       "label": "RSSBWireless.API.AssemblyInfo.cs",
       "file_type": "code",
-      "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.AssemblyInfo.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\obj\\Debug\\net8.0\\RSSBWireless.API.AssemblyInfo.cs",
       "source_location": "L1",
-      "id": "backend_obj_debug_net8_0_rssbwireless_api_assemblyinfo_cs",
-      "community": 44,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_obj_debug_net8_0_rssbwireless_api_assemblyinfo_cs",
+      "community": 47,
       "norm_label": "rssbwireless.api.assemblyinfo.cs"
     },
     {
@@ -2007,7 +2007,7 @@
       "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.GlobalUsings.g.cs",
       "source_location": "L1",
       "id": "backend_obj_debug_net8_0_rssbwireless_api_globalusings_g_cs",
-      "community": 45,
+      "community": 48,
       "norm_label": "rssbwireless.api.globalusings.g.cs"
     },
     {
@@ -2016,7 +2016,7 @@
       "source_file": "backend\\obj\\Debug\\net8.0\\RSSBWireless.API.MvcApplicationPartsAssemblyInfo.cs",
       "source_location": "L1",
       "id": "backend_obj_debug_net8_0_rssbwireless_api_mvcapplicationpartsassemblyinfo_cs",
-      "community": 46,
+      "community": 49,
       "norm_label": "rssbwireless.api.mvcapplicationpartsassemblyinfo.cs"
     },
     {
@@ -2025,7 +2025,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L1",
       "id": "backend_services_accessscopeservice_cs",
-      "community": 11,
+      "community": 12,
       "norm_label": "accessscopeservice.cs"
     },
     {
@@ -2034,7 +2034,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L8",
       "id": "accessscopeservice_accessscope",
-      "community": 11,
+      "community": 12,
       "norm_label": "accessscope"
     },
     {
@@ -2043,7 +2043,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L22",
       "id": "accessscopeservice_accessscopeservice",
-      "community": 11,
+      "community": 12,
       "norm_label": "accessscopeservice"
     },
     {
@@ -2052,7 +2052,7 @@
       "source_file": "",
       "source_location": "",
       "id": "iaccessscopeservice",
-      "community": 11,
+      "community": 12,
       "norm_label": "iaccessscopeservice"
     },
     {
@@ -2061,7 +2061,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L33",
       "id": "accessscopeservice_accessscopeservice_getscopeasync",
-      "community": 11,
+      "community": 12,
       "norm_label": ".getscopeasync()"
     },
     {
@@ -2070,7 +2070,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L64",
       "id": "accessscopeservice_accessscopeservice_requireadminuiasync",
-      "community": 11,
+      "community": 12,
       "norm_label": ".requireadminuiasync()"
     },
     {
@@ -2079,7 +2079,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L72",
       "id": "accessscopeservice_accessscopeservice_ensurecenteraccess",
-      "community": 11,
+      "community": 12,
       "norm_label": ".ensurecenteraccess()"
     },
     {
@@ -2088,7 +2088,7 @@
       "source_file": "backend\\Services\\AccessScopeService.cs",
       "source_location": "L79",
       "id": "accessscopeservice_accessscopeservice_ensuredepartmentaccess",
-      "community": 11,
+      "community": 12,
       "norm_label": ".ensuredepartmentaccess()"
     },
     {
@@ -2097,7 +2097,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L1",
       "id": "backend_services_issueservice_cs",
-      "community": 4,
+      "community": 7,
       "norm_label": "issueservice.cs"
     },
     {
@@ -2106,7 +2106,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L10",
       "id": "issueservice_issueservice",
-      "community": 4,
+      "community": 7,
       "norm_label": "issueservice"
     },
     {
@@ -2115,7 +2115,7 @@
       "source_file": "",
       "source_location": "",
       "id": "iissueservice",
-      "community": 4,
+      "community": 7,
       "norm_label": "iissueservice"
     },
     {
@@ -2124,7 +2124,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L29",
       "id": "issueservice_issueservice_createissueasync",
-      "community": 4,
+      "community": 7,
       "norm_label": ".createissueasync()"
     },
     {
@@ -2133,7 +2133,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L105",
       "id": "issueservice_issueservice_sendissuesmsasync",
-      "community": 4,
+      "community": 7,
       "norm_label": ".sendissuesmsasync()"
     },
     {
@@ -2142,7 +2142,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L175",
       "id": "issueservice_issueservice_getissuebyidasync",
-      "community": 4,
+      "community": 7,
       "norm_label": ".getissuebyidasync()"
     },
     {
@@ -2151,7 +2151,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L198",
       "id": "issueservice_issueservice_getissuesbyvisitasync",
-      "community": 4,
+      "community": 7,
       "norm_label": ".getissuesbyvisitasync()"
     },
     {
@@ -2160,7 +2160,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L219",
       "id": "issueservice_issueservice_returnissueasync",
-      "community": 4,
+      "community": 7,
       "norm_label": ".returnissueasync()"
     },
     {
@@ -2169,7 +2169,7 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L279",
       "id": "issueservice_issueservice_maptodto",
-      "community": 4,
+      "community": 7,
       "norm_label": ".maptodto()"
     },
     {
@@ -2178,7 +2178,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L1",
       "id": "backend_services_productconfigservice_cs",
-      "community": 12,
+      "community": 13,
       "norm_label": "productconfigservice.cs"
     },
     {
@@ -2187,7 +2187,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L3",
       "id": "productconfigservice_productconfigsnapshot",
-      "community": 12,
+      "community": 13,
       "norm_label": "productconfigsnapshot"
     },
     {
@@ -2196,7 +2196,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L14",
       "id": "productconfigservice_brandingconfig",
-      "community": 12,
+      "community": 13,
       "norm_label": "brandingconfig"
     },
     {
@@ -2205,7 +2205,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L20",
       "id": "productconfigservice_smsconfig",
-      "community": 12,
+      "community": 13,
       "norm_label": "smsconfig"
     },
     {
@@ -2214,7 +2214,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L26",
       "id": "productconfigservice_featureflagsconfig",
-      "community": 12,
+      "community": 13,
       "norm_label": "featureflagsconfig"
     },
     {
@@ -2223,7 +2223,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L33",
       "id": "productconfigservice_roledefaultconfig",
-      "community": 12,
+      "community": 13,
       "norm_label": "roledefaultconfig"
     },
     {
@@ -2232,7 +2232,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L39",
       "id": "productconfigservice_assetvisibilityruleconfig",
-      "community": 12,
+      "community": 13,
       "norm_label": "assetvisibilityruleconfig"
     },
     {
@@ -2241,7 +2241,7 @@
       "source_file": "backend\\Services\\ProductConfigService.cs",
       "source_location": "L47",
       "id": "productconfigservice_dashboardwidgetconfig",
-      "community": 12,
+      "community": 13,
       "norm_label": "dashboardwidgetconfig"
     },
     {
@@ -2295,7 +2295,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L1",
       "id": "backend_services_reportservice_cs",
-      "community": 13,
+      "community": 14,
       "norm_label": "reportservice.cs"
     },
     {
@@ -2304,7 +2304,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L14",
       "id": "reportservice_reportservice",
-      "community": 13,
+      "community": 14,
       "norm_label": "reportservice"
     },
     {
@@ -2313,7 +2313,7 @@
       "source_file": "",
       "source_location": "",
       "id": "ireportservice",
-      "community": 13,
+      "community": 14,
       "norm_label": "ireportservice"
     },
     {
@@ -2322,7 +2322,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L19",
       "id": "reportservice_reportservice_getvisitwisedashboardasync",
-      "community": 13,
+      "community": 14,
       "norm_label": ".getvisitwisedashboardasync()"
     },
     {
@@ -2331,7 +2331,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L101",
       "id": "reportservice_reportservice_generatevisitexcelreportasync",
-      "community": 13,
+      "community": 14,
       "norm_label": ".generatevisitexcelreportasync()"
     },
     {
@@ -2340,7 +2340,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L153",
       "id": "reportservice_reportservice_generateinventoryexcelreportasync",
-      "community": 13,
+      "community": 14,
       "norm_label": ".generateinventoryexcelreportasync()"
     },
     {
@@ -2349,7 +2349,7 @@
       "source_file": "backend\\Services\\ReportService.cs",
       "source_location": "L197",
       "id": "reportservice_reportservice_generatebreakagepdfreportasync",
-      "community": 13,
+      "community": 14,
       "norm_label": ".generatebreakagepdfreportasync()"
     },
     {
@@ -2466,7 +2466,7 @@
       "source_file": "backend\\Services\\Interfaces\\IReportService.cs",
       "source_location": "L1",
       "id": "backend_services_interfaces_ireportservice_cs",
-      "community": 5,
+      "community": 4,
       "norm_label": "ireportservice.cs"
     },
     {
@@ -2475,7 +2475,7 @@
       "source_file": "backend\\Services\\Interfaces\\IReportService.cs",
       "source_location": "L5",
       "id": "ireportservice_ireportservice",
-      "community": 5,
+      "community": 4,
       "norm_label": "ireportservice"
     },
     {
@@ -2484,7 +2484,7 @@
       "source_file": "backend\\Services\\Interfaces\\IReportService.cs",
       "source_location": "L7",
       "id": "ireportservice_ireportservice_getvisitwisedashboardasync",
-      "community": 5,
+      "community": 4,
       "norm_label": ".getvisitwisedashboardasync()"
     },
     {
@@ -2493,7 +2493,7 @@
       "source_file": "backend\\Services\\Interfaces\\IReportService.cs",
       "source_location": "L8",
       "id": "ireportservice_ireportservice_generatevisitexcelreportasync",
-      "community": 5,
+      "community": 4,
       "norm_label": ".generatevisitexcelreportasync()"
     },
     {
@@ -2502,7 +2502,7 @@
       "source_file": "backend\\Services\\Interfaces\\IReportService.cs",
       "source_location": "L9",
       "id": "ireportservice_ireportservice_generateinventoryexcelreportasync",
-      "community": 5,
+      "community": 4,
       "norm_label": ".generateinventoryexcelreportasync()"
     },
     {
@@ -2511,7 +2511,7 @@
       "source_file": "backend\\Services\\Interfaces\\IReportService.cs",
       "source_location": "L10",
       "id": "ireportservice_ireportservice_generatebreakagepdfreportasync",
-      "community": 5,
+      "community": 4,
       "norm_label": ".generatebreakagepdfreportasync()"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_file": "frontend\\next-env.d.ts",
       "source_location": "L1",
       "id": "frontend_next_env_d_ts",
-      "community": 47,
+      "community": 50,
       "norm_label": "next-env.d.ts"
     },
     {
@@ -2529,7 +2529,7 @@
       "source_file": "frontend\\next.config.js",
       "source_location": "L1",
       "id": "frontend_next_config_js",
-      "community": 48,
+      "community": 51,
       "norm_label": "next.config.js"
     },
     {
@@ -2538,7 +2538,7 @@
       "source_file": "frontend\\postcss.config.js",
       "source_location": "L1",
       "id": "frontend_postcss_config_js",
-      "community": 49,
+      "community": 52,
       "norm_label": "postcss.config.js"
     },
     {
@@ -2547,7 +2547,7 @@
       "source_file": "frontend\\tailwind.config.js",
       "source_location": "L1",
       "id": "frontend_tailwind_config_js",
-      "community": 50,
+      "community": 53,
       "norm_label": "tailwind.config.js"
     },
     {
@@ -2556,7 +2556,7 @@
       "source_file": "frontend\\components\\BulkEntryModal.tsx",
       "source_location": "L1",
       "id": "frontend_components_bulkentrymodal_tsx",
-      "community": 27,
+      "community": 29,
       "norm_label": "bulkentrymodal.tsx"
     },
     {
@@ -2565,7 +2565,7 @@
       "source_file": "frontend\\components\\BulkEntryModal.tsx",
       "source_location": "L29",
       "id": "bulkentrymodal_handleparse",
-      "community": 27,
+      "community": 29,
       "norm_label": "handleparse()"
     },
     {
@@ -2574,7 +2574,7 @@
       "source_file": "frontend\\components\\BulkEntryModal.tsx",
       "source_location": "L55",
       "id": "bulkentrymodal_handleadd",
-      "community": 27,
+      "community": 29,
       "norm_label": "handleadd()"
     },
     {
@@ -2583,7 +2583,7 @@
       "source_file": "frontend\\components\\ErrorBoundary.tsx",
       "source_location": "L1",
       "id": "frontend_components_errorboundary_tsx",
-      "community": 14,
+      "community": 15,
       "norm_label": "errorboundary.tsx"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_file": "frontend\\components\\ErrorBoundary.tsx",
       "source_location": "L14",
       "id": "errorboundary_errorboundary",
-      "community": 14,
+      "community": 15,
       "norm_label": "errorboundary"
     },
     {
@@ -2601,7 +2601,7 @@
       "source_file": "frontend\\components\\ErrorBoundary.tsx",
       "source_location": "L15",
       "id": "errorboundary_errorboundary_constructor",
-      "community": 14,
+      "community": 15,
       "norm_label": ".constructor()"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_file": "frontend\\components\\ErrorBoundary.tsx",
       "source_location": "L20",
       "id": "errorboundary_errorboundary_getderivedstatefromerror",
-      "community": 14,
+      "community": 15,
       "norm_label": ".getderivedstatefromerror()"
     },
     {
@@ -2619,7 +2619,7 @@
       "source_file": "frontend\\components\\ErrorBoundary.tsx",
       "source_location": "L24",
       "id": "errorboundary_errorboundary_componentdidcatch",
-      "community": 14,
+      "community": 15,
       "norm_label": ".componentdidcatch()"
     },
     {
@@ -2628,7 +2628,7 @@
       "source_file": "frontend\\components\\ErrorBoundary.tsx",
       "source_location": "L28",
       "id": "errorboundary_errorboundary_render",
-      "community": 14,
+      "community": 15,
       "norm_label": ".render()"
     },
     {
@@ -2637,7 +2637,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\SearchDropdown.tsx",
       "source_location": "L1",
       "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_searchdropdown_tsx",
-      "community": 28,
+      "community": 31,
       "norm_label": "searchdropdown.tsx"
     },
     {
@@ -2646,7 +2646,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\SearchDropdown.tsx",
       "source_location": "L37",
       "id": "searchdropdown_handleclickoutside",
-      "community": 28,
+      "community": 31,
       "norm_label": "handleclickoutside()"
     },
     {
@@ -2655,7 +2655,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\admin\\AdminLayout.tsx",
       "source_location": "L1",
       "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_components_admin_adminlayout_tsx",
-      "community": 29,
+      "community": 32,
       "norm_label": "adminlayout.tsx"
     },
     {
@@ -2664,7 +2664,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\components\\admin\\AdminLayout.tsx",
       "source_location": "L66",
       "id": "adminlayout_logout",
-      "community": 29,
+      "community": 32,
       "norm_label": "logout()"
     },
     {
@@ -2673,7 +2673,7 @@
       "source_file": "frontend\\config\\app.ts",
       "source_location": "L1",
       "id": "frontend_config_app_ts",
-      "community": 51,
+      "community": 54,
       "norm_label": "app.ts"
     },
     {
@@ -2682,7 +2682,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L1",
       "id": "frontend_hooks_useapiqueries_ts",
-      "community": 10,
+      "community": 11,
       "norm_label": "useapiqueries.ts"
     },
     {
@@ -2691,7 +2691,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L23",
       "id": "useapiqueries_usecenters",
-      "community": 10,
+      "community": 11,
       "norm_label": "usecenters()"
     },
     {
@@ -2700,7 +2700,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L35",
       "id": "useapiqueries_usedepartments",
-      "community": 10,
+      "community": 11,
       "norm_label": "usedepartments()"
     },
     {
@@ -2709,7 +2709,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L49",
       "id": "useapiqueries_useassettypes",
-      "community": 10,
+      "community": 11,
       "norm_label": "useassettypes()"
     },
     {
@@ -2718,7 +2718,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L62",
       "id": "useapiqueries_useassets",
-      "community": 10,
+      "community": 11,
       "norm_label": "useassets()"
     },
     {
@@ -2727,7 +2727,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L76",
       "id": "useapiqueries_usevisits",
-      "community": 10,
+      "community": 11,
       "norm_label": "usevisits()"
     },
     {
@@ -2736,7 +2736,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L88",
       "id": "useapiqueries_usesewadaars",
-      "community": 10,
+      "community": 11,
       "norm_label": "usesewadaars()"
     },
     {
@@ -2745,7 +2745,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L100",
       "id": "useapiqueries_usedashboardstats",
-      "community": 10,
+      "community": 11,
       "norm_label": "usedashboardstats()"
     },
     {
@@ -2754,7 +2754,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L114",
       "id": "useapiqueries_usevisitwisedashboard",
-      "community": 10,
+      "community": 11,
       "norm_label": "usevisitwisedashboard()"
     },
     {
@@ -2763,7 +2763,7 @@
       "source_file": "frontend\\hooks\\useApiQueries.ts",
       "source_location": "L128",
       "id": "useapiqueries_useproductconfig",
-      "community": 10,
+      "community": 11,
       "norm_label": "useproductconfig()"
     },
     {
@@ -2772,7 +2772,7 @@
       "source_file": "frontend\\hooks\\useAuth.ts",
       "source_location": "L1",
       "id": "frontend_hooks_useauth_ts",
-      "community": 30,
+      "community": 33,
       "norm_label": "useauth.ts"
     },
     {
@@ -2781,7 +2781,7 @@
       "source_file": "frontend\\hooks\\useAuth.ts",
       "source_location": "L15",
       "id": "useauth_useauthstate",
-      "community": 30,
+      "community": 33,
       "norm_label": "useauthstate()"
     },
     {
@@ -2790,7 +2790,7 @@
       "source_file": "frontend\\pages\\index.tsx",
       "source_location": "L1",
       "id": "frontend_pages_index_tsx",
-      "community": 31,
+      "community": 34,
       "norm_label": "index.tsx"
     },
     {
@@ -2799,7 +2799,7 @@
       "source_file": "frontend\\pages\\index.tsx",
       "source_location": "L4",
       "id": "index_home",
-      "community": 31,
+      "community": 34,
       "norm_label": "home()"
     },
     {
@@ -2808,7 +2808,7 @@
       "source_file": "frontend\\pages\\login.tsx",
       "source_location": "L1",
       "id": "frontend_pages_login_tsx",
-      "community": 32,
+      "community": 35,
       "norm_label": "login.tsx"
     },
     {
@@ -2817,7 +2817,7 @@
       "source_file": "frontend\\pages\\login.tsx",
       "source_location": "L15",
       "id": "login_loginpage",
-      "community": 32,
+      "community": 35,
       "norm_label": "loginpage()"
     },
     {
@@ -2826,7 +2826,7 @@
       "source_file": "frontend\\pages\\_app.tsx",
       "source_location": "L1",
       "id": "frontend_pages_app_tsx",
-      "community": 33,
+      "community": 36,
       "norm_label": "_app.tsx"
     },
     {
@@ -2835,7 +2835,7 @@
       "source_file": "frontend\\pages\\_app.tsx",
       "source_location": "L17",
       "id": "app_app",
-      "community": 33,
+      "community": 36,
       "norm_label": "app()"
     },
     {
@@ -2871,7 +2871,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L66",
       "id": "access_loadpages",
-      "community": 2,
+      "community": 3,
       "norm_label": "loadpages()"
     },
     {
@@ -2898,7 +2898,7 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L84",
       "id": "access_loadassettypes",
-      "community": 3,
+      "community": 2,
       "norm_label": "loadassettypes()"
     },
     {
@@ -3028,84 +3028,129 @@
       "norm_label": "saveconfig()"
     },
     {
+      "label": "asset-scan.tsx",
+      "file_type": "code",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\asset-scan.tsx",
+      "source_location": "L1",
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_asset_scan_tsx",
+      "community": 30,
+      "norm_label": "asset-scan.tsx"
+    },
+    {
+      "label": "lookup()",
+      "file_type": "code",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\asset-scan.tsx",
+      "source_location": "L23",
+      "id": "asset_scan_lookup",
+      "community": 30,
+      "norm_label": "lookup()"
+    },
+    {
+      "label": "handleKeyDown()",
+      "file_type": "code",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\asset-scan.tsx",
+      "source_location": "L45",
+      "id": "asset_scan_handlekeydown",
+      "community": 30,
+      "norm_label": "handlekeydown()"
+    },
+    {
       "label": "assets.tsx",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
       "source_location": "L1",
-      "id": "frontend_pages_admin_assets_tsx",
-      "community": 7,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
+      "community": 6,
       "norm_label": "assets.tsx"
+    },
+    {
+      "label": "showQr()",
+      "file_type": "code",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L27",
+      "id": "assets_showqr",
+      "community": 6,
+      "norm_label": "showqr()"
+    },
+    {
+      "label": "downloadQr()",
+      "file_type": "code",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L41",
+      "id": "assets_downloadqr",
+      "community": 6,
+      "norm_label": "downloadqr()"
     },
     {
       "label": "load()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L24",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L49",
       "id": "assets_load",
-      "community": 7,
+      "community": 6,
       "norm_label": "load()"
     },
     {
       "label": "createType()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L70",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L95",
       "id": "assets_createtype",
-      "community": 7,
+      "community": 6,
       "norm_label": "createtype()"
     },
     {
       "label": "createAsset()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L85",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L110",
       "id": "assets_createasset",
-      "community": 7,
+      "community": 6,
       "norm_label": "createasset()"
     },
     {
       "label": "updateStatus()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L104",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L129",
       "id": "assets_updatestatus",
-      "community": 7,
+      "community": 6,
       "norm_label": "updatestatus()"
     },
     {
       "label": "updateType()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L114",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L139",
       "id": "assets_updatetype",
-      "community": 7,
+      "community": 6,
       "norm_label": "updatetype()"
     },
     {
       "label": "deleteType()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L130",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L155",
       "id": "assets_deletetype",
-      "community": 7,
+      "community": 6,
       "norm_label": "deletetype()"
     },
     {
       "label": "updateAssetDetails()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L141",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L166",
       "id": "assets_updateassetdetails",
-      "community": 7,
+      "community": 6,
       "norm_label": "updateassetdetails()"
     },
     {
       "label": "deleteAsset()",
       "file_type": "code",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L157",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L182",
       "id": "assets_deleteasset",
-      "community": 7,
+      "community": 6,
       "norm_label": "deleteasset()"
     },
     {
@@ -3141,7 +3186,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-issue.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_bulk_issue_tsx",
-      "community": 34,
+      "community": 37,
       "norm_label": "bulk-issue.tsx"
     },
     {
@@ -3150,7 +3195,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-issue.tsx",
       "source_location": "L4",
       "id": "bulk_issue_legacybulkissueredirect",
-      "community": 34,
+      "community": 37,
       "norm_label": "legacybulkissueredirect()"
     },
     {
@@ -3159,7 +3204,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-receive.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_bulk_receive_tsx",
-      "community": 35,
+      "community": 38,
       "norm_label": "bulk-receive.tsx"
     },
     {
@@ -3168,7 +3213,7 @@
       "source_file": "frontend\\pages\\admin\\bulk-receive.tsx",
       "source_location": "L4",
       "id": "bulk_receive_legacybulkreceiveredirect",
-      "community": 35,
+      "community": 38,
       "norm_label": "legacybulkreceiveredirect()"
     },
     {
@@ -3177,7 +3222,7 @@
       "source_file": "frontend\\pages\\admin\\incharge-history.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_incharge_history_tsx",
-      "community": 36,
+      "community": 39,
       "norm_label": "incharge-history.tsx"
     },
     {
@@ -3186,7 +3231,7 @@
       "source_file": "frontend\\pages\\admin\\incharge-history.tsx",
       "source_location": "L17",
       "id": "incharge_history_getstatuscolor",
-      "community": 36,
+      "community": 39,
       "norm_label": "getstatuscolor()"
     },
     {
@@ -3240,7 +3285,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
       "source_location": "L1",
       "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_index_tsx",
-      "community": 21,
+      "community": 23,
       "norm_label": "index.tsx"
     },
     {
@@ -3249,7 +3294,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
       "source_location": "L47",
       "id": "index_statcard",
-      "community": 21,
+      "community": 23,
       "norm_label": "statcard()"
     },
     {
@@ -3258,7 +3303,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
       "source_location": "L61",
       "id": "index_countpair",
-      "community": 21,
+      "community": 23,
       "norm_label": "countpair()"
     },
     {
@@ -3267,7 +3312,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\index.tsx",
       "source_location": "L160",
       "id": "index_iswidgetenabled",
-      "community": 21,
+      "community": 23,
       "norm_label": "iswidgetenabled()"
     },
     {
@@ -3276,7 +3321,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L1",
       "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_issue_assets_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "issue-assets.tsx"
     },
     {
@@ -3285,7 +3330,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L65",
       "id": "issue_assets_addbyqr",
-      "community": 1,
+      "community": 2,
       "norm_label": "addbyqr()"
     },
     {
@@ -3294,7 +3339,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L101",
       "id": "issue_assets_toggle",
-      "community": 1,
+      "community": 2,
       "norm_label": "toggle()"
     },
     {
@@ -3303,7 +3348,7 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L106",
       "id": "issue_assets_submit",
-      "community": 1,
+      "community": 2,
       "norm_label": "submit()"
     },
     {
@@ -3312,7 +3357,7 @@
       "source_file": "frontend\\pages\\admin\\issue.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_issue_tsx",
-      "community": 37,
+      "community": 40,
       "norm_label": "issue.tsx"
     },
     {
@@ -3321,7 +3366,7 @@
       "source_file": "frontend\\pages\\admin\\issue.tsx",
       "source_location": "L4",
       "id": "issue_legacyissueredirect",
-      "community": 37,
+      "community": 40,
       "norm_label": "legacyissueredirect()"
     },
     {
@@ -3330,7 +3375,7 @@
       "source_file": "frontend\\pages\\admin\\notifications.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_notifications_tsx",
-      "community": 38,
+      "community": 41,
       "norm_label": "notifications.tsx"
     },
     {
@@ -3339,7 +3384,7 @@
       "source_file": "frontend\\pages\\admin\\notifications.tsx",
       "source_location": "L60",
       "id": "notifications_getstatusbadge",
-      "community": 38,
+      "community": 41,
       "norm_label": "getstatusbadge()"
     },
     {
@@ -3375,7 +3420,7 @@
       "source_file": "frontend\\pages\\admin\\receive.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_receive_tsx",
-      "community": 39,
+      "community": 42,
       "norm_label": "receive.tsx"
     },
     {
@@ -3384,7 +3429,7 @@
       "source_file": "frontend\\pages\\admin\\receive.tsx",
       "source_location": "L4",
       "id": "receive_legacyreceiveredirect",
-      "community": 39,
+      "community": 42,
       "norm_label": "legacyreceiveredirect()"
     },
     {
@@ -3393,7 +3438,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_reports_tsx",
-      "community": 5,
+      "community": 4,
       "norm_label": "reports.tsx"
     },
     {
@@ -3402,7 +3447,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L8",
       "id": "reports_downloadblob",
-      "community": 5,
+      "community": 4,
       "norm_label": "downloadblob()"
     },
     {
@@ -3411,7 +3456,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L15",
       "id": "reports_formatdatetime",
-      "community": 5,
+      "community": 4,
       "norm_label": "formatdatetime()"
     },
     {
@@ -3420,7 +3465,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L20",
       "id": "reports_renderissueditems",
-      "community": 5,
+      "community": 4,
       "norm_label": "renderissueditems()"
     },
     {
@@ -3429,7 +3474,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L34",
       "id": "reports_getreceiveremarks",
-      "community": 5,
+      "community": 4,
       "norm_label": "getreceiveremarks()"
     },
     {
@@ -3438,7 +3483,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L89",
       "id": "reports_loadvisitdetails",
-      "community": 5,
+      "community": 4,
       "norm_label": "loadvisitdetails()"
     },
     {
@@ -3447,7 +3492,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L105",
       "id": "reports_handlevisitselect",
-      "community": 5,
+      "community": 4,
       "norm_label": "handlevisitselect()"
     },
     {
@@ -3456,7 +3501,7 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L116",
       "id": "reports_download",
-      "community": 5,
+      "community": 4,
       "norm_label": "download()"
     },
     {
@@ -3465,7 +3510,7 @@
       "source_file": "frontend\\pages\\admin\\scanner.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_scanner_tsx",
-      "community": 40,
+      "community": 43,
       "norm_label": "scanner.tsx"
     },
     {
@@ -3474,7 +3519,7 @@
       "source_file": "frontend\\pages\\admin\\scanner.tsx",
       "source_location": "L4",
       "id": "scanner_legacyscannerredirect",
-      "community": 40,
+      "community": 43,
       "norm_label": "legacyscannerredirect()"
     },
     {
@@ -3483,7 +3528,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L1",
       "id": "frontend_pages_admin_users_tsx",
-      "community": 3,
+      "community": 1,
       "norm_label": "users.tsx"
     },
     {
@@ -3492,7 +3537,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L52",
       "id": "users_load",
-      "community": 3,
+      "community": 1,
       "norm_label": "load()"
     },
     {
@@ -3501,7 +3546,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L96",
       "id": "users_opencreate",
-      "community": 3,
+      "community": 1,
       "norm_label": "opencreate()"
     },
     {
@@ -3510,7 +3555,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L113",
       "id": "users_createuser",
-      "community": 3,
+      "community": 1,
       "norm_label": "createuser()"
     },
     {
@@ -3519,7 +3564,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L142",
       "id": "users_setpassword",
-      "community": 3,
+      "community": 1,
       "norm_label": "setpassword()"
     },
     {
@@ -3528,7 +3573,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L158",
       "id": "users_openedit",
-      "community": 3,
+      "community": 1,
       "norm_label": "openedit()"
     },
     {
@@ -3537,7 +3582,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L174",
       "id": "users_updateuser",
-      "community": 3,
+      "community": 1,
       "norm_label": "updateuser()"
     },
     {
@@ -3546,7 +3591,7 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L202",
       "id": "users_deleteuser",
-      "community": 3,
+      "community": 1,
       "norm_label": "deleteuser()"
     },
     {
@@ -3609,7 +3654,7 @@
       "source_file": "frontend\\pages\\incharge\\index.tsx",
       "source_location": "L1",
       "id": "frontend_pages_incharge_index_tsx",
-      "community": 41,
+      "community": 44,
       "norm_label": "index.tsx"
     },
     {
@@ -3618,25 +3663,25 @@
       "source_file": "frontend\\pages\\incharge\\index.tsx",
       "source_location": "L6",
       "id": "index_inchargedashboard",
-      "community": 41,
+      "community": 44,
       "norm_label": "inchargedashboard()"
     },
     {
       "label": "[number].tsx",
       "file_type": "code",
-      "source_file": "frontend\\pages\\set\\[number].tsx",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\set\\[number].tsx",
       "source_location": "L1",
-      "id": "frontend_pages_set_number_tsx",
-      "community": 52,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_set_number_tsx",
+      "community": 55,
       "norm_label": "[number].tsx"
     },
     {
       "label": "api.ts",
       "file_type": "code",
-      "source_file": "frontend\\services\\api.ts",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\services\\api.ts",
       "source_location": "L1",
-      "id": "frontend_services_api_ts",
-      "community": 53,
+      "id": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_services_api_ts",
+      "community": 56,
       "norm_label": "api.ts"
     },
     {
@@ -3645,7 +3690,7 @@
       "source_file": "frontend\\types\\index.ts",
       "source_location": "L1",
       "id": "frontend_types_index_ts",
-      "community": 54,
+      "community": 57,
       "norm_label": "index.ts"
     },
     {
@@ -3654,7 +3699,7 @@
       "source_file": "frontend\\utils\\cn.ts",
       "source_location": "L1",
       "id": "frontend_utils_cn_ts",
-      "community": 42,
+      "community": 45,
       "norm_label": "cn.ts"
     },
     {
@@ -3663,7 +3708,7 @@
       "source_file": "frontend\\utils\\cn.ts",
       "source_location": "L3",
       "id": "cn_cn",
-      "community": 42,
+      "community": 45,
       "norm_label": "cn()"
     },
     {
@@ -3672,7 +3717,7 @@
       "source_file": "frontend\\utils\\errorHandler.ts",
       "source_location": "L1",
       "id": "frontend_utils_errorhandler_ts",
-      "community": 7,
+      "community": 6,
       "norm_label": "errorhandler.ts"
     },
     {
@@ -3681,7 +3726,7 @@
       "source_file": "frontend\\utils\\errorHandler.ts",
       "source_location": "L4",
       "id": "errorhandler_handleapierror",
-      "community": 7,
+      "community": 6,
       "norm_label": "handleapierror()"
     },
     {
@@ -3690,7 +3735,7 @@
       "source_file": "frontend\\utils\\errorHandler.ts",
       "source_location": "L20",
       "id": "errorhandler_toasterror",
-      "community": 7,
+      "community": 6,
       "norm_label": "toasterror()"
     },
     {
@@ -3699,7 +3744,7 @@
       "source_file": "frontend\\utils\\errorHandler.ts",
       "source_location": "L24",
       "id": "errorhandler_toastsuccess",
-      "community": 7,
+      "community": 6,
       "norm_label": "toastsuccess()"
     },
     {
@@ -3708,7 +3753,7 @@
       "source_file": "frontend\\utils\\formatters.ts",
       "source_location": "L1",
       "id": "frontend_utils_formatters_ts",
-      "community": 15,
+      "community": 16,
       "norm_label": "formatters.ts"
     },
     {
@@ -3717,7 +3762,7 @@
       "source_file": "frontend\\utils\\formatters.ts",
       "source_location": "L3",
       "id": "formatters_formatdate",
-      "community": 15,
+      "community": 16,
       "norm_label": "formatdate()"
     },
     {
@@ -3726,7 +3771,7 @@
       "source_file": "frontend\\utils\\formatters.ts",
       "source_location": "L13",
       "id": "formatters_formatdatetime",
-      "community": 15,
+      "community": 16,
       "norm_label": "formatdatetime()"
     },
     {
@@ -3735,7 +3780,7 @@
       "source_file": "frontend\\utils\\formatters.ts",
       "source_location": "L17",
       "id": "formatters_formatrelative",
-      "community": 15,
+      "community": 16,
       "norm_label": "formatrelative()"
     },
     {
@@ -3744,7 +3789,7 @@
       "source_file": "frontend\\utils\\formatters.ts",
       "source_location": "L27",
       "id": "formatters_statuscolor",
-      "community": 15,
+      "community": 16,
       "norm_label": "statuscolor()"
     },
     {
@@ -3753,7 +3798,7 @@
       "source_file": "frontend\\utils\\formatters.ts",
       "source_location": "L38",
       "id": "formatters_statusbadge",
-      "community": 15,
+      "community": 16,
       "norm_label": "statusbadge()"
     },
     {
@@ -3762,7 +3807,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L1",
       "id": "frontend_utils_visits_ts",
-      "community": 22,
+      "community": 24,
       "norm_label": "visits.ts"
     },
     {
@@ -3771,7 +3816,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L6",
       "id": "visits_getlatestvisit",
-      "community": 22,
+      "community": 24,
       "norm_label": "getlatestvisit()"
     },
     {
@@ -3780,7 +3825,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L10",
       "id": "visits_getactivevisits",
-      "community": 22,
+      "community": 24,
       "norm_label": "getactivevisits()"
     },
     {
@@ -3789,7 +3834,7 @@
       "source_file": "frontend\\utils\\visits.ts",
       "source_location": "L14",
       "id": "visits_getlatestactivevisit",
-      "community": 22,
+      "community": 24,
       "norm_label": "getlatestactivevisit()"
     }
   ],
@@ -3797,19 +3842,19 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L13",
       "weight": 1.0,
-      "_src": "backend_controllers_assetscontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_assetscontroller_cs",
       "_tgt": "assetscontroller_assetscontroller",
-      "source": "backend_controllers_assetscontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_assetscontroller_cs",
       "target": "assetscontroller_assetscontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L13",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3821,7 +3866,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L24",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3833,7 +3878,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L46",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3845,7 +3890,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L68",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3857,7 +3902,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L93",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3869,7 +3914,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L109",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3881,7 +3926,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L143",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3893,7 +3938,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L172",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3905,7 +3950,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L198",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3917,7 +3962,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L214",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3929,7 +3974,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L232",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
@@ -3941,8 +3986,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
-      "source_location": "L252",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
+      "source_location": "L277",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
       "_tgt": "assetscontroller_assetscontroller_buildremarkswithqr",
@@ -3953,8 +3998,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
-      "source_location": "L259",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
+      "source_location": "L284",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller",
       "_tgt": "assetscontroller_assetscontroller_getallowedassettypeidsasync",
@@ -4001,7 +4046,7 @@
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L12",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4025,8 +4070,8 @@
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L13",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "menucontroller_menucontroller",
       "_tgt": "controllerbase",
@@ -4037,8 +4082,8 @@
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L7",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L8",
       "weight": 1.0,
       "_src": "productconfigcontroller_productconfigcontroller",
       "_tgt": "controllerbase",
@@ -4061,8 +4106,8 @@
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L12",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L13",
       "weight": 1.0,
       "_src": "rolescontroller_rolescontroller",
       "_tgt": "controllerbase",
@@ -4073,8 +4118,8 @@
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L11",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L12",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "controllerbase",
@@ -4085,8 +4130,8 @@
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L13",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "userscontroller_userscontroller",
       "_tgt": "controllerbase",
@@ -4109,7 +4154,7 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L36",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller_gettypes",
@@ -4149,8 +4194,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L85",
       "weight": 1.0,
-      "_src": "access_loadassettypes",
-      "_tgt": "assetscontroller_assetscontroller_gettypes",
+      "_src": "assetscontroller_assetscontroller_gettypes",
+      "_tgt": "access_loadassettypes",
       "source": "assetscontroller_assetscontroller_gettypes",
       "target": "access_loadassettypes"
     },
@@ -4161,8 +4206,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L26",
       "weight": 1.0,
-      "_src": "assets_load",
-      "_tgt": "assetscontroller_assetscontroller_gettypes",
+      "_src": "assetscontroller_assetscontroller_gettypes",
+      "_tgt": "assets_load",
       "source": "assetscontroller_assetscontroller_gettypes",
       "target": "assets_load"
     },
@@ -4241,7 +4286,7 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L121",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller_getassets",
@@ -4253,7 +4298,7 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L136",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller_getassets",
@@ -4305,8 +4350,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L27",
       "weight": 1.0,
-      "_src": "assets_load",
-      "_tgt": "assetscontroller_assetscontroller_getassets",
+      "_src": "assetscontroller_assetscontroller_getassets",
+      "_tgt": "assets_load",
       "source": "assetscontroller_assetscontroller_getassets",
       "target": "assets_load"
     },
@@ -4317,15 +4362,15 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L142",
       "weight": 1.0,
-      "_src": "issue_assets_submit",
-      "_tgt": "assetscontroller_assetscontroller_getassets",
+      "_src": "assetscontroller_assetscontroller_getassets",
+      "_tgt": "issue_assets_submit",
       "source": "assetscontroller_assetscontroller_getassets",
       "target": "issue_assets_submit"
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
       "source_location": "L169",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller_createasset",
@@ -4389,8 +4434,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L106",
       "weight": 1.0,
-      "_src": "assets_updatestatus",
-      "_tgt": "assetscontroller_assetscontroller_updateasset",
+      "_src": "assetscontroller_assetscontroller_updateasset",
+      "_tgt": "assets_updatestatus",
       "source": "assetscontroller_assetscontroller_updateasset",
       "target": "assets_updatestatus"
     },
@@ -4401,8 +4446,8 @@
       "source_file": "frontend\\pages\\admin\\assets.tsx",
       "source_location": "L143",
       "weight": 1.0,
-      "_src": "assets_updateassetdetails",
-      "_tgt": "assetscontroller_assetscontroller_updateasset",
+      "_src": "assetscontroller_assetscontroller_updateasset",
+      "_tgt": "assets_updateassetdetails",
       "source": "assetscontroller_assetscontroller_updateasset",
       "target": "assets_updateassetdetails"
     },
@@ -4469,8 +4514,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\AssetsController.cs",
-      "source_location": "L249",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\AssetsController.cs",
+      "source_location": "L269",
       "weight": 1.0,
       "_src": "assetscontroller_assetscontroller_findbyqr",
       "_tgt": "assetscontroller_assetscontroller_buildremarkswithqr",
@@ -4901,19 +4946,19 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L12",
       "weight": 1.0,
-      "_src": "backend_controllers_inventorycontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_inventorycontroller_cs",
       "_tgt": "inventorycontroller_inventorycontroller",
-      "source": "backend_controllers_inventorycontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_inventorycontroller_cs",
       "target": "inventorycontroller_inventorycontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L24",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4925,7 +4970,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L38",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4937,7 +4982,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L48",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4949,7 +4994,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L77",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4961,7 +5006,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L96",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4973,7 +5018,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L109",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4985,7 +5030,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L122",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -4997,7 +5042,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L133",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -5009,7 +5054,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L144",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -5021,7 +5066,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L157",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -5033,7 +5078,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L166",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -5045,7 +5090,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L177",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -5057,7 +5102,7 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\InventoryController.cs",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\InventoryController.cs",
       "source_location": "L189",
       "weight": 1.0,
       "_src": "inventorycontroller_inventorycontroller",
@@ -5517,8 +5562,8 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
       "source_location": "L40",
       "weight": 1.0,
-      "_src": "receive_assets_receive",
-      "_tgt": "issuescontroller_issuescontroller_getbyvisit",
+      "_src": "issuescontroller_issuescontroller_getbyvisit",
+      "_tgt": "receive_assets_receive",
       "source": "issuescontroller_issuescontroller_getbyvisit",
       "target": "receive_assets_receive"
     },
@@ -5529,8 +5574,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L92",
       "weight": 1.0,
-      "_src": "reports_loadvisitdetails",
-      "_tgt": "issuescontroller_issuescontroller_getbyvisit",
+      "_src": "issuescontroller_issuescontroller_getbyvisit",
+      "_tgt": "reports_loadvisitdetails",
       "source": "issuescontroller_issuescontroller_getbyvisit",
       "target": "reports_loadvisitdetails"
     },
@@ -5661,8 +5706,8 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\receive-assets.tsx",
       "source_location": "L38",
       "weight": 1.0,
-      "_src": "receive_assets_receive",
-      "_tgt": "issuescontroller_issuescontroller_return",
+      "_src": "issuescontroller_issuescontroller_return",
+      "_tgt": "receive_assets_receive",
       "source": "issuescontroller_issuescontroller_return",
       "target": "receive_assets_receive"
     },
@@ -5693,20 +5738,20 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L13",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L14",
       "weight": 1.0,
-      "_src": "backend_controllers_menucontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_menucontroller_cs",
       "_tgt": "menucontroller_menucontroller",
-      "source": "backend_controllers_menucontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_menucontroller_cs",
       "target": "menucontroller_menucontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L22",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L23",
       "weight": 1.0,
       "_src": "menucontroller_menucontroller",
       "_tgt": "menucontroller_menucontroller_getmymenu",
@@ -5717,8 +5762,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L56",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L57",
       "weight": 1.0,
       "_src": "menucontroller_menucontroller",
       "_tgt": "menucontroller_menucontroller_getpages",
@@ -5729,8 +5774,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L67",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L68",
       "weight": 1.0,
       "_src": "menucontroller_menucontroller",
       "_tgt": "menucontroller_menucontroller_getassignment",
@@ -5741,8 +5786,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\MenuController.cs",
-      "source_location": "L95",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\MenuController.cs",
+      "source_location": "L96",
       "weight": 1.0,
       "_src": "menucontroller_menucontroller",
       "_tgt": "menucontroller_menucontroller_upsertassignment",
@@ -5769,8 +5814,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L67",
       "weight": 1.0,
-      "_src": "access_loadpages",
-      "_tgt": "menucontroller_menucontroller_getpages",
+      "_src": "menucontroller_menucontroller_getpages",
+      "_tgt": "access_loadpages",
       "source": "menucontroller_menucontroller_getpages",
       "target": "access_loadpages"
     },
@@ -5817,8 +5862,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L80",
       "weight": 1.0,
-      "_src": "access_loadassignment",
-      "_tgt": "menucontroller_menucontroller_getassignment",
+      "_src": "menucontroller_menucontroller_getassignment",
+      "_tgt": "access_loadassignment",
       "source": "menucontroller_menucontroller_getassignment",
       "target": "access_loadassignment"
     },
@@ -5865,28 +5910,28 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L151",
       "weight": 1.0,
-      "_src": "access_save",
-      "_tgt": "menucontroller_menucontroller_upsertassignment",
+      "_src": "menucontroller_menucontroller_upsertassignment",
+      "_tgt": "access_save",
       "source": "menucontroller_menucontroller_upsertassignment",
       "target": "access_save"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L7",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L8",
       "weight": 1.0,
-      "_src": "backend_controllers_productconfigcontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_productconfigcontroller_cs",
       "_tgt": "productconfigcontroller_productconfigcontroller",
-      "source": "backend_controllers_productconfigcontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_productconfigcontroller_cs",
       "target": "productconfigcontroller_productconfigcontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L21",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L22",
       "weight": 1.0,
       "_src": "productconfigcontroller_productconfigcontroller",
       "_tgt": "productconfigcontroller_productconfigcontroller_get",
@@ -5897,8 +5942,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\ProductConfigController.cs",
-      "source_location": "L28",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\ProductConfigController.cs",
+      "source_location": "L29",
       "weight": 1.0,
       "_src": "productconfigcontroller_productconfigcontroller",
       "_tgt": "productconfigcontroller_productconfigcontroller_update",
@@ -6105,8 +6150,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L122",
       "weight": 1.0,
-      "_src": "reports_download",
-      "_tgt": "reportscontroller_reportscontroller_visitexcel",
+      "_src": "reportscontroller_reportscontroller_visitexcel",
+      "_tgt": "reports_download",
       "source": "reportscontroller_reportscontroller_visitexcel",
       "target": "reports_download"
     },
@@ -6129,8 +6174,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L125",
       "weight": 1.0,
-      "_src": "reports_download",
-      "_tgt": "reportscontroller_reportscontroller_inventoryexcel",
+      "_src": "reportscontroller_reportscontroller_inventoryexcel",
+      "_tgt": "reports_download",
       "source": "reportscontroller_reportscontroller_inventoryexcel",
       "target": "reports_download"
     },
@@ -6153,8 +6198,8 @@
       "source_file": "frontend\\pages\\admin\\reports.tsx",
       "source_location": "L128",
       "weight": 1.0,
-      "_src": "reports_download",
-      "_tgt": "reportscontroller_reportscontroller_breakagespdf",
+      "_src": "reportscontroller_reportscontroller_breakagespdf",
+      "_tgt": "reports_download",
       "source": "reportscontroller_reportscontroller_breakagespdf",
       "target": "reports_download"
     },
@@ -6173,20 +6218,20 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L12",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L13",
       "weight": 1.0,
-      "_src": "backend_controllers_rolescontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_rolescontroller_cs",
       "_tgt": "rolescontroller_rolescontroller",
-      "source": "backend_controllers_rolescontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_rolescontroller_cs",
       "target": "rolescontroller_rolescontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L21",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L22",
       "weight": 1.0,
       "_src": "rolescontroller_rolescontroller",
       "_tgt": "rolescontroller_rolescontroller_getall",
@@ -6197,8 +6242,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L32",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L33",
       "weight": 1.0,
       "_src": "rolescontroller_rolescontroller",
       "_tgt": "rolescontroller_rolescontroller_create",
@@ -6209,8 +6254,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L51",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L52",
       "weight": 1.0,
       "_src": "rolescontroller_rolescontroller",
       "_tgt": "rolescontroller_rolescontroller_update",
@@ -6221,8 +6266,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\RolesController.cs",
-      "source_location": "L73",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\RolesController.cs",
+      "source_location": "L74",
       "weight": 1.0,
       "_src": "rolescontroller_rolescontroller",
       "_tgt": "rolescontroller_rolescontroller_delete",
@@ -6281,20 +6326,20 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L11",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L12",
       "weight": 1.0,
-      "_src": "backend_controllers_tenantscontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_tenantscontroller_cs",
       "_tgt": "tenantscontroller_tenantscontroller",
-      "source": "backend_controllers_tenantscontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_tenantscontroller_cs",
       "target": "tenantscontroller_tenantscontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L20",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L21",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_getcenters",
@@ -6305,8 +6350,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L32",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L33",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_createcenter",
@@ -6317,8 +6362,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L50",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L51",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_updatecenter",
@@ -6329,8 +6374,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L71",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L72",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_deletecenter",
@@ -6341,8 +6386,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L92",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L93",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_getdepartments",
@@ -6353,8 +6398,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L106",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L107",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_createdepartment",
@@ -6365,8 +6410,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L127",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L128",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_updatedepartment",
@@ -6377,8 +6422,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\TenantsController.cs",
-      "source_location": "L148",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\TenantsController.cs",
+      "source_location": "L149",
       "weight": 1.0,
       "_src": "tenantscontroller_tenantscontroller",
       "_tgt": "tenantscontroller_tenantscontroller_deletedepartment",
@@ -6405,8 +6450,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L53",
       "weight": 1.0,
-      "_src": "access_loadcenters",
-      "_tgt": "tenantscontroller_tenantscontroller_getcenters",
+      "_src": "tenantscontroller_tenantscontroller_getcenters",
+      "_tgt": "access_loadcenters",
       "source": "tenantscontroller_tenantscontroller_getcenters",
       "target": "access_loadcenters"
     },
@@ -6417,8 +6462,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L53",
       "weight": 1.0,
-      "_src": "users_load",
-      "_tgt": "tenantscontroller_tenantscontroller_getcenters",
+      "_src": "tenantscontroller_tenantscontroller_getcenters",
+      "_tgt": "users_load",
       "source": "tenantscontroller_tenantscontroller_getcenters",
       "target": "users_load"
     },
@@ -6501,8 +6546,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L62",
       "weight": 1.0,
-      "_src": "access_loaddepartments",
-      "_tgt": "tenantscontroller_tenantscontroller_getdepartments",
+      "_src": "tenantscontroller_tenantscontroller_getdepartments",
+      "_tgt": "access_loaddepartments",
       "source": "tenantscontroller_tenantscontroller_getdepartments",
       "target": "access_loaddepartments"
     },
@@ -6581,20 +6626,20 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L13",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L14",
       "weight": 1.0,
-      "_src": "backend_controllers_userscontroller_cs",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_userscontroller_cs",
       "_tgt": "userscontroller_userscontroller",
-      "source": "backend_controllers_userscontroller_cs",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_backend_controllers_userscontroller_cs",
       "target": "userscontroller_userscontroller",
       "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L31",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L32",
       "weight": 1.0,
       "_src": "userscontroller_userscontroller",
       "_tgt": "userscontroller_userscontroller_getall",
@@ -6605,8 +6650,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L72",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L73",
       "weight": 1.0,
       "_src": "userscontroller_userscontroller",
       "_tgt": "userscontroller_userscontroller_create",
@@ -6617,8 +6662,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L143",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L144",
       "weight": 1.0,
       "_src": "userscontroller_userscontroller",
       "_tgt": "userscontroller_userscontroller_update",
@@ -6629,8 +6674,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L184",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L185",
       "weight": 1.0,
       "_src": "userscontroller_userscontroller",
       "_tgt": "userscontroller_userscontroller_delete",
@@ -6641,8 +6686,8 @@
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "backend\\Controllers\\UsersController.cs",
-      "source_location": "L201",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\backend\\Controllers\\UsersController.cs",
+      "source_location": "L202",
       "weight": 1.0,
       "_src": "userscontroller_userscontroller",
       "_tgt": "userscontroller_userscontroller_setpassword",
@@ -6921,8 +6966,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L72",
       "weight": 1.0,
-      "_src": "access_loadroles",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "access_loadroles",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "access_loadroles"
     },
@@ -6933,8 +6978,8 @@
       "source_file": "frontend\\pages\\admin\\breakage.tsx",
       "source_location": "L18",
       "weight": 1.0,
-      "_src": "breakage_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "breakage_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "breakage_load"
     },
@@ -6945,8 +6990,8 @@
       "source_file": "frontend\\pages\\admin\\incharges.tsx",
       "source_location": "L17",
       "weight": 1.0,
-      "_src": "incharges_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "incharges_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "incharges_load"
     },
@@ -6957,8 +7002,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L53",
       "weight": 1.0,
-      "_src": "users_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "users_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "users_load"
     },
@@ -6969,8 +7014,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L19",
       "weight": 1.0,
-      "_src": "visits_load",
-      "_tgt": "visitscontroller_visitscontroller_getall",
+      "_src": "visitscontroller_visitscontroller_getall",
+      "_tgt": "visits_load",
       "source": "visitscontroller_visitscontroller_getall",
       "target": "visits_load"
     },
@@ -7005,8 +7050,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L248",
       "weight": 1.0,
-      "_src": "access_createrole",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "access_createrole",
       "source": "visitscontroller_visitscontroller_create",
       "target": "access_createrole"
     },
@@ -7017,8 +7062,8 @@
       "source_file": "frontend\\pages\\admin\\breakage.tsx",
       "source_location": "L63",
       "weight": 1.0,
-      "_src": "breakage_onsubmit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "breakage_onsubmit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "breakage_onsubmit"
     },
@@ -7029,8 +7074,8 @@
       "source_file": "frontend\\pages\\admin\\incharges.tsx",
       "source_location": "L35",
       "weight": 1.0,
-      "_src": "incharges_onsubmit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "incharges_onsubmit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "incharges_onsubmit"
     },
@@ -7041,8 +7086,8 @@
       "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\issue-assets.tsx",
       "source_location": "L134",
       "weight": 1.0,
-      "_src": "issue_assets_submit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "issue_assets_submit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "issue_assets_submit"
     },
@@ -7053,8 +7098,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L120",
       "weight": 1.0,
-      "_src": "users_createuser",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "users_createuser",
       "source": "visitscontroller_visitscontroller_create",
       "target": "users_createuser"
     },
@@ -7065,8 +7110,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L33",
       "weight": 1.0,
-      "_src": "visits_onsubmit",
-      "_tgt": "visitscontroller_visitscontroller_create",
+      "_src": "visitscontroller_visitscontroller_create",
+      "_tgt": "visits_onsubmit",
       "source": "visitscontroller_visitscontroller_create",
       "target": "visits_onsubmit"
     },
@@ -7101,8 +7146,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L278",
       "weight": 1.0,
-      "_src": "access_deleterole",
-      "_tgt": "visitscontroller_visitscontroller_delete",
+      "_src": "visitscontroller_visitscontroller_delete",
+      "_tgt": "access_deleterole",
       "source": "visitscontroller_visitscontroller_delete",
       "target": "access_deleterole"
     },
@@ -7113,8 +7158,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L205",
       "weight": 1.0,
-      "_src": "users_deleteuser",
-      "_tgt": "visitscontroller_visitscontroller_delete",
+      "_src": "visitscontroller_visitscontroller_delete",
+      "_tgt": "users_deleteuser",
       "source": "visitscontroller_visitscontroller_delete",
       "target": "users_deleteuser"
     },
@@ -7125,8 +7170,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L41",
       "weight": 1.0,
-      "_src": "visits_ondelete",
-      "_tgt": "visitscontroller_visitscontroller_delete",
+      "_src": "visitscontroller_visitscontroller_delete",
+      "_tgt": "visits_ondelete",
       "source": "visitscontroller_visitscontroller_delete",
       "target": "visits_ondelete"
     },
@@ -7485,8 +7530,8 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L134",
       "weight": 1.0,
-      "_src": "issueservice_issueservice_sendissuesmsasync",
-      "_tgt": "smshelper_smshelper_sendsmsasync",
+      "_src": "smshelper_smshelper_sendsmsasync",
+      "_tgt": "issueservice_issueservice_sendissuesmsasync",
       "source": "smshelper_smshelper_sendsmsasync",
       "target": "issueservice_issueservice_sendissuesmsasync"
     },
@@ -7497,8 +7542,8 @@
       "source_file": "backend\\Services\\IssueService.cs",
       "source_location": "L266",
       "weight": 1.0,
-      "_src": "issueservice_issueservice_returnissueasync",
-      "_tgt": "smshelper_smshelper_sendsmsasync",
+      "_src": "smshelper_smshelper_sendsmsasync",
+      "_tgt": "issueservice_issueservice_returnissueasync",
       "source": "smshelper_smshelper_sendsmsasync",
       "target": "issueservice_issueservice_returnissueasync"
     },
@@ -8793,8 +8838,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L264",
       "weight": 1.0,
-      "_src": "access_updaterole",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "access_updaterole",
       "source": "productconfigservice_productconfigservice_update",
       "target": "access_updaterole"
     },
@@ -8805,8 +8850,8 @@
       "source_file": "frontend\\pages\\admin\\access.tsx",
       "source_location": "L307",
       "weight": 1.0,
-      "_src": "access_saveconfig",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "access_saveconfig",
       "source": "productconfigservice_productconfigservice_update",
       "target": "access_saveconfig"
     },
@@ -8817,8 +8862,8 @@
       "source_file": "frontend\\pages\\admin\\incharges.tsx",
       "source_location": "L34",
       "weight": 1.0,
-      "_src": "incharges_onsubmit",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "incharges_onsubmit",
       "source": "productconfigservice_productconfigservice_update",
       "target": "incharges_onsubmit"
     },
@@ -8829,8 +8874,8 @@
       "source_file": "frontend\\pages\\admin\\users.tsx",
       "source_location": "L182",
       "weight": 1.0,
-      "_src": "users_updateuser",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "users_updateuser",
       "source": "productconfigservice_productconfigservice_update",
       "target": "users_updateuser"
     },
@@ -8841,8 +8886,8 @@
       "source_file": "frontend\\pages\\admin\\visits.tsx",
       "source_location": "L32",
       "weight": 1.0,
-      "_src": "visits_onsubmit",
-      "_tgt": "productconfigservice_productconfigservice_update",
+      "_src": "productconfigservice_productconfigservice_update",
+      "_tgt": "visits_onsubmit",
       "source": "productconfigservice_productconfigservice_update",
       "target": "visits_onsubmit"
     },
@@ -9713,104 +9758,164 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L24",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\asset-scan.tsx",
+      "source_location": "L23",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_asset_scan_tsx",
+      "_tgt": "asset_scan_lookup",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_asset_scan_tsx",
+      "target": "asset_scan_lookup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\asset-scan.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_asset_scan_tsx",
+      "_tgt": "asset_scan_handlekeydown",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_asset_scan_tsx",
+      "target": "asset_scan_handlekeydown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\asset-scan.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_src": "asset_scan_handlekeydown",
+      "_tgt": "asset_scan_lookup",
+      "source": "asset_scan_lookup",
+      "target": "asset_scan_handlekeydown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
+      "_tgt": "assets_showqr",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
+      "target": "assets_showqr",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
+      "_tgt": "assets_downloadqr",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
+      "target": "assets_downloadqr",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_load",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_load",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L70",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L95",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_createtype",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_createtype",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L85",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L110",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_createasset",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_createasset",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L104",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L129",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_updatestatus",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_updatestatus",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L114",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L139",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_updatetype",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_updatetype",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L130",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L155",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_deletetype",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_deletetype",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L141",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L166",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_updateassetdetails",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_updateassetdetails",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L157",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L182",
       "weight": 1.0,
-      "_src": "frontend_pages_admin_assets_tsx",
+      "_src": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "_tgt": "assets_deleteasset",
-      "source": "frontend_pages_admin_assets_tsx",
+      "source": "d_lakshya_grover_try_new_things_lg_git_projects_wireless_frontend_pages_admin_assets_tsx",
       "target": "assets_deleteasset",
       "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L79",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L104",
       "weight": 1.0,
       "_src": "assets_createtype",
       "_tgt": "assets_load",
@@ -9821,8 +9926,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L98",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L123",
       "weight": 1.0,
       "_src": "assets_createasset",
       "_tgt": "assets_load",
@@ -9833,8 +9938,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L124",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L149",
       "weight": 1.0,
       "_src": "assets_updatetype",
       "_tgt": "assets_load",
@@ -9845,8 +9950,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L135",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L160",
       "weight": 1.0,
       "_src": "assets_deletetype",
       "_tgt": "assets_load",
@@ -9857,8 +9962,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L151",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L176",
       "weight": 1.0,
       "_src": "assets_updateassetdetails",
       "_tgt": "assets_load",
@@ -9869,8 +9974,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "frontend\\pages\\admin\\assets.tsx",
-      "source_location": "L162",
+      "source_file": "D:\\Lakshya grover\\TRY NEW THINGS\\LG  Git projects\\Wireless\\frontend\\pages\\admin\\assets.tsx",
+      "source_location": "L187",
       "weight": 1.0,
       "_src": "assets_deleteasset",
       "_tgt": "assets_load",
