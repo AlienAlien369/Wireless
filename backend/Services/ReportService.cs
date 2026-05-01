@@ -105,9 +105,7 @@ public class ReportService : IReportService
             ?? throw new KeyNotFoundException();
         var issues = await _db.Issues
             .AsNoTracking()
-            .Include(i => i.Incharge).Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
-            .Include(i => i.Items).ThenInclude(ii => ii.Charger)
-            .Include(i => i.Items).ThenInclude(ii => ii.Kit)
+            .Include(i => i.Incharge).Include(i => i.Items).ThenInclude(ii => ii.Asset).ThenInclude(a => a!.AssetType)
             .Where(i => i.VisitId == visitId)
             .ToListAsync(cancellationToken);
 
@@ -134,7 +132,7 @@ public class ReportService : IReportService
         int sr = 1;
         foreach (var issue in issues)
         {
-            var items = string.Join(", ", issue.Items.Select(ii => ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber ?? "Kit"));
+            var items = string.Join(", ", issue.Items.Select(ii => ii.Asset?.ItemNumber ?? ii.Asset?.AssetType?.Name ?? "(asset)"));
             ws.Cells[row, 1].Value = sr++;
             ws.Cells[row, 2].Value = issue.Incharge?.Name;
             ws.Cells[row, 3].Value = issue.Incharge?.BadgeNumber;
@@ -153,15 +151,19 @@ public class ReportService : IReportService
     public async Task<byte[]> GenerateInventoryExcelReportAsync(CancellationToken cancellationToken = default)
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        var sets = await _db.WirelessSets.AsNoTracking().OrderBy(w => w.Brand).ThenBy(w => w.ItemNumber).ToListAsync(cancellationToken);
+        var assets = await _db.Assets
+            .AsNoTracking()
+            .Include(a => a.AssetType)
+            .OrderBy(a => a.AssetType.Name).ThenBy(a => a.ItemNumber)
+            .ToListAsync(cancellationToken);
 
         using var package = new ExcelPackage();
         var ws = package.Workbook.Worksheets.Add("Inventory");
-        ws.Cells[1, 1].Value = "RSSB Wireless Inventory Report";
-        ws.Cells[1, 1, 1, 5].Merge = true;
+        ws.Cells[1, 1].Value = "RSSB Asset Inventory Report";
+        ws.Cells[1, 1, 1, 6].Merge = true;
         ws.Cells[1, 1].Style.Font.Bold = true;
 
-        var headers = new[] { "Sr.", "Item Number", "Brand", "Status", "Remarks" };
+        var headers = new[] { "Sr.", "Type", "Item Number", "Brand", "Status", "Remarks" };
         for (int c = 0; c < headers.Length; c++)
         {
             ws.Cells[3, c + 1].Value = headers[c];
@@ -172,22 +174,22 @@ public class ReportService : IReportService
         }
 
         int row = 4;
-        for (int i = 0; i < sets.Count; i++)
+        for (int i = 0; i < assets.Count; i++)
         {
             ws.Cells[row, 1].Value = i + 1;
-            ws.Cells[row, 2].Value = sets[i].ItemNumber;
-            ws.Cells[row, 3].Value = sets[i].Brand;
-            ws.Cells[row, 4].Value = sets[i].Status;
-            ws.Cells[row, 5].Value = sets[i].Remarks;
-            // Color code by status
-            var color = sets[i].Status switch
+            ws.Cells[row, 2].Value = assets[i].AssetType?.Name;
+            ws.Cells[row, 3].Value = assets[i].ItemNumber;
+            ws.Cells[row, 4].Value = assets[i].Brand;
+            ws.Cells[row, 5].Value = assets[i].Status;
+            ws.Cells[row, 6].Value = assets[i].Remarks;
+            var color = assets[i].Status switch
             {
                 AssetStatus.Issued => System.Drawing.Color.LightYellow,
                 AssetStatus.Broken => System.Drawing.Color.LightCoral,
                 _ => System.Drawing.Color.LightGreen
             };
-            ws.Cells[row, 1, row, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells[row, 1, row, 5].Style.Fill.BackgroundColor.SetColor(color);
+            ws.Cells[row, 1, row, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells[row, 1, row, 6].Style.Fill.BackgroundColor.SetColor(color);
             row++;
         }
         ws.Cells[ws.Dimension.Address].AutoFitColumns();

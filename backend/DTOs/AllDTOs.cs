@@ -94,19 +94,6 @@ public record InchargeCreateDto(string Name, string BadgeNumber, string MobileNu
 public record InchargeUpdateDto(string Name, string BadgeNumber, string MobileNumber, string? GroupName, bool IsActive);
 public record InchargeDto(int Id, string Name, string BadgeNumber, string MobileNumber, string? GroupName, bool IsActive);
 
-// ─── WirelessSet ──────────────────────────────────────────────────────────────
-public record WirelessSetCreateDto(string ItemNumber, string Brand, string? Remarks);
-public record WirelessSetUpdateDto(string ItemNumber, string Brand, string Status, string? Remarks);
-public record WirelessSetDto(int Id, string ItemNumber, string Brand, string Status, string? Remarks, string? QrCodeUrl, DateTime CreatedAt);
-
-// ─── Charger ──────────────────────────────────────────────────────────────────
-public record ChargerCreateDto(string? ItemNumber, string Brand, string? Remarks);
-public record ChargerDto(int Id, string? ItemNumber, string Brand, string Status, string? Remarks, DateTime CreatedAt);
-
-// ─── Kit ──────────────────────────────────────────────────────────────────────
-public record KitCreateDto(string ItemNumber, string? Remarks);
-public record KitDto(int Id, string ItemNumber, string Status, string? Remarks, DateTime CreatedAt);
-
 // ─── Issue ────────────────────────────────────────────────────────────────────
 public class IssueCreateDto
 {
@@ -117,24 +104,13 @@ public class IssueCreateDto
     public int? GroupSetCount { get; set; }
     public string? Remarks { get; set; }
     public List<IssueItemDto> Items { get; set; } = new();
-    public CollectorCreateDto? Collector { get; set; }
     public bool SendSms { get; set; } = true;
 }
 
 public class IssueItemDto
 {
     public string ItemType { get; set; } = string.Empty;
-    public int? WirelessSetId { get; set; }
-    public int? ChargerId { get; set; }
-    public int? KitId { get; set; }
     public int? AssetId { get; set; }
-}
-
-public class CollectorCreateDto
-{
-    public string Name { get; set; } = string.Empty;
-    public string BadgeNumber { get; set; } = string.Empty;
-    public string PhoneNumber { get; set; } = string.Empty;
 }
 
 public class IssueResponseDto
@@ -154,9 +130,7 @@ public class IssueResponseDto
     public DateTime? ReturnedAt { get; set; }
     public string Status { get; set; } = string.Empty;
     public string? Remarks { get; set; }
-    public CollectorDto? Collector { get; set; }
     public List<IssueItemResponseDto> Items { get; set; } = new();
-    public List<string> PhotoUrls { get; set; } = new();
     public List<SmsLogDto> SmsLogs { get; set; } = new();
 }
 
@@ -164,9 +138,6 @@ public class IssueItemResponseDto
 {
     public int Id { get; set; }
     public string ItemType { get; set; } = string.Empty;
-    public int? WirelessSetId { get; set; }
-    public int? ChargerId { get; set; }
-    public int? KitId { get; set; }
     public int? AssetId { get; set; }
     public string? ItemNumber { get; set; }
     public string? Brand { get; set; }
@@ -174,8 +145,6 @@ public class IssueItemResponseDto
     public DateTime? ReturnedAt { get; set; }
     public string? ReturnRemarks { get; set; }
 }
-
-public record CollectorDto(int Id, string Name, string BadgeNumber, string PhoneNumber);
 
 public class SmsLogDto
 {
@@ -191,7 +160,6 @@ public class SmsLogDto
 public class BreakageCreateDto
 {
     public int VisitId { get; set; }
-    public int? WirelessSetId { get; set; }
     public string ItemNumber { get; set; } = string.Empty;
     public string BreakageReason { get; set; } = string.Empty;
     public string ReportedBy { get; set; } = string.Empty;
@@ -213,7 +181,7 @@ public class BreakageDto
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 public class DashboardStatsDto
 {
-    public int TotalWirelessSets { get; set; }
+    public int TotalAssets { get; set; }
     public int AvailableSets { get; set; }
     public int IssuedSets { get; set; }
     public int BrokenSets { get; set; }

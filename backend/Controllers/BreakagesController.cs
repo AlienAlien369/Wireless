@@ -51,16 +51,10 @@ public class BreakagesController : ControllerBase
         }
         var breakage = new Breakage
         {
-            VisitId = dto.VisitId, WirelessSetId = dto.WirelessSetId,
+            VisitId = dto.VisitId,
             ItemNumber = dto.ItemNumber, BreakageReason = dto.BreakageReason,
             ReportedBy = dto.ReportedBy, Remarks = dto.Remarks
         };
-
-        if (dto.WirelessSetId.HasValue)
-        {
-            var ws = await _db.WirelessSets.FindAsync(new object?[] { dto.WirelessSetId }, cancellationToken);
-            if (ws != null) ws.Status = AssetStatus.Broken;
-        }
 
         _db.Breakages.Add(breakage);
         await _db.SaveChangesAsync(cancellationToken);

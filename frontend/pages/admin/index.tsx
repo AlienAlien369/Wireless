@@ -5,7 +5,7 @@ import { Radio, Users, AlertTriangle, CheckCircle, Clock, MapPin, Calendar, Acti
 import { APP_NAME, DEFAULT_CENTER_NAME } from '../../config/app'
 
 interface Stats {
-  totalWirelessSets: number
+  totalAssets: number
   availableSets: number
   issuedSets: number
   brokenSets: number
@@ -191,7 +191,7 @@ export default function AdminDashboard() {
         {/* Stats Grid */}
         {isWidgetEnabled('assets.summary') && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Total Sets" value={stats.totalWirelessSets} icon={Radio} color="bg-primary" />
+          <StatCard label="Total Sets" value={stats.totalAssets} icon={Radio} color="bg-primary" />
           <StatCard label="Available" value={stats.availableSets} icon={CheckCircle} color="bg-green-500" />
           <StatCard label="Issued" value={stats.issuedSets} icon={Clock} color="bg-yellow-500" />
           <StatCard label="Broken" value={stats.brokenSets} icon={AlertTriangle} color="bg-red-500" />

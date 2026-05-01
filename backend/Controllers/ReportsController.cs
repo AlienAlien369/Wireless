@@ -34,7 +34,7 @@ public class ReportsController : ControllerBase
 
         var stats = new DashboardStatsDto
         {
-            TotalWirelessSets = await assetsQuery.CountAsync(cancellationToken),
+            TotalAssets = await assetsQuery.CountAsync(cancellationToken),
             AvailableSets = await assetsQuery.CountAsync(a => a.Status == AssetStatus.Available, cancellationToken),
             IssuedSets = await assetsQuery.CountAsync(a => a.Status == AssetStatus.Issued, cancellationToken),
             BrokenSets = await assetsQuery.CountAsync(a => a.Status == AssetStatus.Broken, cancellationToken),

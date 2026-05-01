@@ -3,7 +3,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RSSBWireless.API.DTOs;
-using RSSBWireless.API.Helpers;
 using RSSBWireless.API.Services;
 using RSSBWireless.API.Services.Interfaces;
 using RSSBWireless.API.Data;
@@ -17,13 +16,12 @@ public class IssuesController : ControllerBase
 {
     private readonly IIssueService _svc;
     private readonly AppDbContext _db;
-    private readonly CloudinaryHelper _cloudinary;
     private readonly IAccessScopeService _scope;
     private readonly ProductConfigService _config;
 
-    public IssuesController(IIssueService svc, AppDbContext db, CloudinaryHelper cloudinary, IAccessScopeService scope, ProductConfigService config)
+    public IssuesController(IIssueService svc, AppDbContext db, IAccessScopeService scope, ProductConfigService config)
     {
-        _svc = svc; _db = db; _cloudinary = cloudinary; _scope = scope; _config = config;
+        _svc = svc; _db = db; _scope = scope; _config = config;
     }
 
     [HttpGet("visit/{visitId}")]
@@ -47,7 +45,7 @@ public class IssuesController : ControllerBase
         var scope = await _scope.RequireAdminUiAsync(User, cancellationToken);
         var issues = await _db.Issues
             .AsNoTracking()
-            .Include(i => i.Visit).Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
+            .Include(i => i.Visit).Include(i => i.Items).ThenInclude(ii => ii.Asset)
             .Where(i => i.InchargeId == inchargeId &&
                 (scope.IsGlobalAdmin || (scope.CenterId != null && i.CenterId == scope.CenterId)) &&
                 (scope.IsGlobalAdmin || scope.IsCenterHead || scope.DepartmentId == null || i.DepartmentId == scope.DepartmentId))
@@ -106,19 +104,5 @@ public class IssuesController : ControllerBase
             return NoContent();
         }
         catch (KeyNotFoundException) { return NotFound(); }
-    }
-
-    [HttpPost("{id}/photos")]
-    public async Task<IActionResult> UploadPhoto(int id, IFormFile file, CancellationToken cancellationToken = default)
-    {
-        await _scope.RequireAdminUiAsync(User, cancellationToken);
-        var issue = await _db.Issues.FindAsync(new object?[] { id }, cancellationToken);
-        if (issue == null) return NotFound();
-
-        var (url, publicId) = await _cloudinary.UploadImageAsync(file);
-        var photo = new Photo { IssueId = id, ImageUrl = url, PublicId = publicId };
-        _db.Photos.Add(photo);
-        await _db.SaveChangesAsync(cancellationToken);
-        return Ok(new { url });
     }
 }

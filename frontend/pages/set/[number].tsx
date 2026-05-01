@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { inventoryApi, assetsApi } from '../../services/api'
-import { Radio, User, Hash, Phone, MapPin, CheckCircle, AlertCircle, Package } from 'lucide-react'
+import { assetsApi } from '../../services/api'
+import { User, Hash, Phone, MapPin, CheckCircle, AlertCircle, Package } from 'lucide-react'
 
 /**
  * SetLookupPage  —  public QR landing page
@@ -25,7 +25,6 @@ import { Radio, User, Hash, Phone, MapPin, CheckCircle, AlertCircle, Package } f
 export default function SetLookupPage() {
   const router = useRouter()
   const { number } = router.query
-  const [data, setData] = useState<any>(null)
   const [assetData, setAssetData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -66,11 +65,9 @@ export default function SetLookupPage() {
           .finally(() => setLoading(false))
       }
     } else {
-      // Legacy wireless-set QR — look up by item number (public endpoint).
-      inventoryApi.getSetByNumberPublic(num)
-        .then(r => setData(r.data))
-        .catch(() => setError(true))
-        .finally(() => setLoading(false))
+      // Unknown QR format — show not found
+      setError(true)
+      setLoading(false)
     }
   }, [number])
 
@@ -275,77 +272,11 @@ export default function SetLookupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-light flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
-            <Radio size={32} className="text-accent" />
-          </div>
-          <h1 className="text-2xl font-bold text-white">RSSB Wireless</h1>
-          <p className="text-blue-200 text-sm">Bhatti Center — Wireless Tracker</p>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Status bar */}
-          <div className={`px-5 py-3 ${data.status === 'Issued' ? 'bg-yellow-50 border-b border-yellow-100' :
-            data.status === 'Available' ? 'bg-green-50 border-b border-green-100' :
-            'bg-red-50 border-b border-red-100'}`}>
-            <div className="flex items-center gap-2">
-              <span className={data.status === 'Issued' ? 'badge-issued' : data.status === 'Available' ? 'badge-available' : 'badge-broken'}>
-                {data.status}
-              </span>
-              <span className="text-sm font-medium text-gray-600">Set #{data.setNumber}</span>
-              <span className="ml-auto text-xs text-gray-400">{data.brand}</span>
-            </div>
-          </div>
-
-          <div className="p-5 space-y-4">
-            {data.status === 'Issued' && data.issuedTo ? (
-              <>
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Currently Issued To</h2>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                      <User size={18} className="text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-800">{data.issuedTo}</div>
-                      <div className="text-xs text-gray-400">Sewadar / Incharge</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Hash size={14} className="text-gray-400" /> Badge: {data.badgeNumber}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Phone size={14} className="text-gray-400" /> {data.mobileNumber}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin size={14} className="text-gray-400" /> {data.visitName}
-                  </div>
-                </div>
-              </>
-            ) : data.status === 'Available' ? (
-              <div className="text-center py-4">
-                <CheckCircle size={36} className="text-green-400 mx-auto mb-2" />
-                <p className="text-gray-600">This set is <strong>available</strong> for issue.</p>
-                <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
-                  <Phone size={14} className="text-gray-400" />
-                  <a href={`tel:${defaultContactNumber}`} className="font-medium underline underline-offset-2">{defaultContactNumber}</a>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-4">
-                <AlertCircle size={36} className="text-red-400 mx-auto mb-2" />
-                <p className="text-gray-600">This set is marked as broken/out of service.</p>
-              </div>
-            )}
-          </div>
-
-          <div className="px-5 py-3 bg-gray-50 border-t text-center">
-            <p className="text-xs text-gray-400">RSSB Bhatti Center · Wireless Equipment System</p>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="text-center">
+        <AlertCircle size={48} className="text-yellow-400 mx-auto mb-4" />
+        <h1 className="text-xl font-bold text-gray-700">Unknown QR Code</h1>
+        <p className="text-gray-500 mt-1">This QR code format is not recognised.</p>
       </div>
     </div>
   )

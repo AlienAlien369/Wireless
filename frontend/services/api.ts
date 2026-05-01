@@ -64,22 +64,8 @@ export const inchargesApi = sewadaarsApi
 
 // ─── Inventory ───────────────────────────────────────────────────────────────
 export const inventoryApi = {
-  getSets: (params?: { brand?: string; status?: string }) =>
-    api.get('/inventory/wireless-sets', { params }),
-  getSetByNumber: (number: string) =>
-    api.get(`/inventory/wireless-sets/by-number/${number}`),
-  createSet: (data: any) => api.post('/inventory/wireless-sets', data),
-  updateSet: (id: number, data: any) => api.put(`/inventory/wireless-sets/${id}`, data),
-  deleteSet: (id: number) => api.delete(`/inventory/wireless-sets/${id}`),
-
-  getChargers: (brand?: string) => api.get('/inventory/chargers', { params: { brand } }),
-  createCharger: (data: any) => api.post('/inventory/chargers', data),
-  deleteCharger: (id: number) => api.delete(`/inventory/chargers/${id}`),
-
-  getKits: () => api.get('/inventory/kits'),
-  createKit: (data: any) => api.post('/inventory/kits', data),
-  deleteKit: (id: number) => api.delete(`/inventory/kits/${id}`),
   // Unauthenticated lookup — used by the public /set/[number] landing page.
+  // Returns 404 for non-existent (legacy) QR codes; frontend handles gracefully.
   getSetByNumberPublic: (number: string) => publicApi.get(`/inventory/wireless-sets/by-number/${number}`),
 }
 
@@ -90,13 +76,6 @@ export const issuesApi = {
   getByIncharge: (inchargeId: number) => api.get(`/issues/incharge/${inchargeId}`),
   create: (data: any) => api.post('/issues', data),
   return: (id: number, itemIds: number[]) => api.post(`/issues/${id}/return`, itemIds),
-  uploadPhoto: (id: number, file: File) => {
-    const formData = new FormData()
-    formData.append('file', file)
-    return api.post(`/issues/${id}/photos`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-  },
 }
 
 // ─── Breakages ───────────────────────────────────────────────────────────────
