@@ -11,9 +11,13 @@ import { Radio, User, Hash, Phone, MapPin, CheckCircle, AlertCircle, Package } f
  *   2. Legacy wireless-set item numbers   →  Wireless set QR
  *
  * Smart routing for asset QRs (AST-*):
- *   - Logged-in user:  redirects to /admin/issue-assets?qr=<value>
+ *   - Logged-in user + Available asset:  redirects to /admin/issue-assets?qr=<value>
  *     so the issue form is pre-filled and the asset can be issued immediately.
+ *   - Logged-in user + Issued asset:  shows a modal with full "issued to" details
+ *     instead of redirecting (can't issue an already-issued asset).
  *   - Guest / not logged in:  shows the public read-only status card.
+ *     Available → contact info to submit if found (Lakshya Grover 8800191819).
+ *     Issued    → full incharge details card.
  *
  * Both QR lookup endpoints are [AllowAnonymous] on the backend so this page
  * works without authentication.
@@ -25,26 +29,42 @@ export default function SetLookupPage() {
   const [assetData, setAssetData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [redirecting, setRedirecting] = useState(false) // true when sending logged-in user to issue page
+  const [redirecting, setRedirecting] = useState(false) // true while sending logged-in user to issue page
+  const [issuedModal, setIssuedModal] = useState(false)  // true when logged-in user scans an already-issued asset
   const defaultContactNumber = '8800191819'
+  const defaultContactName   = 'Lakshya Grover'
 
   useEffect(() => {
     if (!number) return
     const num = number as string
 
     if (num.toUpperCase().startsWith('AST-')) {
-      // Logged-in users go straight to the issue-assets page with the asset pre-filled.
       const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
       if (token) {
-        setRedirecting(true)
-        router.replace(`/admin/issue-assets?qr=${encodeURIComponent(num)}`)
-        return
+        // Logged-in user: fetch asset first to check live status before acting.
+        assetsApi.scanQrPublic(num)
+          .then(r => {
+            const asset = r.data
+            setAssetData(asset)
+            if (asset.status === 'Available') {
+              // Asset is free — send to pre-filled issue page.
+              setRedirecting(true)
+              router.replace(`/admin/issue-assets?qr=${encodeURIComponent(num)}`)
+            } else {
+              // Issued or Broken — show modal with current assignment details.
+              setIssuedModal(true)
+              setLoading(false)
+            }
+          })
+          .catch(() => { setError(true); setLoading(false) })
+      } else {
+        // Guest / not logged in — show the public read-only status card.
+        assetsApi.scanQrPublic(num)
+          .then(r => setAssetData(r.data))
+          .catch(() => setError(true))
+          .finally(() => setLoading(false))
       }
-      // Guest / not logged in — show the public read-only status card.
-      assetsApi.scanQrPublic(num)
-        .then(r => setAssetData(r.data))
-        .catch(() => setError(true))
-        .finally(() => setLoading(false))
     } else {
       // Legacy wireless-set QR — look up by item number (public endpoint).
       inventoryApi.getSetByNumberPublic(num)
@@ -89,8 +109,78 @@ export default function SetLookupPage() {
       a.status === 'Issued'    ? 'badge-issued' :
                                  'badge-broken'
     const contactNumber = (a.mobileNumber || defaultContactNumber) as string
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-light flex items-center justify-center p-4">
+
+        {/* ── Issued-to Modal (logged-in user scanned an already-issued asset) ── */}
+        {issuedModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
+              {/* Modal header */}
+              <div className="px-5 py-4 bg-yellow-50 border-b border-yellow-100 flex items-center gap-3">
+                <AlertCircle size={20} className="text-yellow-500 shrink-0" />
+                <div>
+                  <p className="font-semibold text-gray-800">Already Issued</p>
+                  <p className="text-xs text-gray-500">This asset is currently assigned</p>
+                </div>
+              </div>
+
+              {/* Asset + incharge details */}
+              <div className="p-5 space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className={badgeClass}>{a.status}</span>
+                  <span className="text-sm font-medium text-gray-600">{a.assetTypeName}</span>
+                  {a.itemNumber && <span className="ml-auto text-xs text-gray-400">#{a.itemNumber}</span>}
+                </div>
+
+                {a.issuedTo && (
+                  <div className="space-y-3">
+                    <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Currently Issued To</h2>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <User size={18} className="text-primary" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-800">{a.issuedTo}</div>
+                        <div className="text-xs text-gray-400">Sewadar / Incharge</div>
+                      </div>
+                    </div>
+                    {a.badgeNumber && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Hash size={14} className="text-gray-400" /> Badge: {a.badgeNumber}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Phone size={14} className="text-gray-400" />
+                      <a href={`tel:${contactNumber}`} className="underline underline-offset-2">{contactNumber}</a>
+                    </div>
+                    {a.visitName && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin size={14} className="text-gray-400" /> {a.visitName}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {a.status === 'Broken' && (
+                  <p className="text-sm text-red-600 text-center">This asset is marked as broken / out of service.</p>
+                )}
+              </div>
+
+              <div className="px-5 pb-5">
+                <button
+                  onClick={() => setIssuedModal(false)}
+                  className="w-full btn btn-secondary"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Public status card (guest user, or fallback when modal is closed) ── */}
         <div className="w-full max-w-sm">
           <div className="text-center mb-6">
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
@@ -110,6 +200,7 @@ export default function SetLookupPage() {
             </div>
 
             <div className="p-5 space-y-4">
+              {/* Issued: show full incharge details */}
               {a.status === 'Issued' && a.issuedTo ? (
                 <>
                   <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Currently Issued To</h2>
@@ -129,7 +220,8 @@ export default function SetLookupPage() {
                       </div>
                     )}
                     <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Phone size={14} className="text-gray-400" /> {contactNumber}
+                      <Phone size={14} className="text-gray-400" />
+                      <a href={`tel:${contactNumber}`} className="underline underline-offset-2">{contactNumber}</a>
                     </div>
                     {a.visitName && (
                       <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -139,35 +231,37 @@ export default function SetLookupPage() {
                   </div>
                 </>
               ) : a.status === 'Available' ? (
-                <div className="text-center py-4">
-                  <CheckCircle size={36} className="text-green-400 mx-auto mb-2" />
-                  <p className="text-gray-600">This set is <strong>available</strong> for issue.</p>
-                  <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
-                    <Phone size={14} className="text-gray-400" />
-                    <a href={`tel:${contactNumber}`} className="font-medium underline underline-offset-2">{contactNumber}</a>
+                /* Available: show asset info + contact to submit if found/lost */
+                <div className="text-center py-4 space-y-3">
+                  <CheckCircle size={36} className="text-green-400 mx-auto" />
+                  <div>
+                    <p className="text-gray-800 font-semibold">{a.assetTypeName}</p>
+                    {a.brand && <p className="text-sm text-gray-500">Brand: {a.brand}</p>}
+                    {a.itemNumber && <p className="text-sm text-gray-400">Item #: {a.itemNumber}</p>}
                   </div>
-                </div>
-              ) : a.status === 'Broken' ? (
-                <div className="text-center py-4">
-                  <AlertCircle size={36} className="text-red-400 mx-auto mb-2" />
-                  <p className="text-gray-600">This set is marked as <strong>broken / out of service</strong>.</p>
-                  <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
-                    <Phone size={14} className="text-gray-400" />
-                    <a href={`tel:${contactNumber}`} className="font-medium underline underline-offset-2">{contactNumber}</a>
+                  <p className="text-gray-600 text-sm">This asset is <strong>available</strong>.</p>
+                  {/* Contact info to submit if the device is found or lost */}
+                  <div className="mt-2 bg-blue-50 border border-blue-100 rounded-xl p-3 text-left">
+                    <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">If found / lost — submit to:</p>
+                    <div className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                      <User size={14} className="text-blue-400 shrink-0" /> {defaultContactName}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                      <Phone size={14} className="text-blue-400 shrink-0" />
+                      <a href={`tel:${defaultContactNumber}`} className="font-medium underline underline-offset-2">{defaultContactNumber}</a>
+                    </div>
                   </div>
                 </div>
               ) : (
+                /* Broken or other status */
                 <div className="text-center py-4">
-                  <Package size={36} className="text-orange-400 mx-auto mb-2" />
-                  <p className="text-gray-600">This set is currently <strong>issued / allocated</strong>.</p>
+                  <AlertCircle size={36} className="text-red-400 mx-auto mb-2" />
+                  <p className="text-gray-600">This asset is marked as <strong>broken / out of service</strong>.</p>
                   <div className="mt-3 inline-flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1">
                     <Phone size={14} className="text-gray-400" />
-                    <a href={`tel:${contactNumber}`} className="font-medium underline underline-offset-2">{contactNumber}</a>
+                    <a href={`tel:${defaultContactNumber}`} className="font-medium underline underline-offset-2">{defaultContactNumber}</a>
                   </div>
                 </div>
-              )}
-              {a.brand && (
-                <div className="text-sm text-gray-500 text-center">Brand: {a.brand}</div>
               )}
             </div>
 
