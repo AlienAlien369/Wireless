@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import AdminLayout from '../../components/admin/AdminLayout'
-import { reportsApi, visitsApi, issuesApi } from '../../services/api'
+import { reportsApi, visitsApi, issuesApi, tenantsApi } from '../../services/api'
 import { Download, FileSpreadsheet, FileText, ChevronDown, ChevronUp, Clock, CheckCircle } from 'lucide-react'
 import { getActiveVisits, getLatestActiveVisit } from '../../utils/visits'
 
@@ -10,6 +10,11 @@ function downloadBlob(blob: Blob, filename: string) {
   const a = document.createElement('a')
   a.href = url; a.download = filename; a.click()
   URL.revokeObjectURL(url)
+}
+
+function formatDateTime(value?: string | null) {
+  if (!value) return '-'
+  return new Date(value).toLocaleString()
 }
 
 function renderIssuedItems(issue: any) {
@@ -26,7 +31,20 @@ function renderIssuedItems(issue: any) {
   return itemNumbers.length > 0 ? itemNumbers.join(', ') : 'No item numbers'
 }
 
+function getReceiveRemarks(issue: any) {
+  const remarks = (issue.items || [])
+    .map((item: any) => item.returnRemarks)
+    .filter((x: any) => !!x && String(x).trim().length > 0)
+  if (remarks.length === 0) return '-'
+  return Array.from(new Set(remarks)).join(', ')
+}
+
 export default function ReportsPage() {
+  const [user, setUser] = useState<any>(null)
+  const [centers, setCenters] = useState<any[]>([])
+  const [departments, setDepartments] = useState<any[]>([])
+  const [centerId, setCenterId] = useState<number | null>(null)
+  const [departmentId, setDepartmentId] = useState<number | null>(null)
   const [visits, setVisits] = useState<any[]>([])
   const [selectedVisit, setSelectedVisit] = useState('')
   const [loading, setLoading] = useState<string>('')
@@ -36,7 +54,20 @@ export default function ReportsPage() {
   const [expandedVisit, setExpandedVisit] = useState<number | null>(null)
 
 useEffect(() => {
-  visitsApi.getAll().then(r => {
+  const stored = JSON.parse(localStorage.getItem('user') || 'null')
+  setUser(stored)
+  setCenterId(stored?.centerId ?? null)
+  setDepartmentId(stored?.role === 'Admin' ? stored?.departmentId ?? null : null)
+  tenantsApi.getCenters().then(r => setCenters((r.data || []).filter((x: any) => x.isActive))).catch(() => {})
+}, [])
+
+useEffect(() => {
+  if (!centerId) return
+  tenantsApi.getDepartments(centerId).then(r => setDepartments((r.data || []).filter((x: any) => x.isActive))).catch(() => setDepartments([]))
+}, [centerId])
+
+useEffect(() => {
+  visitsApi.getAll({ centerId: centerId ?? undefined, departmentId: departmentId ?? undefined }).then(r => {
     const activeVisits = getActiveVisits(r.data)
     setVisits(activeVisits)
 
@@ -46,9 +77,14 @@ useEffect(() => {
       setSelectedVisit(latestVisit.id.toString());
       setExpandedVisit(latestVisitId)
       loadVisitDetails(latestVisitId)
+    } else {
+      setSelectedVisit('')
+      setExpandedVisit(null)
+      setIssuedList([])
+      setReturnedList([])
     }
   })
-}, [])
+}, [centerId, departmentId])
 
   const loadVisitDetails = async (visitId: number) => {
     setLoadingList(true)
@@ -127,8 +163,23 @@ useEffect(() => {
     <AdminLayout title="Reports">
       <div className="space-y-6">
         <div className="card">
-          <label className="label">Visit Filter (for visit-specific reports)</label>
-          <div className="w-full md:w-96">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label className="label">Center</label>
+              <select className="input" value={centerId ?? ''} onChange={(e) => { setCenterId(e.target.value ? Number(e.target.value) : null); setDepartmentId(null) }} disabled={!!user && !user.role?.includes('SUPER') && user.role !== 'Center Head'}>
+                <option value="">All centers</option>
+                {centers.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="label">Department</label>
+              <select className="input" value={departmentId ?? ''} onChange={(e) => setDepartmentId(e.target.value ? Number(e.target.value) : null)} disabled={!centerId}>
+                <option value="">All departments</option>
+                {departments.map((d: any) => <option key={d.id} value={d.id}>{d.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="label">Visit Filter (for visit-specific reports)</label>
             <select
               value={selectedVisit}
               className="input"
@@ -141,6 +192,7 @@ useEffect(() => {
                 </option>
               ))}
             </select>
+            </div>
           </div>
         </div>
 
@@ -204,14 +256,14 @@ useEffect(() => {
                     <table className="w-full text-sm">
                       <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <tr>
-                          {['Sr.', 'Incharge', 'Badge', 'Mobile', 'Items Count', 'Item Numbers', 'Issued At', 'Status'].map(h => (
+                          {['Sr.', 'Sewadaar', 'Badge', 'Mobile', 'Items Count', 'Item Numbers', 'Issue Time', 'Remarks', 'Status'].map(h => (
                             <th key={h} className="text-left px-3 py-2 font-semibold text-gray-700 whitespace-nowrap">{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {issuedList.length === 0 ? (
-                          <tr><td colSpan={8} className="text-center py-4 text-gray-500">No current issues</td></tr>
+                          <tr><td colSpan={9} className="text-center py-4 text-gray-500">No current issues</td></tr>
                         ) : (
                           issuedList.map((issue, idx) => (
                             <tr key={issue.id} className="border-b border-gray-100 hover:bg-yellow-50 transition-colors">
@@ -221,7 +273,8 @@ useEffect(() => {
                               <td className="px-3 py-2"><a href={`tel:${issue.inchargeMobile}`} className="text-blue-600 hover:underline">{issue.inchargeMobile}</a></td>
                               <td className="px-3 py-2 font-medium">{issue.items?.length || 0}</td>
                               <td className="px-3 py-2 text-xs text-gray-600 max-w-sm">{renderIssuedItems(issue)}</td>
-                              <td className="px-3 py-2 text-xs text-gray-500">{new Date(issue.issuedAt).toLocaleDateString()}</td>
+                              <td className="px-3 py-2 text-xs text-gray-500">{formatDateTime(issue.issuedAt)}</td>
+                              <td className="px-3 py-2 text-xs text-gray-600 max-w-xs">{issue.remarks || '-'}</td>
                               <td className="px-3 py-2">{statusBadge(issue.status)}</td>
                             </tr>
                           ))
@@ -280,14 +333,14 @@ useEffect(() => {
                     <table className="w-full text-sm">
                       <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <tr>
-                          {['Sr.', 'Incharge', 'Badge', 'Mobile', 'Items Count', 'Item Numbers', 'Issued At', 'Returned At'].map(h => (
+                          {['Sr.', 'Sewadaar', 'Badge', 'Mobile', 'Items Count', 'Item Numbers', 'Issue Time', 'Receive Time', 'Remarks', 'Receive Remarks'].map(h => (
                             <th key={h} className="text-left px-3 py-2 font-semibold text-gray-700 whitespace-nowrap">{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {returnedList.length === 0 ? (
-                          <tr><td colSpan={8} className="text-center py-4 text-gray-500">No returned items</td></tr>
+                          <tr><td colSpan={10} className="text-center py-4 text-gray-500">No returned items</td></tr>
                         ) : (
                           returnedList.map((issue, idx) => (
                             <tr key={issue.id} className="border-b border-gray-100 hover:bg-green-50 transition-colors">
@@ -297,8 +350,10 @@ useEffect(() => {
                               <td className="px-3 py-2"><a href={`tel:${issue.inchargeMobile}`} className="text-blue-600 hover:underline">{issue.inchargeMobile}</a></td>
                               <td className="px-3 py-2 font-medium">{issue.items?.length || 0}</td>
                               <td className="px-3 py-2 text-xs text-gray-600 max-w-sm">{renderIssuedItems(issue)}</td>
-                              <td className="px-3 py-2 text-xs text-gray-500">{new Date(issue.issuedAt).toLocaleDateString()}</td>
-                              <td className="px-3 py-2 text-xs font-medium text-green-600">{new Date(issue.returnedAt).toLocaleDateString()}</td>
+                              <td className="px-3 py-2 text-xs text-gray-500">{formatDateTime(issue.issuedAt)}</td>
+                              <td className="px-3 py-2 text-xs font-medium text-green-600">{formatDateTime(issue.returnedAt)}</td>
+                              <td className="px-3 py-2 text-xs text-gray-600 max-w-xs">{issue.remarks || '-'}</td>
+                              <td className="px-3 py-2 text-xs text-gray-600 max-w-xs">{getReceiveRemarks(issue)}</td>
                             </tr>
                           ))
                         )}

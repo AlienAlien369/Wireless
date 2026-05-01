@@ -2,8 +2,87 @@ namespace RSSBWireless.API.DTOs;
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 public record LoginDto(string Username, string Password);
-public record RegisterDto(string Username, string Password, string FullName, string Role, string? BadgeNumber);
-public record AuthResponseDto(string Token, string Username, string Role, string FullName);
+public record RegisterDto(string Username, string Password, string FullName, string Role, string? BadgeNumber, int? CenterId, int? DepartmentId);
+public record AuthResponseDto(
+    string Token,
+    string Username,
+    string Role,
+    string Audience,
+    string FullName,
+    int? CenterId,
+    string? CenterName,
+    int? DepartmentId,
+    string? DepartmentName
+);
+
+// â”€â”€â”€ Tenancy + Menu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+public record CenterCreateDto(string Name);
+public record CenterUpdateDto(string Name, bool IsActive);
+public record CenterDto(int Id, string Name, bool IsActive);
+
+public record DepartmentCreateDto(int CenterId, string Name);
+public record DepartmentUpdateDto(string Name, bool IsActive);
+public record DepartmentDto(int Id, int CenterId, string Name, bool IsActive);
+
+public record MenuPageDto(int Id, string Code, string Label, string Path, string Icon, string Audience, int SortOrder, bool IsActive);
+public record MenuAssignmentUpdateDto(int CenterId, int? DepartmentId, string Role, List<int> MenuPageIds);
+public record MenuMyItemDto(string Code, string Label, string Path, string Icon, int SortOrder);
+
+public record AppRoleCreateDto(string Name, string Audience);
+public record AppRoleUpdateDto(string Name, string Audience, bool IsActive);
+public record AppRoleDto(int Id, string Name, string Audience, bool IsActive);
+
+public record AdminUserCreateDto(
+    string Username,
+    string Password,
+    string FullName,
+    string Role,
+    int? CenterId,
+    int? DepartmentId,
+    string? BadgeNumber,
+    string? Email,
+    string? PhoneNumber,
+    bool IsActive
+);
+
+public record AdminUserUpdateDto(
+    string FullName,
+    string Role,
+    int? CenterId,
+    int? DepartmentId,
+    string? BadgeNumber,
+    string? Email,
+    string? PhoneNumber,
+    bool IsActive
+);
+
+public record AdminUserDto(
+    string Id,
+    string Username,
+    string FullName,
+    string Role,
+    int? CenterId,
+    string? CenterName,
+    int? DepartmentId,
+    string? DepartmentName,
+    string? BadgeNumber,
+    string? Email,
+    string? PhoneNumber,
+    bool IsActive,
+    DateTime CreatedAt
+);
+
+public record AdminSetPasswordDto(string NewPassword);
+
+public record ForgotPasswordDto(string Identifier);
+public record ResetPasswordDto(string Identifier, string Otp, string NewPassword);
+
+public record AssetTypeCreateDto(int CenterId, string Code, string Name, string TrackingMode);
+public record AssetTypeUpdateDto(string Code, string Name, string TrackingMode, bool IsActive);
+public record AssetTypeDto(int Id, int CenterId, string Code, string Name, string TrackingMode, bool IsActive);
+public record AssetCreateDto(int CenterId, int AssetTypeId, string? ItemNumber, string? Brand, string? Remarks);
+public record AssetUpdateDto(string? Status, string? ItemNumber, string? Brand, string? Remarks);
+public record AssetDto(int Id, int CenterId, int AssetTypeId, string AssetTypeCode, string AssetTypeName, string? ItemNumber, string? Brand, string Status, string? Remarks);
 
 // ─── Visit ────────────────────────────────────────────────────────────────────
 public record VisitCreateDto(string Name, string Location, DateTime VisitDate, string? Remarks);
@@ -15,19 +94,6 @@ public record InchargeCreateDto(string Name, string BadgeNumber, string MobileNu
 public record InchargeUpdateDto(string Name, string BadgeNumber, string MobileNumber, string? GroupName, bool IsActive);
 public record InchargeDto(int Id, string Name, string BadgeNumber, string MobileNumber, string? GroupName, bool IsActive);
 
-// ─── WirelessSet ──────────────────────────────────────────────────────────────
-public record WirelessSetCreateDto(string ItemNumber, string Brand, string? Remarks);
-public record WirelessSetUpdateDto(string ItemNumber, string Brand, string Status, string? Remarks);
-public record WirelessSetDto(int Id, string ItemNumber, string Brand, string Status, string? Remarks, string? QrCodeUrl, DateTime CreatedAt);
-
-// ─── Charger ──────────────────────────────────────────────────────────────────
-public record ChargerCreateDto(string? ItemNumber, string Brand, string? Remarks);
-public record ChargerDto(int Id, string? ItemNumber, string Brand, string Status, string? Remarks, DateTime CreatedAt);
-
-// ─── Kit ──────────────────────────────────────────────────────────────────────
-public record KitCreateDto(string ItemNumber, string? Remarks);
-public record KitDto(int Id, string ItemNumber, string Status, string? Remarks, DateTime CreatedAt);
-
 // ─── Issue ────────────────────────────────────────────────────────────────────
 public class IssueCreateDto
 {
@@ -38,23 +104,13 @@ public class IssueCreateDto
     public int? GroupSetCount { get; set; }
     public string? Remarks { get; set; }
     public List<IssueItemDto> Items { get; set; } = new();
-    public CollectorCreateDto? Collector { get; set; }
     public bool SendSms { get; set; } = true;
 }
 
 public class IssueItemDto
 {
     public string ItemType { get; set; } = string.Empty;
-    public int? WirelessSetId { get; set; }
-    public int? ChargerId { get; set; }
-    public int? KitId { get; set; }
-}
-
-public class CollectorCreateDto
-{
-    public string Name { get; set; } = string.Empty;
-    public string BadgeNumber { get; set; } = string.Empty;
-    public string PhoneNumber { get; set; } = string.Empty;
+    public int? AssetId { get; set; }
 }
 
 public class IssueResponseDto
@@ -74,9 +130,7 @@ public class IssueResponseDto
     public DateTime? ReturnedAt { get; set; }
     public string Status { get; set; } = string.Empty;
     public string? Remarks { get; set; }
-    public CollectorDto? Collector { get; set; }
     public List<IssueItemResponseDto> Items { get; set; } = new();
-    public List<string> PhotoUrls { get; set; } = new();
     public List<SmsLogDto> SmsLogs { get; set; } = new();
 }
 
@@ -84,16 +138,13 @@ public class IssueItemResponseDto
 {
     public int Id { get; set; }
     public string ItemType { get; set; } = string.Empty;
-    public int? WirelessSetId { get; set; }
-    public int? ChargerId { get; set; }
-    public int? KitId { get; set; }
+    public int? AssetId { get; set; }
     public string? ItemNumber { get; set; }
     public string? Brand { get; set; }
     public bool IsReturned { get; set; }
     public DateTime? ReturnedAt { get; set; }
+    public string? ReturnRemarks { get; set; }
 }
-
-public record CollectorDto(int Id, string Name, string BadgeNumber, string PhoneNumber);
 
 public class SmsLogDto
 {
@@ -109,7 +160,6 @@ public class SmsLogDto
 public class BreakageCreateDto
 {
     public int VisitId { get; set; }
-    public int? WirelessSetId { get; set; }
     public string ItemNumber { get; set; } = string.Empty;
     public string BreakageReason { get; set; } = string.Empty;
     public string ReportedBy { get; set; } = string.Empty;
@@ -131,7 +181,7 @@ public class BreakageDto
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 public class DashboardStatsDto
 {
-    public int TotalWirelessSets { get; set; }
+    public int TotalAssets { get; set; }
     public int AvailableSets { get; set; }
     public int IssuedSets { get; set; }
     public int BrokenSets { get; set; }

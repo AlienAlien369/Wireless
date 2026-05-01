@@ -1,0 +1,37 @@
+namespace RSSBWireless.API.Controllers;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RSSBWireless.API.Services;
+using RSSBWireless.API.Services.Interfaces;
+
+[ApiController]
+[Route("api/[controller]")]
+[Authorize]
+public class ProductConfigController : ControllerBase
+{
+    private readonly ProductConfigService _config;
+    private readonly IAccessScopeService _scope;
+
+    public ProductConfigController(ProductConfigService config, IAccessScopeService scope)
+    {
+        _config = config;
+        _scope = scope;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        await _scope.RequireAdminUiAsync(User);
+        return Ok(_config.GetSnapshot());
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] ProductConfigSnapshot dto)
+    {
+        var scope = await _scope.RequireAdminUiAsync(User);
+        if (!scope.IsSuperAdmin) return Forbid();
+        var next = _config.Update(dto);
+        return Ok(next);
+    }
+}

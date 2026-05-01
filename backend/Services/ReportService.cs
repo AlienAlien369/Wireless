@@ -8,36 +8,47 @@ using iText.Layout.Element;
 using iText.Kernel.Colors;
 using RSSBWireless.API.Data;
 using RSSBWireless.API.DTOs;
+using RSSBWireless.API.Models;
+using RSSBWireless.API.Services.Interfaces;
 
-public class ReportService
+public class ReportService : IReportService
 {
     private readonly AppDbContext _db;
     public ReportService(AppDbContext db) => _db = db;
 
-    public async Task<List<VisitWiseDashboardDto>> GetVisitWiseDashboardAsync()
+    public async Task<List<VisitWiseDashboardDto>> GetVisitWiseDashboardAsync(CancellationToken cancellationToken = default)
     {
+        // Load all assets with their types once – avoids N+1 and WirelessSets/Chargers/Kits tables.
+        var allAssets = await _db.Assets
+            .AsNoTracking()
+            .Include(a => a.AssetType)
+            .ToListAsync(cancellationToken);
+
+        // Build a fast lookup: AssetId → Asset (with AssetType pre-loaded).
+        var assetById = allAssets.ToDictionary(a => a.Id);
+
+        // Total inventory counts (non-broken) by type code + brand.
+        int TotalByTypeAndBrand(string typeCode, string? brand) =>
+            allAssets.Count(a =>
+                a.AssetType.Code == typeCode &&
+                (brand == null || a.Brand == brand) &&
+                a.Status != AssetStatus.Broken);
+
+        var totalKenwoodSets = TotalByTypeAndBrand(AssetTypeCodes.WirelessSet, "Kenwood");
+        var totalVertelSets  = TotalByTypeAndBrand(AssetTypeCodes.WirelessSet, "Vertel");
+        var totalAsperaSets  = TotalByTypeAndBrand(AssetTypeCodes.WirelessSet, "Aspera");
+        var totalKenwoodChargers = TotalByTypeAndBrand(AssetTypeCodes.Charger, "Kenwood");
+        var totalVertelChargers  = TotalByTypeAndBrand(AssetTypeCodes.Charger, "Vertel");
+        var totalAsperaChargers  = TotalByTypeAndBrand(AssetTypeCodes.Charger, "Aspera");
+        var totalKits = TotalByTypeAndBrand(AssetTypeCodes.Kit, null);
+
+        // Load visits with only IssueItem IDs + AssetId (no deep navigation needed).
         var visits = await _db.Visits
+            .AsNoTracking()
             .Include(v => v.Issues)
                 .ThenInclude(i => i.Items)
-                    .ThenInclude(ii => ii.WirelessSet)
-            .Include(v => v.Issues)
-                .ThenInclude(i => i.Items)
-                    .ThenInclude(ii => ii.Charger)
-            .Include(v => v.Issues)
-                .ThenInclude(i => i.Items)
-                    .ThenInclude(ii => ii.Kit)
             .OrderByDescending(v => v.VisitDate)
-            .ToListAsync();
-
-        var totalKenwoodSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Kenwood" && w.Status != "Broken");
-        var totalVertelSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Vertel" && w.Status != "Broken");
-        var totalAsperaSets = await _db.WirelessSets.CountAsync(w => w.Brand == "Aspera" && w.Status != "Broken");
-
-        var totalKenwoodChargers = await _db.Chargers.CountAsync(c => c.Brand == "Kenwood" && c.Status != "Broken");
-        var totalVertelChargers = await _db.Chargers.CountAsync(c => c.Brand == "Vertel" && c.Status != "Broken");
-        var totalAsperaChargers = await _db.Chargers.CountAsync(c => c.Brand == "Aspera" && c.Status != "Broken");
-
-        var totalKits = await _db.Kits.CountAsync(k => k.Status != "Broken");
+            .ToListAsync(cancellationToken);
 
         var result = new List<VisitWiseDashboardDto>();
         foreach (var visit in visits)
@@ -47,51 +58,56 @@ public class ReportService
                 .Where(ii => !ii.IsReturned)
                 .ToList();
 
-            var kenwoodSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Kenwood");
-            var vertelSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Vertel");
-            var asperaSetsIssued = activeItems.Count(ii => ii.WirelessSet?.Brand == "Aspera");
+            int CountIssued(string typeCode, string? brand) =>
+                activeItems.Count(ii =>
+                    ii.AssetId.HasValue &&
+                    assetById.TryGetValue(ii.AssetId.Value, out var a) &&
+                    a.AssetType.Code == typeCode &&
+                    (brand == null || a.Brand == brand));
 
-            var kenwoodChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Kenwood");
-            var vertelChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Vertel");
-            var asperaChargersIssued = activeItems.Count(ii => ii.Charger?.Brand == "Aspera");
-
-            var kitsIssued = activeItems.Count(ii => ii.KitId.HasValue);
+            var kenwoodSetsIssued    = CountIssued(AssetTypeCodes.WirelessSet, "Kenwood");
+            var vertelSetsIssued     = CountIssued(AssetTypeCodes.WirelessSet, "Vertel");
+            var asperaSetsIssued     = CountIssued(AssetTypeCodes.WirelessSet, "Aspera");
+            var kenwoodChargersIssued = CountIssued(AssetTypeCodes.Charger, "Kenwood");
+            var vertelChargersIssued  = CountIssued(AssetTypeCodes.Charger, "Vertel");
+            var asperaChargersIssued  = CountIssued(AssetTypeCodes.Charger, "Aspera");
+            var kitsIssued           = CountIssued(AssetTypeCodes.Kit, null);
 
             result.Add(new VisitWiseDashboardDto
             {
                 VisitId = visit.Id,
                 VisitName = visit.Name,
                 TotalCurrentlyIssued = activeItems.Count,
-                KenwoodSetsCurrentlyIssued = kenwoodSetsIssued,
-                KenwoodSetsRemaining = Math.Max(0, totalKenwoodSets - kenwoodSetsIssued),
-                VertelSetsCurrentlyIssued = vertelSetsIssued,
-                VertelSetsRemaining = Math.Max(0, totalVertelSets - vertelSetsIssued),
-                AsperaSetsCurrentlyIssued = asperaSetsIssued,
-                AsperaSetsRemaining = Math.Max(0, totalAsperaSets - asperaSetsIssued),
+                KenwoodSetsCurrentlyIssued  = kenwoodSetsIssued,
+                KenwoodSetsRemaining        = Math.Max(0, totalKenwoodSets - kenwoodSetsIssued),
+                VertelSetsCurrentlyIssued   = vertelSetsIssued,
+                VertelSetsRemaining         = Math.Max(0, totalVertelSets - vertelSetsIssued),
+                AsperaSetsCurrentlyIssued   = asperaSetsIssued,
+                AsperaSetsRemaining         = Math.Max(0, totalAsperaSets - asperaSetsIssued),
                 KenwoodChargersCurrentlyIssued = kenwoodChargersIssued,
-                KenwoodChargersRemaining = Math.Max(0, totalKenwoodChargers - kenwoodChargersIssued),
-                VertelChargersCurrentlyIssued = vertelChargersIssued,
-                VertelChargersRemaining = Math.Max(0, totalVertelChargers - vertelChargersIssued),
-                AsperaChargersCurrentlyIssued = asperaChargersIssued,
-                AsperaChargersRemaining = Math.Max(0, totalAsperaChargers - asperaChargersIssued),
+                KenwoodChargersRemaining       = Math.Max(0, totalKenwoodChargers - kenwoodChargersIssued),
+                VertelChargersCurrentlyIssued  = vertelChargersIssued,
+                VertelChargersRemaining        = Math.Max(0, totalVertelChargers - vertelChargersIssued),
+                AsperaChargersCurrentlyIssued  = asperaChargersIssued,
+                AsperaChargersRemaining        = Math.Max(0, totalAsperaChargers - asperaChargersIssued),
                 KitsCurrentlyIssued = kitsIssued,
-                KitsRemaining = Math.Max(0, totalKits - kitsIssued)
+                KitsRemaining       = Math.Max(0, totalKits - kitsIssued)
             });
         }
 
         return result;
     }
 
-    public async Task<byte[]> GenerateVisitExcelReportAsync(int visitId)
+    public async Task<byte[]> GenerateVisitExcelReportAsync(int visitId, CancellationToken cancellationToken = default)
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        var visit = await _db.Visits.FindAsync(visitId) ?? throw new KeyNotFoundException();
+        var visit = await _db.Visits.AsNoTracking().FirstOrDefaultAsync(v => v.Id == visitId, cancellationToken)
+            ?? throw new KeyNotFoundException();
         var issues = await _db.Issues
-            .Include(i => i.Incharge).Include(i => i.Items).ThenInclude(ii => ii.WirelessSet)
-            .Include(i => i.Items).ThenInclude(ii => ii.Charger)
-            .Include(i => i.Items).ThenInclude(ii => ii.Kit)
+            .AsNoTracking()
+            .Include(i => i.Incharge).Include(i => i.Items).ThenInclude(ii => ii.Asset).ThenInclude(a => a!.AssetType)
             .Where(i => i.VisitId == visitId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         using var package = new ExcelPackage();
         var ws = package.Workbook.Worksheets.Add("Issuance Report");
@@ -116,7 +132,7 @@ public class ReportService
         int sr = 1;
         foreach (var issue in issues)
         {
-            var items = string.Join(", ", issue.Items.Select(ii => ii.WirelessSet?.ItemNumber ?? ii.Charger?.ItemNumber ?? ii.Kit?.ItemNumber ?? "Kit"));
+            var items = string.Join(", ", issue.Items.Select(ii => ii.Asset?.ItemNumber ?? ii.Asset?.AssetType?.Name ?? "(asset)"));
             ws.Cells[row, 1].Value = sr++;
             ws.Cells[row, 2].Value = issue.Incharge?.Name;
             ws.Cells[row, 3].Value = issue.Incharge?.BadgeNumber;
@@ -132,18 +148,22 @@ public class ReportService
         return package.GetAsByteArray();
     }
 
-    public async Task<byte[]> GenerateInventoryExcelReportAsync()
+    public async Task<byte[]> GenerateInventoryExcelReportAsync(CancellationToken cancellationToken = default)
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        var sets = await _db.WirelessSets.OrderBy(w => w.Brand).ThenBy(w => w.ItemNumber).ToListAsync();
+        var assets = await _db.Assets
+            .AsNoTracking()
+            .Include(a => a.AssetType)
+            .OrderBy(a => a.AssetType.Name).ThenBy(a => a.ItemNumber)
+            .ToListAsync(cancellationToken);
 
         using var package = new ExcelPackage();
         var ws = package.Workbook.Worksheets.Add("Inventory");
-        ws.Cells[1, 1].Value = "RSSB Wireless Inventory Report";
-        ws.Cells[1, 1, 1, 5].Merge = true;
+        ws.Cells[1, 1].Value = "RSSB Asset Inventory Report";
+        ws.Cells[1, 1, 1, 6].Merge = true;
         ws.Cells[1, 1].Style.Font.Bold = true;
 
-        var headers = new[] { "Sr.", "Item Number", "Brand", "Status", "Remarks" };
+        var headers = new[] { "Sr.", "Type", "Item Number", "Brand", "Status", "Remarks" };
         for (int c = 0; c < headers.Length; c++)
         {
             ws.Cells[3, c + 1].Value = headers[c];
@@ -154,33 +174,33 @@ public class ReportService
         }
 
         int row = 4;
-        for (int i = 0; i < sets.Count; i++)
+        for (int i = 0; i < assets.Count; i++)
         {
             ws.Cells[row, 1].Value = i + 1;
-            ws.Cells[row, 2].Value = sets[i].ItemNumber;
-            ws.Cells[row, 3].Value = sets[i].Brand;
-            ws.Cells[row, 4].Value = sets[i].Status;
-            ws.Cells[row, 5].Value = sets[i].Remarks;
-            // Color code by status
-            var color = sets[i].Status switch
+            ws.Cells[row, 2].Value = assets[i].AssetType?.Name;
+            ws.Cells[row, 3].Value = assets[i].ItemNumber;
+            ws.Cells[row, 4].Value = assets[i].Brand;
+            ws.Cells[row, 5].Value = assets[i].Status;
+            ws.Cells[row, 6].Value = assets[i].Remarks;
+            var color = assets[i].Status switch
             {
-                "Issued" => System.Drawing.Color.LightYellow,
-                "Broken" => System.Drawing.Color.LightCoral,
+                AssetStatus.Issued => System.Drawing.Color.LightYellow,
+                AssetStatus.Broken => System.Drawing.Color.LightCoral,
                 _ => System.Drawing.Color.LightGreen
             };
-            ws.Cells[row, 1, row, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells[row, 1, row, 5].Style.Fill.BackgroundColor.SetColor(color);
+            ws.Cells[row, 1, row, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells[row, 1, row, 6].Style.Fill.BackgroundColor.SetColor(color);
             row++;
         }
         ws.Cells[ws.Dimension.Address].AutoFitColumns();
         return package.GetAsByteArray();
     }
 
-    public async Task<byte[]> GenerateBreakagePdfReportAsync(int? visitId = null)
+    public async Task<byte[]> GenerateBreakagePdfReportAsync(int? visitId = null, CancellationToken cancellationToken = default)
     {
-        var query = _db.Breakages.Include(b => b.Visit).AsQueryable();
+        var query = _db.Breakages.AsNoTracking().Include(b => b.Visit).AsQueryable();
         if (visitId.HasValue) query = query.Where(b => b.VisitId == visitId);
-        var breakages = await query.OrderByDescending(b => b.ReportedAt).ToListAsync();
+        var breakages = await query.OrderByDescending(b => b.ReportedAt).ToListAsync(cancellationToken);
 
         using var ms = new MemoryStream();
         var writer = new PdfWriter(ms);

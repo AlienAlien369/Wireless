@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import AdminLayout from "../../components/admin/AdminLayout";
-import { breakagesApi, visitsApi, inventoryApi } from "../../services/api";
+import { assetsApi, breakagesApi, visitsApi } from "../../services/api";
 import { getLatestActiveVisit } from "../../utils/visits";
 import { Plus, Trash2, AlertTriangle, Calendar } from "lucide-react";
 
@@ -32,7 +32,22 @@ export default function BreakagePage() {
         setValue("visitId", latestVisitId);
       }
     });
-    inventoryApi.getSets().then((r) => setWirelessSets(r.data));
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+    const centerId = user?.centerId;
+    if (centerId) {
+      assetsApi.getTypes(centerId).then((typesRes) => {
+        const wirelessType = (typesRes.data || []).find((t: any) => t.code === "wireless-set");
+        if (!wirelessType) { setWirelessSets([]); return; }
+        assetsApi.getAssets(centerId, wirelessType.id).then((assetsRes) => {
+          const mapped = (assetsRes.data || []).map((a: any) => ({
+            id: a.id,
+            itemNumber: a.itemNumber,
+            brand: a.brand,
+          }));
+          setWirelessSets(mapped);
+        });
+      });
+    }
     load();
   }, [setValue]);
 
