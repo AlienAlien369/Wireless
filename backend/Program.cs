@@ -13,6 +13,13 @@ using RSSBWireless.API.Models;
 using RSSBWireless.API.Services;
 using RSSBWireless.API.Services.Interfaces;
 
+// Disable config-file hot-reload watchers BEFORE CreateBuilder.
+// ASP.NET Core registers appsettings.json with reloadOnChange:true by default,
+// which creates inotify instances on Linux. Render (and other shared-Linux hosts)
+// cap inotify instances at 1024 per user — exhausting that limit crashes the
+// process before it even starts. We never need live config reload in production.
+Environment.SetEnvironmentVariable("DOTNET_hostBuilder__reloadConfigOnChange", "false");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ─── Database ─────────────────────────────────────────────────────────────────
